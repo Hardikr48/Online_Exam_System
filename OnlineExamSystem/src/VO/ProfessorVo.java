@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,6 +40,10 @@ public class ProfessorVo {
 
 	@Column(name = "Contact_NO")
 	private String con_no;
+	
+	@Lob
+    @Column(name="ProfessorImage", nullable=false)
+    private byte[] image;
 
 	@Column(name = "Address")
 	private String address;
@@ -71,7 +76,7 @@ public class ProfessorVo {
 	@JoinColumn(name = "Subjectid")
 	private SubjectVo subjectid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professorid", cascade = CascadeType.REMOVE)
+	@OneToMany( mappedBy = "professorid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<LoginVO> loginid ;
 
@@ -201,6 +206,14 @@ public class ProfessorVo {
 
 	public void setLoginid(List<LoginVO> loginid) {
 		this.loginid = loginid;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 }

@@ -40,7 +40,7 @@ public class SubjectVo {
 	@JoinColumn(name = "Departmentid")
 	private DepartmentVo departmentid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subjectid", cascade = CascadeType.REMOVE)
+	@OneToMany( mappedBy = "subjectid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professorid;
 

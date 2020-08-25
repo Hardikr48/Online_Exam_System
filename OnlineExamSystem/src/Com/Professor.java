@@ -1,5 +1,6 @@
 package Com;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -99,11 +100,17 @@ public class Professor extends HttpServlet {
 		try {
 			String email = request.getParameter("email");
 			if (EmailValidation.isValid(email)) {
+				
 				int collegeid = (int) session.getAttribute("collegeid");
 				int semid = (Integer.parseInt(request.getParameter("semid")));
 				int departmentid = (Integer.parseInt(request.getParameter("departmentid")));
 				int subjectid = (Integer.parseInt(request.getParameter("subjectid")));
+				String id[]= new String[10];
+					for(int i=0;i<10;i++){
+				id[i]=request.getParameter("check"+i);
 
+				}
+				
 				String firstname = request.getParameter("firstName");
 				String lastname = request.getParameter("lastName");
 				String con_no = request.getParameter("Con_no");

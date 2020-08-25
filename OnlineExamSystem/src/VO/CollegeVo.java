@@ -38,23 +38,22 @@ public class CollegeVo {
 	@Column(name = "JoiningDate")
 	private String joiningdate;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "college", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "college", cascade = CascadeType.REMOVE)
 	private List<SemVo> samid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@OneToMany( mappedBy = "collegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<LoginVO> loginid ;
    
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departmentcollegeid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "departmentcollegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<DepartmentVo> departmentid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> subjectid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professortid;
 	
