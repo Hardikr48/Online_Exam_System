@@ -10,5 +10,10 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="D:/SOFTWARE 64-BIT1/JAR FILES/hibernate-annotations-3.5.0-Final.jar"/>
 	<classpathentry kind="lib" path="D:/SOFTWARE 64-BIT1/JAR FILES/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/SOFTWARE 64-BIT1/JAR FILES/gson-2.2.2.jar/gson-2.2.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

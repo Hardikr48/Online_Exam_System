@@ -32,15 +32,15 @@ public class SemVo {
 	@JoinColumn(name = "Collegeid")
 	private CollegeVo college;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "semid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "semid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<DepartmentVo> departmentid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "semid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "semid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> subjectid;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "semid", cascade = CascadeType.REMOVE)
+	@OneToMany( mappedBy = "semid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professorid;
 	

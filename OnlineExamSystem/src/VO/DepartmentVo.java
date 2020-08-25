@@ -36,11 +36,11 @@ public class DepartmentVo {
 	@JoinColumn(name="DepartmentCollegeid")
 	private CollegeVo departmentcollegeid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departmentid", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> departmentid;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departmentid", cascade = CascadeType.REMOVE)
+	@OneToMany( mappedBy = "departmentid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professorid;
 
