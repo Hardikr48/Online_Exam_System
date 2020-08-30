@@ -53,7 +53,7 @@ public class Department extends HttpServlet {
 			response.sendRedirect("College_Department_List.jsp");
 		}
 		if (flag.equalsIgnoreCase("viewdepartrmentsearch")) {
-			viewSemDepartmentList(request, response);
+//			viewSemDepartmentList(request, response);
 			response.sendRedirect("College_Sem_Department_List.jsp");
 		}
 	}
@@ -93,20 +93,14 @@ public class Department extends HttpServlet {
 
 			int companyid = (int) session.getAttribute("collegeid");
 			System.out.println(companyid);
-			int semid = (Integer.parseInt(request.getParameter("semid")));
-			System.out.println(semid);
 			String departmentname = request.getParameter("departmentname");
 
 			CollegeVo collegevo = new CollegeVo();
 			collegevo.setId(companyid);
 
-			SemVo semvo = new SemVo();
-			semvo.setId(semid);
-
 			DepartmentVo departmentvo = new DepartmentVo();
 			departmentvo.setDepartment(departmentname);
 			departmentvo.setDepartmentcollegeid(collegevo);
-			departmentvo.setSemid(semvo);
 
 			DepartmentDao departmentdao = new DepartmentDao();
 			ArrayList<DepartmentVo> departmentist = departmentdao.chackDepartment(departmentvo);
@@ -114,8 +108,8 @@ public class Department extends HttpServlet {
 				departmentdao.insertDepartment(departmentvo);
 				session.setAttribute("adddepartment", "true");
 			} else {
-				int sem = departmentist.get(0).getSemid().getId();
-				if (sem == semid) {
+				int companyid1 = departmentist.get(0).getDepartmentcollegeid().getId();
+				if (companyid1 == companyid) {
 					session.setAttribute("department", "true");
 				} else {
 					departmentdao.insertDepartment(departmentvo);
@@ -149,25 +143,25 @@ public class Department extends HttpServlet {
 
 	}
 
-	private void viewSemDepartmentList(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		try {
-			int semid = Integer.parseInt(request.getParameter("id"));
-
-			SemVo semvo = new SemVo();
-			semvo.setId(semid);
-
-			DepartmentVo departmentvo = new DepartmentVo();
-			departmentvo.setSemid(semvo);
-
-			DepartmentDao departmentdao = new DepartmentDao();
-			ArrayList<DepartmentVo> departmentist = departmentdao.searchSemDepartment(departmentvo);
-
-			session.setAttribute("departmentist", departmentist);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
+//	private void viewSemDepartmentList(HttpServletRequest request, HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		try {
+//			int semid = Integer.parseInt(request.getParameter("id"));
+//
+//			SemVo semvo = new SemVo();
+//			semvo.setId(semid);
+//
+//			DepartmentVo departmentvo = new DepartmentVo();
+//			departmentvo.setSemid(semvo);
+//
+//			DepartmentDao departmentdao = new DepartmentDao();
+//			ArrayList<DepartmentVo> departmentist = departmentdao.searchSemDepartment(departmentvo);
+//
+//			session.setAttribute("departmentist", departmentist);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 }

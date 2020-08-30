@@ -9,18 +9,25 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import VO.DepartmentProfessorVo;
 import VO.DepartmentVo;
 import VO.LoginVO;
 import VO.ProfessorVo;
+import VO.SemProfessorVo;
+import VO.SubjectProfessorVo;
 
 public class ProfessorDao {
-	public void professorInsert(ProfessorVo professorvo , LoginVO loginvo) {
+	public void professorInsert(ProfessorVo professorvo, LoginVO loginvo, DepartmentProfessorVo departmentprofessorvo,
+			SemProfessorVo semprofessorvo, SubjectProfessorVo subjectprofessorvo) {
 		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			session.save(professorvo);
 			session.save(loginvo);
+			session.save(departmentprofessorvo);
+			session.save(semprofessorvo);
+			session.save(subjectprofessorvo);
 			transaction.commit();
 			session.close();
 		} catch (Exception e) {
@@ -46,19 +53,19 @@ public class ProfessorDao {
 
 	public ArrayList<ProfessorVo> professorHodSearch(ProfessorVo professorvo) {
 		List<ProfessorVo> Professorlist = new ArrayList<ProfessorVo>();
-		try{
+		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from ProfessorVo AS p where p.departmentid =:dep And p.semid =:sem And p.roll =:roll1");
-			q.setParameter("dep",professorvo.getDepartmentid());
-			q.setParameter("sem",professorvo.getSemid());
-			q.setParameter("roll1",professorvo.getRoll());
+			Query q = session.createQuery(
+					"from ProfessorVo AS p where p.departmentid =:dep And p.semid =:sem And p.roll =:roll1");
+//			q.setParameter("dep",professorvo.getDepartmentid());
+//			q.setParameter("sem",professorvo.getSemid());
+			q.setParameter("roll1", professorvo.getRoll());
 			Professorlist = q.list();
 			transaction.commit();
 			session.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return (ArrayList<ProfessorVo>) Professorlist;
@@ -72,11 +79,10 @@ public class ProfessorDao {
 			session.update(professorvo);
 			transaction.commit();
 			session.close();
-			}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public ArrayList<ProfessorVo> searchCollegeProfessor(ProfessorVo professorvo) {
@@ -104,7 +110,7 @@ public class ProfessorDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.semid =:sem");
 			q.setParameter("id", professorvo.getCollegeid());
-			q.setParameter("sem", professorvo.getSemid());
+//			q.setParameter("sem", professorvo.getSemid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();
@@ -120,9 +126,10 @@ public class ProfessorDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.departmentid =:department");
+			Query q = session
+					.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.departmentid =:department");
 			q.setParameter("id", professorvo.getCollegeid());
-			q.setParameter("department", professorvo.getDepartmentid());
+//			q.setParameter("department", professorvo.getDepartmentid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();
@@ -140,7 +147,7 @@ public class ProfessorDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.subjectid =:subject");
 			q.setParameter("id", professorvo.getCollegeid());
-			q.setParameter("subject", professorvo.getSubjectid());
+//			q.setParameter("subject", professorvo.getSubjectid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();

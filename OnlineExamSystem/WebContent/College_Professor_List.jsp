@@ -67,18 +67,18 @@ a:hover {
 	<ul>
 	  <c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
+		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Sem </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Professor?flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">Add Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
@@ -88,15 +88,35 @@ a:hover {
 		<h3>View Department</h3>
 		<table border="1">
 			<tr>
-				<td>Department Name</td>
+				<td>Professor Name</td>
+				<td>Last Name</td>
+				<td>Email</td>
+				<td>ContactNo</td>
+				<td>Address</td>
+				<td>Gender</td>
+				<td>Salary</td>
+				<td>Designation</td>
+				<td>JoiningDate</td>
+				<td>Department</td>
+				<td>Subject</td>
 				<td>Semester</td>
-				<td>View Subject</td>
+				<td>Image</td>
 			</tr>
-			<c:forEach items="${sessionScope.departmentist }" var="q">
+			<c:forEach items="${sessionScope.collegeProfessorlist }" var="q">
 				<tr>
-					<td>${q.department }</td>
-					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+					<td>${q.firstName }</td>
+					<td>${q.lastName }</td>
+					<td>${q.email }</td>
+					<td>${q.con_no }</td>
+					<td>${q.address }</td>
+					<td>${q.gender }</td>
+					<td>${q.salary }</td>
+					<td>${q.roll }</td>
+					<td>${q.joiningdate }</td>
+					<td>${q.departmentprofessor.departmentid }</td>
+					<td>${q.semprofessor.semid }</td>
+					<td>${q.subjectprofessor.subjectid }</td>
+					<td><a href="<%=request.getContextPath()%>/PhotoUpload?flag=insert&id=${q.id }">Insert Image</a></td>
 				</tr>
 			</c:forEach>
 		</table>

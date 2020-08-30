@@ -245,6 +245,24 @@ public class LoginDAO {
 		}return chack="add";
 	}
 
+	public String studentLoginUpdate(LoginVO loginvo) {
+		String chack;
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("update LoginVO as a set a.email =:email1 , a.password =:password1 where a.studentid =:studentid");
+			q.setParameter("studentid", loginvo.getStudentid());
+			q.setParameter("email1", loginvo.getEmail());
+			q.setParameter("password1", loginvo.getPassword());
+			q.executeUpdate();
+			transaction.commit();
+			session.close();
+			}
+		catch (Exception e) {
+			return chack="erorr"; 
+		}return chack="add";
+	}
 
 //	public String loginupdate1(LoginVO login) {
 //		String chack;

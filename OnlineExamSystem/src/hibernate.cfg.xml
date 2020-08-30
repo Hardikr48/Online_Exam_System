@@ -35,11 +35,23 @@
 		
 		<mapping class="VO.ProfessorVo"/>
 		
-		<mapping class="VO.DEpartmentProfessorVo"/>
+		<mapping class="VO.DepartmentProfessorVo"/>
 		
 		<mapping class="VO.SemProfessorVo"/>
 		
 		<mapping class="VO.SubjectProfessorVo"/>
+		
+		<mapping class="VO.PhotoUploadVo"/>
+		
+		<mapping class="VO.DepartmentProfessorVo"/>
+		
+		<mapping class="VO.SemProfessorVo"/>
+		
+		<mapping class="VO.SubjectProfessorVo"/>
+		
+		<mapping class="VO.StudentVo"/>
+		
+		<mapping class="VO.ExamVo"/>
 		
 	</session-factory>
 </hibernate-configuration>

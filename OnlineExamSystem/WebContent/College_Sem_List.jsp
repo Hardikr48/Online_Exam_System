@@ -85,11 +85,14 @@ a:hover {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<h3>View Sem</h3>
+		<h3>View Semester</h3>
 		<table border="1">
 			<tr>
-				<td>Sem</td>
+				<td>Semester</td>
 				<td>View Department</td>
+				<td>View Subject</td>
+				<!-- <td>View Professor</td>
+				<td>View Student</td> -->
 				<td>Delete</td>
 			</tr>
 			

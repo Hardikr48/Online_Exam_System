@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<head>
-<meta charset="ISO-8859-1">
 <style type="text/css">
 body {
 	margin: 0;
@@ -84,29 +82,33 @@ li a:hover:not(.active) {
 				session.removeAttribute("wrong");
 			}
 			%>
-			<h3>Edit Profile</h3>
-			<form action="<%=request.getContextPath()%>/College" method="post">
-				<c:forEach items="${sessionScope.collegedata }" var="q">
-			College_name:-<input type="text" name="collegename"
-						value="${q.collegename }"required>
+			<h3>Edit Exam</h3>
+			<form action="<%=request.getContextPath()%>/Exam" method="post">
+			<%int i=0; %>
+				<c:forEach items="${sessionScope.examlist }" var="q">
+				<%=i++ %>
+			Phase<%=i%>:-<input type="text" name="phase"
+						value="${q.phase }"required>
 					<br>
 					<br>
-			Address:-<input type="text" name="collegeaddress"
-						value="${q.address }"required>
+			Time<%=i%>:-<input type="text" name="time"
+						value="${q.time }"required>
 					<br>	
 					<br>
-			Email:-<input type="email" name="email" value="${q.email }"required>
-					<br>
-					<br>
-			Password:-<input type="text" name="password" value="${q.password }"required>
+			Marks<%=i%>:-<input type="email" name="maeks" value="${q.marks }"required>
 					<br>
 					<br>
 					<input type="hidden" name="id" value="${q.id}"required>
+					<input type="hidden" name="departmentid" value="${q.departmentid.id }"required>
+					<input type="hidden" name="semid" value="${q.semesterid.id }"required>
+					<input type="hidden" name="semid" value="${q.subjectid.id }"required>
+					<input type="hidden" name="collegeid" value="${q.collegeid.id }"required>
 					<input type="hidden" name="flag" value="updateprofile">
 				</c:forEach>
 				<input type="submit">
 			</form>
 		</div>
 	</div>
+			
 </body>
 </html>

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,12 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "Sam", uniqueConstraints = @UniqueConstraint(name = "unique", columnNames = "SemName"))
+@Table(name = "Sam")
 public class SemVo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,17 +30,21 @@ public class SemVo {
 	@JoinColumn(name = "Collegeid")
 	private CollegeVo college;
 	
-	@OneToMany(mappedBy = "semid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
-	private List<DepartmentVo> departmentid;
+	@ManyToOne
+	@JoinColumn(name = "DepartmentId")
+	private DepartmentVo departmentid;
 	
 	@OneToMany(mappedBy = "semid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> subjectid;
-
+	
 	@OneToMany( mappedBy = "semid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
-	private List<ProfessorVo> professorid;
+	private List<SemProfessorVo> semprofessorid;
+	
+	@OneToMany(mappedBy = "semesterid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<StudentVo> studentid;
 	
 	public int getId() {
 		return id;
@@ -68,11 +70,11 @@ public class SemVo {
 		this.college = college;
 	}
 
-	public List<DepartmentVo> getDepartmentid() {
+	public DepartmentVo getDepartmentid() {
 		return departmentid;
 	}
 
-	public void setDepartmentid(List<DepartmentVo> departmentid) {
+	public void setDepartmentid(DepartmentVo departmentid) {
 		this.departmentid = departmentid;
 	}
 
@@ -84,12 +86,19 @@ public class SemVo {
 		this.subjectid = subjectid;
 	}
 
-	public List<ProfessorVo> getProfessorid() {
-		return professorid;
+	public List<SemProfessorVo> getSemprofessorid() {
+		return semprofessorid;
 	}
 
-	public void setProfessorid(List<ProfessorVo> professorid) {
-		this.professorid = professorid;
+	public void setSemprofessorid(List<SemProfessorVo> semprofessorid) {
+		this.semprofessorid = semprofessorid;
 	}
-	
+
+	public List<StudentVo> getStudentid() {
+		return studentid;
+	}
+
+	public void setStudentid(List<StudentVo> studentid) {
+		this.studentid = studentid;
+	}
 }
