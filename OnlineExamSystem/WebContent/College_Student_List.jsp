@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,15 +89,31 @@ a:hover {
 		<h3>View Department</h3>
 		<table border="1">
 			<tr>
-				<td>Department Name</td>
+				<td>Student Name</td>
+				<td>Last Name</td>
+				<td>Email</td>
+				<td>ContactNo</td>
+				<td>Address</td>
+				<td>Gender</td>
+				<td>Roll No</td>
+				<td>JoiningDate</td>
+				<td>Department</td>
 				<td>Semester</td>
-				<td>View Subject</td>
+				<td>Edit Profile</td>
 			</tr>
-			<c:forEach items="${sessionScope.departmentist }" var="q">
+			<c:forEach items="${sessionScope.collegeStudentlist }" var="q">
 				<tr>
-					<td>${q.department }</td>
-					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+					<td>${q.firstName }</td>
+					<td>${q.lastName }</td>
+					<td>${q.email }</td>
+					<td>${q.con_no }</td>
+					<td>${q.address }</td>
+					<td>${q.gender }</td>
+					<td>${q.roll }</td>
+					<td>${q.joiningdate }</td>
+					<td>${q.departmentid.department }</td>
+					<td>${q.semesterid.semname }</td>
+					<td><a href="<%=request.getContextPath()%>/PhotoUpload?flag=insert&id=${q.id }">Insert Image</a></td>
 				</tr>
 			</c:forEach>
 		</table>

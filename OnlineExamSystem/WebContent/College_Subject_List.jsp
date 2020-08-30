@@ -88,15 +88,17 @@ a:hover {
 		<h3>View Department</h3>
 		<table border="1">
 			<tr>
-				<td>Department Name</td>
+				<td>Subject Name</td>
 				<td>Semester</td>
+				<td>Department Name</td>
 				<td>View Subject</td>
 			</tr>
-			<c:forEach items="${sessionScope.departmentist }" var="q">
+			<c:forEach items="${sessionScope.subjectlist }" var="q">
 				<tr>
-					<td>${q.department }</td>
+					<td>${q.subject }</td>
 					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+					<td>${q.departmentid.department }</td>
+					<td><a href="<%=request.getContextPath()%>/Professor?flag=viewdepartrmentsearch&id=${q.id }">View Professor</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -7,6 +7,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta charset="ISO-8859-1">
 <style type="text/css">
 body {
@@ -41,57 +44,87 @@ li a:hover:not(.active) {
 	color: white;
 }
 </style>
-<title>Insert title here</title>
-<script type="text/javascript">
-<%-- function ChangeCarList() {
-	var somesession = '<%= session.getAttribute("departmentist") %>';
-	semlist = document.getElementById("sem");
-	semlist1=somesession[semlist.value];
-	changeselect('dep',semlist1,semlist1)
-	
-} --%>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
-function ChangeCarList() {
-	  semlist = document.getElementById("sem");
-	 
-	  <%
-	 	 List<DepartmentVo> list = (List) session.getAttribute("departmentist");
-	  	for(DepartmentVo sem :list ){
-	  		int s1 = sem.getSemid().getSemname();
+<script>
+
+
+$(document).ready(function(){
+	var count = 0;
+	var maxfield = 5;
+	$(document).on('click', '.add', function(){
+	  	if(count<maxfield){
+			count++;
+		   	var html = '';
+		   	html += '<tr>';
+		   	html += '<td><select name="departmentlist[]" class="form-control department"  data-semester_id="'+count+'" id="departmentid'+count+'"><option value="">Select Department</option></select></td>';
+		   	html += '<td><select name="semesterlist[]" class="form-control semestr" data-subject_id="'+count+'" id="semesterid'+count+'"><option value="">Select Semester</option></select></td>';
+		   	html += '<td><select name="subjectlist[]" class="form-control subject" data-subject_id="'+count+'" id="subjectid'+count+'"><option value="">Select Subject</option></select></td>';
+		   	html += '<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-minus"></span></button></td>';
+		   	$('tbody').append(html);
+		   	var username="deaprtment";
+		   	$.post('Department1',{flag:username},function(response) {
+		   		var obj = JSON.parse(response);
+	    		var select = $('#departmentid'+count);
+		    	$.each(obj, function(index, value) {
+		 		   	$('<option>').val(obj[index].id).text(obj[index].department).appendTo(select);
+		 		 });
+		 	});
+	  	}else{
+	  		alert("maximum 5 files add")
 	  	}
-	  %>
-	  var selectedCar = semlist.value;
-	  var selectedCar1 = somesession.value;
-	  alert(somesession)
-	  var options = somesession.filter(function(model) {
-	    return somesession.sem === selectedCar;
-	  });
+	});
 
-	  removeOptions(modelsSelect);
-	  removeOptions(configurationSelect);
-	  addOptions(modelsSelect, options);
-	} 
+  	$(document).on('click', '.remove', function(){
+  		count--;
+    	$(this).closest('tr').remove();
+  	});
 
+  	$(document).on('change', '.department', function(){
+    	var departmetid = $(this).val();
+    	var semester = $(this).data('semester_id');
+    	$.post('Department1',{department:departmetid,flag:"semester"},function(response) {
+    		var obj = JSON.parse(response);
+     		var select = $('#semesterid'+semester);
+     	 	$.each(obj, function(index, value) {
+  		   		$('<option>').val(obj[index].id).text(obj[index].semester).appendTo(select);
+  		 	});
+  		});
+  	});
+
+  	$(document).on('change', '.semestr', function(){
+      	var semesterid = $(this).val();
+      	var subject = $(this).data('subject_id');
+      	$.post('Department1',{semesterid:semesterid,flag:"subject"},function(response) {
+      		var obj = JSON.parse(response);
+       		var select = $('#subjectid'+subject);
+       	 	$.each(obj, function(index, value) {
+    			$('<option>').val(obj[index].id).text(obj[index].subject).appendTo(select);
+    		 });
+    	});
+    });
+});
 </script>
+<title>Insert title here</title>
 </head>
 <body>
 
 	<div>
 		<ul>
-			<c:forEach items="${sessionScope.collegedata }" var="q">
+		<c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Sem </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
+		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Professor?flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 		</ul>
@@ -99,11 +132,11 @@ function ChangeCarList() {
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
 		<div style="padding-top: 2%;">
 			<%
-				if (session.getAttribute("addsubject") != null) {
+				if (session.getAttribute("professoradd") != null) {
 			%>
 			<p style="color: red">Add Successfully</p>
 			<%
-				session.removeAttribute("addsubject");
+				session.removeAttribute("professoradd");
 			} else if (session.getAttribute("selectsemordepartment") != null) {
 			%>
 			<p style="color: red">Please select Sem or Department</p>
@@ -117,29 +150,27 @@ function ChangeCarList() {
 			}
 			%>
 			<h3>Add Professor</h3>
-			<form action="<%=request.getContextPath()%>/Professor" method="post">
+			<form method="post" action="<%=request.getContextPath()%>/Professor">
 				<span>*</span> First_Name: 
 				<input type="text" name="firstName"required><br><br> 
 				<span>*</span>Last_Name: 
 				<input type="text" name="lastName" required><br> <br> <span>*</span>Contact_No:
 				<input type="text" name="Con_no" required><br> <br>
-				<span>*</span>Sem:<br>
-					<c:forEach items="${sessionScope.semlist }" var="q">
-						<input type="checkbox" name="semid" value="${q.id }"><label>${q.semname }</label>
-					</c:forEach>
-					<br><br>
 				
-				<span>*</span>Department:<br>
-					<c:forEach items="${sessionScope.departmentist }" var="q">
-						<input type="checkbox" name="departmentid" value="${q.id }"><label>${q.department }</label>
-					</c:forEach>
-					<br><br>
-					
-				<span>*</span>Subject:<br>
-					<c:forEach items="${sessionScope.subjectlist }" var="q">
-						<input type="checkbox" name="subjectid" value="${q.id }"><label>${q.subject }</label>
-					</c:forEach>
-					<br><br>
+				<div class="table-repsonsive">
+		          <span id="error"></span>
+		          <table class="table table-bordered" id="item_table">
+		            <thead>
+		              <tr>
+		                <th>Department</th>
+		                <th>Semester</th>
+		                <th>Subject</th>
+		                <th><button type="button" name="add" class="btn btn-success btn-xs add"><span class="glyphicon glyphicon-plus"></span></button></th>
+		              </tr>
+		            </thead>
+		            <tbody></tbody>
+		          </table>
+		          </div>
 				<span>*</span>Roll:-<select name="roll" required>
 					<option>Select</option>
 					<option>HOD</option>
@@ -150,15 +181,14 @@ function ChangeCarList() {
 				<br> <br> <span>*</span>Gender:<br> Male: <input
 					type="radio" name="gender" value="male" required><br>
 				Female: <input type="radio" name="gender" value="female" required><br>
-				<br> 
-				<span>*</span>Image:  <input type="file" name="profimg" accept="image/*">
+				<br>
 				<span>*</span>Salary: <input type="text" name="salary"required><br><br> 
 				<span>*</span>Email: 
 				<input type="email" name="email" required><br><br> 
 				<span>*</span>Password:
 				<input type="password" name="pass" required><br><br>
 				<input type="hidden" name="flag" value="insert">
-				<input type="submit" value="SUBMIT">
+	            <input type="submit" name="submit">
 			</form>
 		</div>
 	</div>

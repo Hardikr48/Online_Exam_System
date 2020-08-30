@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,21 +86,44 @@ a:hover {
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
 		<h3>View Department</h3>
-		<table border="1">
-			<tr>
-				<td>Department Name</td>
+		<%
+			if (session.getAttribute("examdelete") != null) {
+		%>
+		<p style="color: red">Delete Successfully</p>
+		<%
+			session.removeAttribute("examdelete");
+		}
+		%><%int i=1; %>
+		<table border="1" >
+			<tr style="text-align: center;">
+				<td>No</td>
+				<td>Department</td>
 				<td>Semester</td>
-				<td>View Subject</td>
+				<td>Subject</td>
+				<td>Phase</td>
+				<td>Time</td>
+				<td>Marks</td>
+				<td>Edit</td>
+				<td>Delete</td>
 			</tr>
-			<c:forEach items="${sessionScope.departmentist }" var="q">
-				<tr>
-					<td>${q.department }</td>
-					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+			
+			<c:forEach items="${sessionScope.collegeExam }" var="q">
+				<tr style="text-align: center;">
+					<td><%=i %></td>
+					<td>${q.departmentid.department }</td>
+					<td>${q.semesterid.semname }</td>
+					<td>${q.subjectid.subject }</td>
+					<td>${q.phase }</td>
+					<td>${q.time }</td>
+					<td>${q.marks }</td>
+					<td><a href="<%=request.getContextPath()%>/Exam?flag=editexam&id=${q.id }">Edit</a></td>
+					<td><a href="<%=request.getContextPath()%>/Exam?flag=examdelete&id=${q.id }">Delete</a></td>
 				</tr>
+				<%i++; %>
 			</c:forEach>
 		</table>
 	</div>
 </div>
+
 </body>
 </html>

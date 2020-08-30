@@ -1,13 +1,17 @@
-<%@page import="VO.DepartmentVo"%>
-<%@page import="VO.SemVo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style type="text/css">
 body {
 	margin: 0;
@@ -41,13 +45,31 @@ li a:hover:not(.active) {
 	color: white;
 }
 </style>
-<title>Insert title here</title>
 
-
-
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script>
-$(document).ready(function() {                        
+$(document).ready(function() {
+	var count = 0;
+	var maxfield = 3;
+	$(document).on('click','.add',function() {
+		if (count < maxfield) {
+			count++;
+			var html = '';
+			html += '<tr>';
+			html += '<td><input type="text" name="phase[]" class="form-control"  id="phaseid'+count+'" value="Phase'+count+'"></td>';
+			html += '<td> <input type="number" name="time[]" class="form-control"  id="timeid'+count+'"></td>';
+			html += '<td> <input type="number" name="marks[]" class="form-control"  id="marks'+count+'"></td>';
+			html += '<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-minus"></span></button></td>';
+			$('tbody').append(html);
+
+		} else {
+			alert("Field limit reached")
+			}
+		})
+		
+		$(document).on('click', '.remove', function() {
+		count--;
+		$(this).closest('tr').remove();
+	});                        
 	$('#deaprtmentid').change(function(event) {  
         var username=$('#deaprtmentid').val();
      $.get('Department1',{q:username},function(response) {
@@ -60,13 +82,26 @@ $(document).ready(function() {
 		 });
      });   
   });
+	
+	$('#semesterid').change(function(event) {  
+        var semesterid=$('#semesterid').val();
+        $.post('Department1',{semesterid:semesterid,flag:"subject"},function(response) {
+    	 var obj = JSON.parse(response);
+    	 var select = $('#subjctid');
+    	 select.find('option').remove();
+    	 $('<option>').val("").text("Select Subject").appendTo(select);  
+		    $.each(obj, function(index, value) {
+		    	$('<option>').val(obj[index].id).text(obj[index].subject).appendTo(select);
+		 	});
+     	});   
+ 	 });
 });
 </script>
 </head>
 <body>
 	<div>
 		<ul>
-		<c:forEach items="${sessionScope.collegedata }" var="q">
+			<c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
@@ -87,28 +122,25 @@ $(document).ready(function() {
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
 		<div style="padding-top: 2%;">
 			<%
-				if (session.getAttribute("addsubject") != null) {
+				if (session.getAttribute("examAdd") != null) {
 			%>
-			<p style="color: red">Add Successfully</p>
+			<p style="color: red">Exam Add Successfully</p>
 			<%
-				session.removeAttribute("addsubject");
-			} else if (session.getAttribute("selectsemordepartment") != null) {
+				session.removeAttribute("examAdd");
+			} else if (session.getAttribute("cahck") != null) {
 			%>
-			<p style="color: red">Please select Sem or Department</p>
+			<p style="color: red">Please select department , semester and subject </p>
 			<%
-				session.removeAttribute("selectsemordepartment");
-			} else if (session.getAttribute("cahcksubject") != null) {
-			%>
-			<p style="color: red">Subject already exist</p>
-			<%
-				session.removeAttribute("cahcksubject");
+				session.removeAttribute("cahck");
 			}
 			%>
-			<h3>Add Subject</h3>
-			<form action="<%=request.getContextPath()%>/Subject" method="post">
+			
+			<h3>Exam Form</h3>
+			<form method="post" action="<%=request.getContextPath()%>/Exam">
+
 				<span>*</span>Department:-<br>
 				<select name="departmentid" id="deaprtmentid" required>
-					<option>Select</option>
+					<option>Select Department</option>
 					<c:forEach items="${sessionScope.departmentist }" var="q">
 						<option value="${q.id }">${q.department }</option>
 					</c:forEach>
@@ -119,9 +151,30 @@ $(document).ready(function() {
 					<option>Select Semester</option>
 				</select><br> <br> 
 				
-				<span>*</span>Subject Name:- <input type="text"	name="subject" required><br> <br> 
-				<input type="hidden" name="flag" value="insert" />
-				<input type="submit"value="SUBMIT" />
+				<span>*</span>Subject:-<br>
+				<select	name="subjectid" id="subjctid" required>
+					<option>Select Subject</option>
+				</select><br> <br>
+
+				<div class="table-repsonsive">
+					<span id="error"></span>
+					<table class="table table-bordered" id="item_table">
+						<thead>
+							<tr>
+								<th>Phase</th>
+								<th>Time(In mintues)</th>
+								<th>Marks</th>
+								<th><button type="button" name="add"class="btn btn-success btn-xs add">
+										<span class="glyphicon glyphicon-plus"></span>
+									</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+				<input type="hidden" name="flag" value="insert">
+	            <input type="submit" name="submit">	
 			</form>
 		</div>
 	</div>
