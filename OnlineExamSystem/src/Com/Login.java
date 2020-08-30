@@ -83,6 +83,7 @@ public class Login extends HttpServlet {
 					LoginDAO dsearch = new LoginDAO();
 					ArrayList<CollegeVo> admin = dsearch.collegeVerify(collegevo);
 					HttpSession h1 = request.getSession();
+					h1.setAttribute("collegename", admin.get(0).getCollegename());
 					h1.setAttribute("collegedata", admin);
 
 					Timestamp t1 = new Timestamp(System.currentTimeMillis());
