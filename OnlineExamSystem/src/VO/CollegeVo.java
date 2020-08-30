@@ -44,6 +44,10 @@ public class CollegeVo {
 	@OneToMany( mappedBy = "collegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<LoginVO> loginid ;
+	
+	@OneToMany( mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<StudentVo> studentid ;
    
 	@OneToMany(mappedBy = "departmentcollegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
@@ -56,6 +60,18 @@ public class CollegeVo {
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professortid;
+	
+	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<DepartmentProfessorVo> departmentprofessor;
+	
+	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<SemProfessorVo> semprofessor;
+	
+	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<SubjectProfessorVo> subjectprofessor;
 	
 	public int getId() {
 		return id;
@@ -144,5 +160,39 @@ public class CollegeVo {
 	public void setProfessortid(List<ProfessorVo> professortid) {
 		this.professortid = professortid;
 	}
+
+	public List<DepartmentProfessorVo> getDepartmentprofessor() {
+		return departmentprofessor;
+	}
+
+	public void setDepartmentprofessor(List<DepartmentProfessorVo> departmentprofessor) {
+		this.departmentprofessor = departmentprofessor;
+	}
+
+	public List<SemProfessorVo> getSemprofessor() {
+		return semprofessor;
+	}
+
+	public void setSemprofessor(List<SemProfessorVo> semprofessor) {
+		this.semprofessor = semprofessor;
+	}
+
+	public List<SubjectProfessorVo> getSubjectprofessor() {
+		return subjectprofessor;
+	}
+
+	public void setSubjectprofessor(List<SubjectProfessorVo> subjectprofessor) {
+		this.subjectprofessor = subjectprofessor;
+	}
+
+	public List<StudentVo> getStudentid() {
+		return studentid;
+	}
+
+	public void setStudentid(List<StudentVo> studentid) {
+		this.studentid = studentid;
+	}
+	
+	
 	
 }

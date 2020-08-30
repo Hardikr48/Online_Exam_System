@@ -1,13 +1,11 @@
-<%@page import="VO.DepartmentVo"%>
-<%@page import="VO.SemVo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ page import="java.util.List"%>
+    pageEncoding="ISO-8859-1"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Insert title here</title>
 <style type="text/css">
 body {
 	margin: 0;
@@ -41,10 +39,6 @@ li a:hover:not(.active) {
 	color: white;
 }
 </style>
-<title>Insert title here</title>
-
-
-
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script>
 $(document).ready(function() {                        
@@ -54,14 +48,15 @@ $(document).ready(function() {
     	 var obj = JSON.parse(response);
     	 var select = $('#semesterid');
     	 select.find('option').remove();
-    	 $('<option>').val("").text("Select Semester").appendTo(select);  
-		    $.each(obj, function(index, value) {
-		   $('<option>').val(obj[index].id).text(obj[index].semester).appendTo(select);
+    	 $('<option>').val("").text("Select Semester").appendTo(select);   
+    	 $.each(obj, function(index, value) {
+		   	$('<option>').val(obj[index].id).text(obj[index].semester).appendTo(select);
 		 });
      });   
   });
 });
 </script>
+<title>Insert title here</title>
 </head>
 <body>
 	<div>
@@ -76,7 +71,7 @@ $(document).ready(function() {
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
@@ -87,25 +82,34 @@ $(document).ready(function() {
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
 		<div style="padding-top: 2%;">
 			<%
-				if (session.getAttribute("addsubject") != null) {
+				if (session.getAttribute("studentadd") != null) {
 			%>
 			<p style="color: red">Add Successfully</p>
 			<%
-				session.removeAttribute("addsubject");
-			} else if (session.getAttribute("selectsemordepartment") != null) {
+				session.removeAttribute("studentadd");
+			} else if (session.getAttribute("emailidadd") != null) {
 			%>
-			<p style="color: red">Please select Sem or Department</p>
+			<p style="color: red">Email id already exist</p>
 			<%
-				session.removeAttribute("selectsemordepartment");
-			} else if (session.getAttribute("cahcksubject") != null) {
+				session.removeAttribute("emailidadd");
+			} else if (session.getAttribute("cahck") != null) {
 			%>
-			<p style="color: red">Subject already exist</p>
+			<p style="color: red">Please select department and semester</p>
 			<%
-				session.removeAttribute("cahcksubject");
+				session.removeAttribute("cahck");
 			}
 			%>
-			<h3>Add Subject</h3>
-			<form action="<%=request.getContextPath()%>/Subject" method="post">
+			<h3>Add Student</h3>
+			<form method="post" action="<%=request.getContextPath()%>/Student">
+				<span>*</span> First_Name: 
+				<input type="text" name="firstName"required><br><br> 
+				
+				<span>*</span>Last_Name: 
+				<input type="text" name="lastName" required><br> <br> 
+				
+				<span>*</span>Contact_No:
+  				<input type="tel" id="phone" name="Con_no" placeholder="123-456-7890"pattern="[0-9]{3}[0-9]{3}[0-9]{4}"><br><br>
+  				
 				<span>*</span>Department:-<br>
 				<select name="departmentid" id="deaprtmentid" required>
 					<option>Select</option>
@@ -116,12 +120,26 @@ $(document).ready(function() {
 				
 				<span>*</span>Semester:-<br>
 				<select	name="semid" id="semesterid" required>
-					<option>Select Semester</option>
+					<option value="">Select Semester</option>
 				</select><br> <br> 
 				
-				<span>*</span>Subject Name:- <input type="text"	name="subject" required><br> <br> 
-				<input type="hidden" name="flag" value="insert" />
-				<input type="submit"value="SUBMIT" />
+				<span>*</span>Roll No.:-<input type = "text" name="roll" required><br><br>
+				
+				<span>*</span>Address:
+				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
+				
+				<br> <br> <span>*</span>Gender:<br>
+				Male: <input type="radio" name="gender" value="male" required><br>
+				Female: <input type="radio" name="gender" value="female" required><br><br>
+				
+				<span>*</span>Email: 
+				<input type="email" name="email" required><br><br> 
+				
+				<span>*</span>Password:
+				<input type="password" name="pass" required><br><br>
+				
+				<input type="hidden" name="flag" value="insert">
+	            <input type="submit" name="submit">
 			</form>
 		</div>
 	</div>

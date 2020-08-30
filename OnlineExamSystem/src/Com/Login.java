@@ -90,7 +90,7 @@ public class Login extends HttpServlet {
 					LoginVO login = new LoginVO();
 					login.setLastlogin(lastlogin);
 					login.setId(logintime);
-
+					
 					LoginDAO logindao = new LoginDAO();
 					logindao.logintime(login);
 

@@ -1,12 +1,10 @@
 package VO;
 
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +17,9 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "Professsor", uniqueConstraints = @UniqueConstraint(name = "unique", columnNames = "Email"))
-public class ProfessorVo {
+@Table(name = "Student", uniqueConstraints = @UniqueConstraint(name = "unique", columnNames = "Email"))
+
+public class StudentVo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
@@ -47,9 +46,6 @@ public class ProfessorVo {
 	@Column(name = "Gender")
 	private String gender;
 
-	@Column(name = "Salary")
-	private String salary;
-
 	@Column(name = "Roll")
 	private String roll;
 
@@ -57,18 +53,21 @@ public class ProfessorVo {
 	private String joiningdate;
 	
 	@ManyToOne
-	@JoinColumn(name = "Collegeid")
+	@JoinColumn(name = "DepartmentId")
+	private DepartmentVo departmentid;
+	
+	@ManyToOne
+	@JoinColumn(name = "SemesterId")
+	private SemVo semesterid;
+
+	@ManyToOne
+	@JoinColumn(name = "collegeId")
 	private CollegeVo collegeid;
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "profrssorid")
-	private List<DepartmentProfessorVo> departmentprofessor;
+	@OneToMany( mappedBy = "studentid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<LoginVO> loginid ;
 	
-	@OneToMany(mappedBy = "profrssorid")
-	private List<SemProfessorVo> semprofessor;
-	
-	@OneToMany(mappedBy = "profrssorid")
-	private List<SubjectProfessorVo> subjectprofessor;
-
 	public int getId() {
 		return id;
 	}
@@ -133,14 +132,6 @@ public class ProfessorVo {
 		this.gender = gender;
 	}
 
-	public String getSalary() {
-		return salary;
-	}
-
-	public void setSalary(String salary) {
-		this.salary = salary;
-	}
-
 	public String getRoll() {
 		return roll;
 	}
@@ -157,28 +148,27 @@ public class ProfessorVo {
 		this.joiningdate = joiningdate;
 	}
 
-	public List<DepartmentProfessorVo> getDepartmentprofessor() {
-		return departmentprofessor;
+	public DepartmentVo getDepartmentid() {
+		return departmentid;
 	}
 
-	public void setDepartmentprofessor(List<DepartmentProfessorVo> departmentprofessor) {
-		this.departmentprofessor = departmentprofessor;
+	public void setDepartmentid(DepartmentVo departmentid) {
+		this.departmentid = departmentid;
 	}
 
-	public List<SemProfessorVo> getSemprofessor() {
-		return semprofessor;
+	public SemVo getSemesterid() {
+		return semesterid;
 	}
 
-	public void setSemprofessor(List<SemProfessorVo> semprofessor) {
-		this.semprofessor = semprofessor;
+	public void setSemesterid(SemVo semesterid) {
+		this.semesterid = semesterid;
 	}
 
-	public List<SubjectProfessorVo> getSubjectprofessor() {
-		return subjectprofessor;
+	public List<LoginVO> getLoginid() {
+		return loginid;
 	}
 
-	public void setSubjectprofessor(List<SubjectProfessorVo> subjectprofessor) {
-		this.subjectprofessor = subjectprofessor;
+	public void setLoginid(List<LoginVO> loginid) {
 	}
 
 	public CollegeVo getCollegeid() {
@@ -188,5 +178,4 @@ public class ProfessorVo {
 	public void setCollegeid(CollegeVo collegeid) {
 		this.collegeid = collegeid;
 	}
-
 }

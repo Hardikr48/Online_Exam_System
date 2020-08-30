@@ -80,7 +80,7 @@ a:hover {
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
@@ -99,14 +99,14 @@ a:hover {
 		<table border="1">
 			<tr>
 				<td>Department Name</td>
-				<td>Sem</td>
+				<td>Semester</td>
 				<td>View Subject</td>
 			</tr>
 			<c:forEach items="${sessionScope.departmentist }" var="q">
 				<tr>
 					<td>${q.department }</td>
 					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+					<td><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></td>
 				</tr>
 			</c:forEach>
 		</table>

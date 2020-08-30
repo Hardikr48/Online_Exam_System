@@ -81,17 +81,24 @@ input[type=number] {
 		<%session.removeAttribute("addsem");
 		}else if(session.getAttribute("erorr") != null ){
 		%>
-		 <p style="color:red"> Sem already exists </p>
+		 <p style="color:red"> Semester already exists </p>
 		<%session.removeAttribute("erorr");
 		}else if(session.getAttribute("semno") != null ){
 		%>
-		 <p style="color:red"> Sem NO is not valid </p>
+		 <p style="color:red"> Semester NO is not valid </p>
 		<%session.removeAttribute("semno");
 		}
 		%>
-		<h3>Add Sem</h3>
+		<h3>Add Semester</h3>
 		<form action="<%=request.getContextPath()%>/Sem" method="post">
-		Sem_No:<input type="number" name="sem"  required >
+			<span>*</span>Department:-<br>
+			<select name="departmentid" required>
+				<option>Select</option>
+				<c:forEach items="${sessionScope.departmentist }" var="q">
+					<option value="${q.id }">${q.department }</option>
+				</c:forEach>
+			</select><br><br>
+		Semester:<input type="number" name="sem" min="1" max="8" required >
 		<input type="hidden" name="flag" value="insert"/><br/><br/>
 		<input type="submit" value="SUBMIT"/>
 		</form>

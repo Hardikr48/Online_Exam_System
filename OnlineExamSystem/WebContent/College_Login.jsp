@@ -45,18 +45,18 @@ li a:hover:not(.active) {
 	<ul>
 	  <c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Sem </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
+		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Professor?flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
@@ -64,6 +64,10 @@ li a:hover:not(.active) {
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="text-align: left;">
 		<%out.print( "Last Login Time :"+session.getAttribute("time"));%>
+		
+	</div>
+	<div style="text-align: left; margin-left: 60%;">
+		<%out.print(  "Welcome to :"+session.getAttribute("collegename"));%>
 	</div>
 	<table border="1"style="margin-top: 2%;">
 	<tr>

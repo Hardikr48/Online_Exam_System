@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import DAO.SemDao;
 import VO.CollegeVo;
+import VO.DepartmentVo;
 import VO.SemVo;
 
 /**
@@ -40,6 +41,8 @@ public class Sem extends HttpServlet {
 		if (flag.equalsIgnoreCase("insert")) {
 			int collegeid = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("collegeid", collegeid);
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("College_Sem_Reg.jsp");
 		}
 		if (flag.equalsIgnoreCase("viewsemlist")) {
@@ -73,22 +76,30 @@ public class Sem extends HttpServlet {
 			HttpSession session = request.getSession();
 			int collegeid = (int) session.getAttribute("collegeid");
 			int sem = Integer.parseInt(request.getParameter("sem"));
-			if (sem > 0) {
+			int departmentid = Integer.parseInt(request.getParameter("departmentid"));
+			if (sem > 0 && sem < 9) {
 				CollegeVo collegevo = new CollegeVo();
 				collegevo.setId(collegeid);
+
+				DepartmentVo departmentvo = new DepartmentVo();
+				departmentvo.setId(departmentid);
 
 				SemVo semvo = new SemVo();
 				semvo.setCollege(collegevo);
 				semvo.setSemname(sem);
+				semvo.setDepartmentid(departmentvo);
 
-				SemDao samdao = new SemDao();
-
-				String s = samdao.insertSame(semvo);
-
-				if (s.equals("erorr")) {
-					session.setAttribute("erorr", "true");
-				} else if (s.equals("add")) {
-					session.setAttribute("addsem", "true");
+				SemDao semdao = new SemDao();
+				ArrayList<SemVo> semlist = semdao.searchDepartmentSem(semvo);
+				System.out.println(semlist.size());
+				if (semlist.isEmpty() == true) {
+					String s = semdao.insertSame(semvo);
+					System.out.println(s);
+					if (s.equals("erorr")) {
+						session.setAttribute("erorr", "true");
+					} else if (s.equals("add")) {
+						session.setAttribute("addsem", "true");
+					}
 				}
 			} else {
 				session.setAttribute("semno", "true");

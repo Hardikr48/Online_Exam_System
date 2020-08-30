@@ -94,4 +94,20 @@ public class SubjectDao {
 		}
 		return (ArrayList<SubjectVo>) subjectlist;
 	}
+	public ArrayList<SubjectVo> searchSem(SubjectVo subjectvo) {
+		List<SubjectVo> subjectlist = new ArrayList<SubjectVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from SubjectVo AS a where a.semid =:sem");
+			q.setParameter("sem", subjectvo.getSemid());
+			subjectlist = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<SubjectVo>) subjectlist;
+	}
 }

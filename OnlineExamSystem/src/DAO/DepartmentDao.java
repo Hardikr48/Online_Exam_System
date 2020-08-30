@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 import VO.DepartmentVo;
-import VO.SemVo;
 
 public class DepartmentDao {
 
