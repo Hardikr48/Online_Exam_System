@@ -54,7 +54,7 @@ public class Subject extends HttpServlet {
 			int collegeid = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("collegeid", collegeid);
 			searchCollegeSubject(request, response);
-			response.sendRedirect("College_professor_Edit_Profile.jsp");
+			response.sendRedirect("College_Subject_List.jsp");
 		}
 		if (flag.equalsIgnoreCase("searchsemsubject")) {
 			searchSemSubject(request, response);

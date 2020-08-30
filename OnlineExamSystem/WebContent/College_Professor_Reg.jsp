@@ -122,9 +122,15 @@ $(document).ready(function(){
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
+<<<<<<< HEAD
 		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
 		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
+=======
+		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
+>>>>>>> a18668d36c6479ee0a758268158f5f30085ab589
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 		</ul>

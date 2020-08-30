@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,10 +26,6 @@ public class DepartmentVo {
 
 	@Column(name = "DepartmentName")
 	private String department;
-
-	@ManyToOne
-	@JoinColumn(name = "DepartmentSemid")
-	private SemVo semid;
 	
 	@ManyToOne
 	@JoinColumn(name="DepartmentCollegeid")
@@ -38,11 +33,20 @@ public class DepartmentVo {
 	
 	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<StudentVo> studentid;
+	
+	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<SemVo> semid;
+	
+	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> departmentid;
 	
 	@OneToMany( mappedBy = "departmentid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
-	private List<ProfessorVo> professorid;
+	private List<DepartmentProfessorVo> departmentprofessor;
+	
 
 	public int getId() {
 		return id;
@@ -60,11 +64,11 @@ public class DepartmentVo {
 		this.department = department;
 	}
 
-	public SemVo getSemid() {
+	public List<SemVo> getSemid() {
 		return semid;
 	}
 
-	public void setSemid(SemVo semid) {
+	public void setSemid(List<SemVo> semid) {
 		this.semid = semid;
 	}
 
@@ -84,12 +88,20 @@ public class DepartmentVo {
 		this.departmentid = departmentid;
 	}
 
-	public List<ProfessorVo> getProfessorid() {
-		return professorid;
+	public List<DepartmentProfessorVo> getDepartmentprofessor() {
+		return departmentprofessor;
 	}
 
-	public void setProfessorid(List<ProfessorVo> professorid) {
-		this.professorid = professorid;
+	public void setDepartmentprofessor(List<DepartmentProfessorVo> departmentprofessor) {
+		this.departmentprofessor = departmentprofessor;
+	}
+
+	public List<StudentVo> getStudentid() {
+		return studentid;
+	}
+
+	public void setStudentid(List<StudentVo> studentid) {
+		this.studentid = studentid;
 	}
 	
 }

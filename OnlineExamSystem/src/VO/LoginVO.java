@@ -38,6 +38,9 @@ public class LoginVO {
 	@JoinColumn(name="LoginProfessorid")
 	private ProfessorVo professorid;
 
+	@ManyToOne
+	@JoinColumn(name="LoginStudentId")
+	private StudentVo studentid;
 
 	public int getId() {
 		return id;
@@ -93,6 +96,14 @@ public class LoginVO {
 
 	public void setProfessorid(ProfessorVo professorid) {
 		this.professorid = professorid;
+	}
+
+	public StudentVo getStudentid() {
+		return studentid;
+	}
+
+	public void setStudentid(StudentVo studentid) {
+		this.studentid = studentid;
 	}
 
 }

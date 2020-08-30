@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Insert title here</title>
 <style type="text/css">
 body {
   margin: 0;
@@ -37,6 +38,16 @@ li a:hover:not(.active) {
   background-color: #555;
   color: white;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
 <title>Insert title here</title>
 </head>
@@ -44,7 +55,7 @@ li a:hover:not(.active) {
 
 <div>
 	<ul>
-	 <c:forEach items="${sessionScope.collegedata }" var="q">
+	  <c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
@@ -64,30 +75,12 @@ li a:hover:not(.active) {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<% 
-	    if(session.getAttribute("adddepartment") != null ){
-		%>
-		 <p style="color:red"> Add Successfully </p>
-		<%session.removeAttribute("adddepartment");
-		}else if(session.getAttribute("erorr") != null ){
-		%>
-		 <p style="color:red"> Department already exists </p>
-		<%session.removeAttribute("erorr");
-		}else if(session.getAttribute("selectsem") != null ){
-		%>
-		 <p style="color:red"> Please select sem </p>
-		<%session.removeAttribute("selectsem");
-		}
-		%>
-		<h3>Add Department</h3>
-		<form action="<%=request.getContextPath()%>/Department" method="post">
 
-		<span>*</span>Department Name:-
-		<input type="text" name="departmentname"  required ><br><br>
-		<input type="hidden" name="flag" value="insert"/>
-		<input type="submit" value="SUBMIT"/>
-		</form>
+	<form action="PhotoUpload" method="post"enctype="multipart/form-data">
+		<input type="file" name="file" accept="image/*"> <br /><br> 
+		<input type="submit" value="Upload Photo" />
+	</form>
 	</div>
-</div>
+	</div>
 </body>
 </html>

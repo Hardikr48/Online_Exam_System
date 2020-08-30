@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Insert title here</title>
 <style type="text/css">
 body {
   margin: 0;
@@ -47,9 +48,19 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+a {
+	text-decoration: none;
+	display: inline-block;
+	padding: 8px 16px;
+}
+
+a:hover {
+	background-color: #555;
+	color: white;
+}
 </style>
-<title>Insert title here</title>
 </head>
+<body>
 <body>
 
 <div>
@@ -64,7 +75,7 @@ input[type=number] {
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
 		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
@@ -74,34 +85,41 @@ input[type=number] {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<% 
-	    if(session.getAttribute("addsem") != null ){
-		%>
-		 <p style="color:red"> Add Successfully </p>
-		<%session.removeAttribute("addsem");
-		}else if(session.getAttribute("erorr") != null ){
-		%>
-		 <p style="color:red"> Semester already exists </p>
-		<%session.removeAttribute("erorr");
-		}else if(session.getAttribute("semno") != null ){
-		%>
-		 <p style="color:red"> Semester NO is not valid </p>
-		<%session.removeAttribute("semno");
-		}
-		%>
-		<h3>Add Semester</h3>
-		<form action="<%=request.getContextPath()%>/Sem" method="post">
-			<span>*</span>Department:-<br>
-			<select name="departmentid" required>
-				<option>Select</option>
-				<c:forEach items="${sessionScope.departmentist }" var="q">
-					<option value="${q.id }">${q.department }</option>
-				</c:forEach>
-			</select><br><br>
-		Semester:<input type="number" name="sem" min="1" max="8" required >
-		<input type="hidden" name="flag" value="insert"/><br/><br/>
-		<input type="submit" value="SUBMIT"/>
-		</form>
+		<h3>View Department</h3>
+		<table border="1">
+			<tr>
+				<td>Professor Name</td>
+				<td>Last Name</td>
+				<td>Email</td>
+				<td>ContactNo</td>
+				<td>Address</td>
+				<td>Gender</td>
+				<td>Salary</td>
+				<td>Designation</td>
+				<td>JoiningDate</td>
+				<td>Department</td>
+				<td>Subject</td>
+				<td>Semester</td>
+				<td>Image</td>
+			</tr>
+			<c:forEach items="${sessionScope.collegeProfessorlist }" var="q">
+				<tr>
+					<td>${q.firstName }</td>
+					<td>${q.lastName }</td>
+					<td>${q.email }</td>
+					<td>${q.con_no }</td>
+					<td>${q.address }</td>
+					<td>${q.gender }</td>
+					<td>${q.salary }</td>
+					<td>${q.roll }</td>
+					<td>${q.joiningdate }</td>
+					<td>${q.departmentprofessor.departmentid }</td>
+					<td>${q.semprofessor.semid }</td>
+					<td>${q.subjectprofessor.subjectid }</td>
+					<td><a href="<%=request.getContextPath()%>/PhotoUpload?flag=insert&id=${q.id }">Insert Image</a></td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
 </div>
 </body>

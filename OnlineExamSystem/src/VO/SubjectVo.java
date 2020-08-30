@@ -39,11 +39,15 @@ public class SubjectVo {
 	@ManyToOne
 	@JoinColumn(name = "Departmentid")
 	private DepartmentVo departmentid;
+
+	@OneToMany( mappedBy = "subjectid", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	private List<SubjectProfessorVo> subjectprofessorid;
 	
 	@OneToMany( mappedBy = "subjectid", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
-	private List<ProfessorVo> professorid;
-
+	private List<ExamVo> examid;
+	
 	public int getId() {
 		return id;
 	}
@@ -84,11 +88,20 @@ public class SubjectVo {
 		this.departmentid = departmentid;
 	}
 
-	public List<ProfessorVo> getProfessorid() {
-		return professorid;
+	public List<SubjectProfessorVo> getSubjectprofessorid() {
+		return subjectprofessorid;
 	}
 
-	public void setProfessorid(List<ProfessorVo> professorid) {
-		this.professorid = professorid;
+	public void setSubjectprofessorid(List<SubjectProfessorVo> subjectprofessorid) {
+		this.subjectprofessorid = subjectprofessorid;
 	}
+
+	public List<ExamVo> getExamid() {
+		return examid;
+	}
+
+	public void setExamid(List<ExamVo> examid) {
+		this.examid = examid;
+	}
+	
 }
