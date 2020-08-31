@@ -31,6 +31,12 @@ public class StudentDao {
 
 	public void studentProfileUpdate(StudentVo studentvo) {
 		try {
+			System.out.println(studentvo.getAddress()+" "+studentvo.getCollegeid()+" "+studentvo.getCon_no()+" "+studentvo.getDepartmentid()
+			+""+studentvo.getEmail()+" "+studentvo.getFirstName()+" "+studentvo.getGender()+" "+studentvo.getJoiningdate()+" "+
+					studentvo.getLastName()+" "+studentvo.getPassword()+" "+studentvo.getRoll()+" "+studentvo.getSemesterid()+" "+studentvo.getId()
+					
+					
+					);
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
@@ -66,6 +72,23 @@ public class StudentDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from StudentVo AS s where s.collegeid =:id");
 			q.setParameter("id", studentVo.getCollegeid());
+			studentList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<StudentVo>) studentList;
+	}
+
+	public ArrayList<StudentVo> searchDepartmentStudent(StudentVo studentVo) {
+		List<StudentVo> studentList = new ArrayList<StudentVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from StudentVo AS s where s.departmentid =:id");
+			q.setParameter("id", studentVo.getDepartmentid());
 			studentList = q.list();
 			transaction.commit();
 			session.close();

@@ -1,16 +1,21 @@
 package Com;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
 
 import DAO.CollegeDao;
 import DAO.LoginDAO;
@@ -21,6 +26,7 @@ import VO.LoginVO;
  * Servlet implementation class College
  */
 @WebServlet("/College")
+@MultipartConfig
 public class College extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -65,17 +71,25 @@ public class College extends HttpServlet {
 	private void collegeInsert(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession();
-			String collegeName = request.getParameter("collegename");
-			String collegeAdd = request.getParameter("collegeaddress");
 			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-
+			
 			if (EmailValidation.isValid(email)) {
+				String collegeName = request.getParameter("collegename");
+				String collegeAdd = request.getParameter("collegeaddress");
+				String pass = request.getParameter("pass");
+				Part filepart = request.getPart("myimg");
+				InputStream inputstream = null;
+				if (filepart != null) {
+					inputstream = filepart.getInputStream();
+				}
+				byte[] bytes = IOUtils.toByteArray(inputstream);
+			
 				CollegeVo collegevo = new CollegeVo();
 				collegevo.setCollegename(collegeName);
 				collegevo.setAddress(collegeAdd);
 				collegevo.setEmail(email);
 				collegevo.setPassword(pass);
+				collegevo.setImage(bytes);
 
 				Timestamp t1 = new Timestamp(System.currentTimeMillis());
 				String time = t1.toString();

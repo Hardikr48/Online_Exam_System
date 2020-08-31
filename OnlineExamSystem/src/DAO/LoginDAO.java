@@ -11,6 +11,8 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 import VO.CollegeVo;
 import VO.LoginVO;
+import VO.ProfessorVo;
+import VO.StudentVo;
 
 public class LoginDAO {
 
@@ -55,28 +57,6 @@ public class LoginDAO {
 		return (ArrayList<CollegeVo>) li1;
 	}
 
-//	public ArrayList<EmployeeVo> everify(EmployeeVo v1) {
-//
-//		List<EmployeeVo> li1 = new ArrayList<EmployeeVo>();
-//		try {
-//
-//			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-//			Session session = sessionfactory.openSession();
-//			Transaction transaction = session.beginTransaction();
-////			Query q = session.createQuery("from EmployeeVo where email= :email and password = :password and status= :status1");
-//			Query q = session.createQuery("from EmployeeVo where email= :email and password = :password");
-//			q.setParameter("email", v1.getEmail());
-//			q.setParameter("password", v1.getPassword());
-////			q.setParameter("status1", v1.getStatus());
-//			li1 = q.list();
-//			transaction.commit();
-//			session.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return (ArrayList<EmployeeVo>) li1;
-//	}
-
 	public ArrayList<LoginVO> emailverify(LoginVO v1) {
 
 		List<LoginVO> li1 = new ArrayList<LoginVO>();
@@ -95,18 +75,15 @@ public class LoginDAO {
 		return (ArrayList<LoginVO>) li1;
 	}
 
-	public void forgetpasswordcompany(CollegeVo compny, LoginVO login) {
+	public void forgetPasswordCollege(CollegeVo collegevo, LoginVO login) {
 		try {
-			System.out.println("login.getPassword()");
-			System.out.println(login.getPassword());
-			System.out.println("login.getPassword()");
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			String dep = "UPDATE CollegeVo set password =:password1 " + "WHERE email =:email1";
 			Query query = session.createQuery(dep);
-			query.setParameter("password1", compny.getPassword());
-			query.setParameter("email1", compny.getEmail());
+			query.setParameter("password1", collegevo.getPassword());
+			query.setParameter("email1", collegevo.getEmail());
 
 			String log = "UPDATE LoginVO set password =:password1 " + "WHERE email =:email1";
 			Query query1 = session.createQuery(log);
@@ -124,33 +101,6 @@ public class LoginDAO {
 		}
 	}
 
-//	public void forgetpasswordemp(EmployeeVo emp, LoginVO login) {
-//		try {
-//
-//			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-//			Session session = sessionfactory.openSession();
-//			Transaction transaction = session.beginTransaction();
-//			String dep = "UPDATE EmployeeVo set password =:password1 " + "WHERE email =:email1";
-//			Query query = session.createQuery(dep);
-//			query.setParameter("password1", emp.getPassword());
-//			query.setParameter("email1", emp.getEmail());
-//
-//			String log = "UPDATE LoginVO set password =:password1 " + "WHERE email =:email1";
-//			Query query1 = session.createQuery(log);
-//			query1.setParameter("password1", login.getPassword());
-//			query1.setParameter("email1", login.getEmail());
-//
-//			int result = query.executeUpdate();
-//			int result1 = query1.executeUpdate();
-//
-//			System.out.println("Rows Affected: " + result + "  " + result1);
-//			transaction.commit();
-//			session.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 	public void logintime(LoginVO login) {
 		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
@@ -166,23 +116,6 @@ public class LoginDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public ArrayList<LoginVO> timeeeeeeees(LoginVO v1) {
-		List<LoginVO> li1 = new ArrayList<LoginVO>();
-		try {
-			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-			Session session = sessionfactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from LoginVO where id= :id1");
-			q.setParameter("id1", v1.getId());
-			li1 = q.list();
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (ArrayList<LoginVO>) li1;
 	}
 
 	public String loginupdate(LoginVO login) {
@@ -264,46 +197,92 @@ public class LoginDAO {
 		}return chack="add";
 	}
 
-//	public String loginupdate1(LoginVO login) {
-//		String chack;
-//		try {
-//			System.out.println(login.getCompnayid().getId());
-//			System.out.println(login.getEmail() + "" + login.getPassword());
-//			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-//			Session session = sessionfactory.openSession();
-//			Transaction transaction = session.beginTransaction();
-//			Query q = session.createQuery(
-//					"update LoginVO as a set a.email =:end1 , a.password =:status1 where a.compnayid =:id1");
-//			q.setParameter("id1", login.getCompnayid());
-//			q.setParameter("end1", login.getEmail());
-//			q.setParameter("status1", login.getPassword());
-//			q.executeUpdate();
-//			transaction.commit();
-//			session.close();
-//		} catch (Exception e) {
-//			return chack = "erorr";
-//		}
-//		return chack = "add";
-//	}
+	public ArrayList<ProfessorVo> professorVerify(ProfessorVo professorvo) {
+		List<ProfessorVo> li1 = new ArrayList<ProfessorVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from ProfessorVo where email= :email and password = :password");
+			q.setParameter("email", professorvo.getEmail());
+			q.setParameter("password", professorvo.getPassword());
+			li1 = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<ProfessorVo>) li1;
+	}
 
-//	public String loginupdate2(LoginVO loginvo) {
-//		String chack;
-//		try {
-//			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-//			Session session = sessionfactory.openSession();
-//			Transaction transaction = session.beginTransaction();
-//			Query q = session.createQuery(
-//					"update LoginVO as a set a.email =:end1 , a.password =:status1 where a.employeeid =:id1");
-//			q.setParameter("id1", loginvo.getEmployeeid());
-//			q.setParameter("end1", loginvo.getEmail());
-//			q.setParameter("status1", loginvo.getPassword());
-//			q.executeUpdate();
-//			transaction.commit();
-//			session.close();
-//		} catch (Exception e) {
-//			return chack = "erorr";
-//		}
-//		return chack = "add";
-//	}
+	public ArrayList<StudentVo> studentVerify(StudentVo studentvo) {
+		List<StudentVo> li1 = new ArrayList<StudentVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from StudentVo where email= :email and password = :password");
+			q.setParameter("email", studentvo.getEmail());
+			q.setParameter("password", studentvo.getPassword());
+			li1 = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<StudentVo>) li1;
+	}
 
+	public void forgetPasswordProfessor(ProfessorVo professorvo, LoginVO login) {
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String dep = "UPDATE ProfessorVo set password =:password1 " + "WHERE email =:email1";
+			Query query = session.createQuery(dep);
+			query.setParameter("password1", professorvo.getPassword());
+			query.setParameter("email1", professorvo.getEmail());
+
+			String log = "UPDATE LoginVO set password =:password1 " + "WHERE email =:email1";
+			Query query1 = session.createQuery(log);
+			query1.setParameter("password1", login.getPassword());
+			query1.setParameter("email1", login.getEmail());
+
+			int result = query.executeUpdate();
+			int result1 = query1.executeUpdate();
+
+			System.out.println("Rows Affected: " + result + "  " + result1);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void forgetPasswordStudent(StudentVo studentvo, LoginVO login) {
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			String dep = "UPDATE StudentVo set password =:password1 " + "WHERE email =:email1";
+			Query query = session.createQuery(dep);
+			query.setParameter("password1", studentvo.getPassword());
+			query.setParameter("email1", studentvo.getEmail());
+
+			String log = "UPDATE LoginVO set password =:password1 " + "WHERE email =:email1";
+			Query query1 = session.createQuery(log);
+			query1.setParameter("password1", login.getPassword());
+			query1.setParameter("email1", login.getEmail());
+
+			int result = query.executeUpdate();
+			int result1 = query1.executeUpdate();
+
+			System.out.println("Rows Affected: " + result + "  " + result1);
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

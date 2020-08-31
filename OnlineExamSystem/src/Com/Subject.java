@@ -60,9 +60,9 @@ public class Subject extends HttpServlet {
 			searchSemSubject(request, response);
 			response.sendRedirect("College_professor_Edit_Profile.jsp");
 		}
-		if (flag.equalsIgnoreCase("searchdepartmentsubject")) {
+		if (flag.equalsIgnoreCase("viewdepartmentsubject")) {
 			searchDepartmentSubject(request, response);
-			response.sendRedirect("College_professor_Edit_Profile.jsp");
+			response.sendRedirect("College_Subject_List.jsp");
 		}
 	}
 
@@ -173,22 +173,17 @@ public class Subject extends HttpServlet {
 	private void searchDepartmentSubject(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		try {
-			int collegeid = (int) session.getAttribute("collegeid");
-			int departmentid = (Integer.parseInt(request.getParameter("departmentid")));
-			
-			CollegeVo collegevo = new CollegeVo();
-			collegevo.setId(collegeid);
+			int departmentid = (Integer.parseInt(request.getParameter("id")));
 			
 			DepartmentVo departmentvo = new DepartmentVo();
 			departmentvo.setId(departmentid);
 			
 			SubjectVo subjectvo = new SubjectVo();
-			subjectvo.setCollegeid(collegevo);
 			subjectvo.setDepartmentid(departmentvo);
 			
 			SubjectDao subjectdao = new SubjectDao();
 			ArrayList<SubjectVo> subjecttist = subjectdao.searchDepartmentSubject(subjectvo);
-			session.setAttribute("departmentsubjectlist", subjecttist);
+			session.setAttribute("subjectlist", subjecttist);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

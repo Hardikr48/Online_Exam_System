@@ -83,8 +83,7 @@ public class SubjectDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from SubjectVo AS a where a.collegeid =:id And a.departmentid =:department");
-			q.setParameter("id", subjectvo.getCollegeid());
+			Query q = session.createQuery("from SubjectVo AS a where a.departmentid =:department");
 			q.setParameter("department", subjectvo.getDepartmentid());
 			subjectlist = q.list();
 			transaction.commit();

@@ -63,6 +63,7 @@ a:hover {
 <body>
 <body>
 
+
 <div>
 	<ul>
 	  <c:forEach items="${sessionScope.collegedata }" var="q">
@@ -70,7 +71,8 @@ a:hover {
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=insert&id=${q.id }">Add Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
@@ -86,17 +88,23 @@ a:hover {
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
 		<h3>View Department</h3>
-		<table border="1">
+		<table border="1" style="text-align: center;">
 			<tr>
 				<td>Department Name</td>
-				<td>Semester</td>
+				<td>View Semester</td>
 				<td>View Subject</td>
+				<td>View Professor</td>
+				<td>View Student</td>
+				<td>Delete</td>
 			</tr>
 			<c:forEach items="${sessionScope.departmentist }" var="q">
 				<tr>
 					<td>${q.department }</td>
-					<td>${q.semid.semname }</td>
-					<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
+					<td><a href="<%=request.getContextPath()%>/Sem?flag=viewdepartmentsemlist&id=${q.id }">View SemList </a></td>
+					<td><a href="<%=request.getContextPath()%>/Subject?flag=viewdepartmentsubject&id=${q.id }">View Subject</a></td>
+					<td><a href="<%=request.getContextPath()%>/Professor?flag2=department&flag=viewdepartmentprofessor&id=${q.id }">View Professor</a></td>
+					<td><a href="<%=request.getContextPath()%>/Student?flag=viewdepartmentstudent&id=${q.id }">View Student</a></td>
+					<td><a href="<%=request.getContextPath()%>/Department?flag=deletedepartment&id=${q.id }">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

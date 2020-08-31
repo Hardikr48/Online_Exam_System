@@ -27,7 +27,7 @@ public class SubjectProfessorVo {
 
 	@ManyToOne
 	@JoinColumn(name = "professorid")
-	private ProfessorVo profrssorid ;
+	private ProfessorVo professorid ;
 	
 	public int getId() {
 		return id;
@@ -53,11 +53,11 @@ public class SubjectProfessorVo {
 		this.subjectid = subjectid;
 	}
 
-	public ProfessorVo getProfrssorid() {
-		return profrssorid;
+	public ProfessorVo getProfessorid() {
+		return professorid;
 	}
 
-	public void setProfrssorid(ProfessorVo profrssorid) {
-		this.profrssorid = profrssorid;
+	public void setProfessorid(ProfessorVo professorid) {
+		this.professorid = professorid;
 	}
 }

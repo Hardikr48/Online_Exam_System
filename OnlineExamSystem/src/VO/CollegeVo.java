@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -25,6 +26,10 @@ public class CollegeVo {
 
 	@Column(name = "CollegeName")
 	private String collegename;
+	
+	@Lob
+	@Column(name = "CollegeImage")
+	private byte[] image;
 
 	@Column(name = "Address")
 	private String address;
@@ -38,39 +43,31 @@ public class CollegeVo {
 	@Column(name = "JoiningDate")
 	private String joiningdate;
 	
-	@OneToMany(mappedBy = "college", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "college")
 	private List<SemVo> samid;
 	
-	@OneToMany( mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany( mappedBy = "collegeid")
 	private List<LoginVO> loginid ;
 	
 	@OneToMany( mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<StudentVo> studentid ;
    
 	@OneToMany(mappedBy = "departmentcollegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<DepartmentVo> departmentid;
 	
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectVo> subjectid;
 	
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<ProfessorVo> professortid;
 	
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<DepartmentProfessorVo> departmentprofessor;
 	
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SemProfessorVo> semprofessor;
 	
 	@OneToMany(mappedBy = "collegeid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<SubjectProfessorVo> subjectprofessor;
 	
 	public int getId() {
@@ -191,6 +188,14 @@ public class CollegeVo {
 
 	public void setStudentid(List<StudentVo> studentid) {
 		this.studentid = studentid;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 	

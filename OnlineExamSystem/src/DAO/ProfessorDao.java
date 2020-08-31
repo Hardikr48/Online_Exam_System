@@ -17,17 +17,13 @@ import VO.SemProfessorVo;
 import VO.SubjectProfessorVo;
 
 public class ProfessorDao {
-	public void professorInsert(ProfessorVo professorvo, LoginVO loginvo, DepartmentProfessorVo departmentprofessorvo,
-			SemProfessorVo semprofessorvo, SubjectProfessorVo subjectprofessorvo) {
+	public void professorInsert(ProfessorVo professorvo, LoginVO loginvo) {
 		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			session.save(professorvo);
 			session.save(loginvo);
-			session.save(departmentprofessorvo);
-			session.save(semprofessorvo);
-			session.save(subjectprofessorvo);
 			transaction.commit();
 			session.close();
 		} catch (Exception e) {
@@ -120,24 +116,7 @@ public class ProfessorDao {
 		return (ArrayList<ProfessorVo>) professorList;
 	}
 
-	public ArrayList<ProfessorVo> searchCollegeDepartmentProfessor(ProfessorVo professorvo) {
-		List<ProfessorVo> professorList = new ArrayList<ProfessorVo>();
-		try {
-			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
-			Session session = sessionfactory.openSession();
-			Transaction transaction = session.beginTransaction();
-			Query q = session
-					.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.departmentid =:department");
-			q.setParameter("id", professorvo.getCollegeid());
-//			q.setParameter("department", professorvo.getDepartmentid());
-			professorList = q.list();
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (ArrayList<ProfessorVo>) professorList;
-	}
+	
 
 	public ArrayList<ProfessorVo> searchCollegeSubjectProfessor(ProfessorVo professorvo) {
 		List<ProfessorVo> professorList = new ArrayList<ProfessorVo>();

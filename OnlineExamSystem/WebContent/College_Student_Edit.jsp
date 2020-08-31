@@ -103,45 +103,47 @@ $(document).ready(function() {
 			%>
 			<h3>Add Student</h3>
 			<form method="post" action="<%=request.getContextPath()%>/Student">
+				
+				<c:forEach items="${sessionScope.studentlist }" var="q">
 				<span>*</span> First_Name: 
-				<input type="text" name="firstName"required><br><br> 
+				<input type="text" name="firstName" value="${q.firstName}"><br><br> 
 				
 				<span>*</span>Last_Name: 
-				<input type="text" name="lastName" required><br> <br> 
+				<input type="text" name="lastName" value="${q.lastName }" required><br> <br> 
 				
 				<span>*</span>Contact_No:
-  				<input type="tel" id="phone" name="Con_no" placeholder="123-456-7890"pattern="[0-9]{3}[0-9]{3}[0-9]{4}"><br><br>
-  				
+  				<input type="tel" id="phone" name="Con_no" placeholder="123-456-7890"pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value="${q.con_no }"><br><br>
+  				<span>*</span>Roll No:
+				<input type="text" name="roll" value="${q.roll }"><br><br>
 				<span>*</span>Department:-<br>
 				<select name="departmentid" id="deaprtmentid" required>
-					<option>Select</option>
+					<option value="${q.departmentid.id }">${q.departmentid.department }</option>
 					<c:forEach items="${sessionScope.departmentist }" var="q">
 						<option value="${q.id }">${q.department }</option>
 					</c:forEach>
 				</select><br><br>
-				
-				<span>*</span>Semester:-<br>
+				</c:forEach>
+				<c:forEach items="${sessionScope.studentlist }" var="q">
+  				<span>*</span>Semester:-<br>
 				<select	name="semid" id="semesterid" required>
-					<option value="">Select Semester</option>
+					<option value="${q.semesterid.id }">${q.semesterid.semname }</option>
 				</select><br> <br> 
 				
-				<span>*</span>Roll No.:-<input type = "text" name="roll" required><br><br>
 				
 				<span>*</span>Address:
-				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
-				
-				<br> <br> <span>*</span>Gender:<br>
-				Male: <input type="radio" name="gender" value="male" required><br>
-				Female: <input type="radio" name="gender" value="female" required><br><br>
-				
+				<input type="text" name="address" value="${q.address }"><br><br>
 				<span>*</span>Email: 
-				<input type="email" name="email" required><br><br> 
+				<input type="email" name="email" value="${q.email }" required><br><br> 
 				
 				<span>*</span>Password:
-				<input type="password" name="pass" required><br><br>
-				
-				<input type="hidden" name="flag" value="insert">
+				<input type="text" name="pass" value="${q.password }" required><br><br>
+				<input type="hidden" name="flag" value="update">
+				<input type="hidden" name="gender" value="${q.gender }">
+				<input type="hidden" name="collegeid" value="${q.collegeid.id }">
+				<input type="hidden" name="id" value="${q.id }">
+				<input type="hidden" name="joiningdate" value="${q.joiningdate }">
 	            <input type="submit" name="submit">
+	            </c:forEach>
 			</form>
 		</div>
 	</div>

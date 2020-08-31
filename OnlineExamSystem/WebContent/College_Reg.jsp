@@ -27,12 +27,13 @@
 	%>
 	<div class="loginbox">
 		<img src="img/expertlogo.png" class="user">
-		<form action="College" method="post">
+		<form action="College" method="post" enctype="multipart/form-data">
 			<input type="text" name="collegename" placeholder="College name" required><br>
 			<input type="text" name="collegeaddress" placeholder="Address"
 				required><br> <input type="email" name="email"
 				placeholder="College email" required> <br> <input
 				type="password" name="pass" placeholder="Password" required><br>
+				<input type="file" name="myimg"><br><br>
 			<input type="hidden" name="flag" value="insert"> <input
 				type="submit" value="Submit" name="submit">
 		</form>

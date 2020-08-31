@@ -28,15 +28,14 @@ public class SemProfessorDao {
 		}
 
 	}
-
-	public ArrayList<SemProfessorVo> semesterProfessor(SemProfessorVo semProfessorVo) {
+	public ArrayList<SemProfessorVo> searchCollegeDepartmentProfessor(SemProfessorVo semprofessorvo) {
 		List<SemProfessorVo> professorList = new ArrayList<SemProfessorVo>();
 		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from SemProfessorVo AS p where p.professorid =:id");
-			q.setParameter("id", semProfessorVo.getProfrssorid());
+			q.setParameter("id", semprofessorvo.getProfessorid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();
@@ -45,5 +44,23 @@ public class SemProfessorDao {
 		}
 		return (ArrayList<SemProfessorVo>) professorList;
 	}
-
+	public ArrayList<SemProfessorVo> searchSemesterProfessor(SemProfessorVo semProfessorVo) {
+		List<SemProfessorVo> professorList = new ArrayList<SemProfessorVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from SemProfessorVo AS d where d.semid =:department");
+			q.setParameter("department", semProfessorVo.getSemid());
+			professorList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<SemProfessorVo>) professorList;
+	}
+	
 }
+
+

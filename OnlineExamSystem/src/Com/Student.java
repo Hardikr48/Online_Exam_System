@@ -53,33 +53,53 @@ public class Student extends HttpServlet {
 		if (flag.equalsIgnoreCase("insert")) {
 			int collegeid = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("collegeid", collegeid);
-			System.out.println("........................"+collegeid);
 			Department department = new Department();
 			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("College_Student_Reg.jsp");
 		}
 		if (flag.equalsIgnoreCase("editprofile")) {
-			int collegeid = Integer.parseInt(request.getParameter("id"));
-			session.setAttribute("collegeid", collegeid);
+			int studentid = (Integer.parseInt(request.getParameter("id")));
+			session.setAttribute("studentid", studentid);
 			editStudentProfile(request, response);
-			response.sendRedirect("College_professor_Edit_Profile.jsp");
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
+			response.sendRedirect("College_Student_Edit.jsp");
 		}
 		if (flag.equalsIgnoreCase("searchcollegestudent")) {
 			searchCollegeStudent(request, response);
 			response.sendRedirect("College_Student_List.jsp");
 		}
-		if (flag.equalsIgnoreCase("searchsemprofessor")) {
-			searchSemProfessor(request, response);
-			response.sendRedirect("College_professor_Edit_Profile.jsp");
+		if (flag.equalsIgnoreCase("viewdepartmentstudent")) {
+			searchDepartmentStudent(request, response);
+			response.sendRedirect("College_Student_List.jsp");
 		}
-		if (flag.equalsIgnoreCase("searchdepartmentprofessor")) {
-			searchDepartmentProfessor(request, response);
-			response.sendRedirect("College_professor_Edit_Profile.jsp");
-		}
+		
 		if (flag.equalsIgnoreCase("searchsubjectprofessor")) {
 			searchSubjectProfessor(request, response);
 			response.sendRedirect("College_professor_Edit_Profile.jsp");
 		}
+	}
+
+	private void searchDepartmentStudent(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		try {
+			int departmentid = Integer.parseInt(request.getParameter("id"));
+
+			DepartmentVo departmentVo = new DepartmentVo();
+			departmentVo.setId(departmentid);
+			
+			StudentVo studentVo = new StudentVo();
+			studentVo.setDepartmentid(departmentVo);
+			
+			StudentDao studentdao = new StudentDao();
+			ArrayList<StudentVo> Studentlist= studentdao.searchDepartmentStudent(studentVo);
+			
+			session.setAttribute("collegeStudentlist", Studentlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -93,14 +113,21 @@ public class Student extends HttpServlet {
 			studentInsert(request, response);
 			response.sendRedirect("College_Student_Reg.jsp");
 		}
+		if (flag.equalsIgnoreCase("update")) {
+			updateStudentProfile(request, response);
+			editStudentProfile(request, response);
+			response.sendRedirect("College_Student_Edit.jsp");
+		}
 	}
 
 	private void studentInsert(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		try {
+			System.out.println("0.0.00.0.0..00..0........................................");
 			String email = request.getParameter("email");
 			if (EmailValidation.isValid(email)) {
+				
 				int collegeid = (int) session.getAttribute("collegeid");
 				CollegeVo collegevo = new CollegeVo();
 				collegevo.setId(collegeid);
@@ -113,7 +140,8 @@ public class Student extends HttpServlet {
 				
 				SemVo semVo = new SemVo();
 				semVo.setId(semid);
-
+				
+				System.out.println(collegeid+" "+semid+" "+departmentid);
 				String firstname = request.getParameter("firstName");
 				String lastname = request.getParameter("lastName");
 				String con_no = request.getParameter("Con_no");
@@ -149,6 +177,7 @@ public class Student extends HttpServlet {
 				LoginDAO logdao = new LoginDAO();
 				ArrayList<LoginVO> emailchack = logdao.emailverify(loginvo);
 				if (emailchack.isEmpty() == true) {
+					System.out.println(".13132323232...........................................");
 					StudentDao studentdao = new StudentDao();
 					studentdao.studentInsert(studentvo, loginvo);
 					session.setAttribute("studentadd", "true");
@@ -164,7 +193,8 @@ public class Student extends HttpServlet {
 	}
 
 	protected void editStudentProfile(HttpServletRequest request, HttpServletResponse response) {
-		int studentid = (Integer.parseInt(request.getParameter("id")));
+		HttpSession session = request.getSession();
+		int studentid = (int) session.getAttribute("studentid");
 
 		StudentVo studentvo = new StudentVo();
 		studentvo.setId(studentid);
@@ -177,12 +207,12 @@ public class Student extends HttpServlet {
 		h1.setAttribute("studentlist", studentlist);
 	}
 
-	protected void updateProfessorProfile(HttpServletRequest request, HttpServletResponse response) {
+	protected void updateStudentProfile(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		try {
 			String email = request.getParameter("email");
 			if (EmailValidation.isValid(email)) {
-				int collegeid = (int) session.getAttribute("collegeid");
+				int collegeid = Integer.parseInt(request.getParameter("collegeid"));
 				CollegeVo collegevo = new CollegeVo();
 				collegevo.setId(collegeid);
 				int semid = (Integer.parseInt(request.getParameter("semid")));
@@ -192,17 +222,16 @@ public class Student extends HttpServlet {
 				String con_no = request.getParameter("Con_no");
 				String Address = request.getParameter("address");
 				String gender = request.getParameter("gender");
+				String joiningdate = request.getParameter("joiningdate");
 				String pass = request.getParameter("pass");
 				String roll = request.getParameter("roll");
+				int studentid = Integer.parseInt(request.getParameter("id"));
 
 				SemVo semvo = new SemVo();
 				semvo.setId(semid);
 
 				DepartmentVo departmentvo = new DepartmentVo();
 				departmentvo.setId(departmentid);
-
-				Timestamp t1 = new Timestamp(System.currentTimeMillis());
-				String joiningdate = t1.toString();
 
 				StudentVo studentvo = new StudentVo();
 				studentvo.setFirstName(firstname);
@@ -216,6 +245,7 @@ public class Student extends HttpServlet {
 				studentvo.setJoiningdate(joiningdate);
 				studentvo.setDepartmentid(departmentvo);
 				studentvo.setSemesterid(semvo);
+				studentvo.setId(studentid);
 
 				LoginVO loginvo = new LoginVO();
 				loginvo.setStudentid(studentvo);
@@ -240,7 +270,6 @@ public class Student extends HttpServlet {
 				} else {
 					session.setAttribute("wrong", "true");
 				}
-
 			}
 		} catch (Exception e) {
 			session.setAttribute("selecterorr", "true");
@@ -267,57 +296,7 @@ public class Student extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	private void searchSemProfessor(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		try {
-			int collegeid = Integer.parseInt(request.getParameter("collegeid"));
-			int semid = Integer.parseInt(request.getParameter("semid"));
-
-			CollegeVo collegevo = new CollegeVo();
-			collegevo.setId(collegeid);
-
-			SemVo semvo = new SemVo();
-			semvo.setId(semid);
-
-			ProfessorVo professorvo = new ProfessorVo();
-			professorvo.setCollegeid(collegevo);
-
-			ProfessorDao professordao = new ProfessorDao();
-			ArrayList<ProfessorVo> professorlist = professordao.searchCollegeSemProfessor(professorvo);
-			System.out.println(professorlist.size());
-			session.setAttribute("collegeSemProfessorlist", professorlist);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void searchDepartmentProfessor(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		try {
-			int collegeid = Integer.parseInt(request.getParameter("collegeid"));
-			int departmentid = Integer.parseInt(request.getParameter("departmentid"));
-
-			CollegeVo collegevo = new CollegeVo();
-			collegevo.setId(collegeid);
-
-			DepartmentVo departmentvo = new DepartmentVo();
-			departmentvo.setId(departmentid);
-
-			ProfessorVo professorvo = new ProfessorVo();
-			professorvo.setCollegeid(collegevo);
-
-			ProfessorDao professordao = new ProfessorDao();
-			ArrayList<ProfessorVo> professorlist = professordao.searchCollegeDepartmentProfessor(professorvo);
-			System.out.println(professorlist.size());
-			session.setAttribute("collegeDepartmentProfessorlist", professorlist);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	private void searchSubjectProfessor(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		try {

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -52,7 +53,11 @@ public class ProfessorVo {
 
 	@Column(name = "Roll")
 	private String roll;
-
+	
+	@Lob
+	@Column(name = "ProfessorImage")
+	private byte[] image;
+	
 	@Column(name = "JoiningDate")
 	private String joiningdate;
 	
@@ -60,20 +65,20 @@ public class ProfessorVo {
 	@JoinColumn(name = "Collegeid")
 	private CollegeVo collegeid;
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "profrssorid")
+	@OneToMany(mappedBy = "professorid")
 	private List<DepartmentProfessorVo> departmentprofessor;
 	
-	@OneToMany(mappedBy = "profrssorid")
+	@OneToMany(mappedBy = "professorid")
 	private List<SemProfessorVo> semprofessor;
 	
-	@OneToMany(mappedBy = "profrssorid")
+	@OneToMany(mappedBy = "professorid")
 	private List<SubjectProfessorVo> subjectprofessor;
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) {	
 		this.id = id;
 	}
 
@@ -187,6 +192,14 @@ public class ProfessorVo {
 
 	public void setCollegeid(CollegeVo collegeid) {
 		this.collegeid = collegeid;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 }

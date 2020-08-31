@@ -51,11 +51,37 @@ public class Sem extends HttpServlet {
 			viewSemList(request, response);
 			response.sendRedirect("College_Sem_List.jsp");
 		}
+		if (flag.equalsIgnoreCase("viewdepartmentsemlist")) {
+			viewDepaertmentSemList(request, response);
+			response.sendRedirect("College_Sem_List.jsp");
+		}
 		if (flag.equalsIgnoreCase("deletesem")) {
 			deleteSem(request, response);
 			viewSemList(request, response);
 			response.sendRedirect("College_Sem_List.jsp");
 		}
+	}
+
+	private void viewDepaertmentSemList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		try {
+			int departmentid = Integer.parseInt(request.getParameter("id"));
+
+			DepartmentVo departmentvo = new DepartmentVo();
+			departmentvo.setId(departmentid);
+			
+			SemVo semvo = new SemVo();
+			semvo.setDepartmentid(departmentvo);
+
+			SemDao semdao = new SemDao();
+			ArrayList<SemVo> semlist = semdao.searchDepartmentSem(semvo);
+
+			session.setAttribute("semlist", semlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -90,7 +116,7 @@ public class Sem extends HttpServlet {
 				semvo.setDepartmentid(departmentvo);
 
 				SemDao semdao = new SemDao();
-				ArrayList<SemVo> semlist = semdao.searchDepartmentSem(semvo);
+				ArrayList<SemVo> semlist = semdao.chackhDepartmentSem(semvo);
 				System.out.println(semlist.size());
 				if (semlist.isEmpty() == true) {
 					String s = semdao.insertSame(semvo);

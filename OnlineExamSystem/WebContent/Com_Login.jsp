@@ -227,10 +227,9 @@ a:-webkit-any-link {
 							<span class="glyphicon glyphicon-log-in"></span>
 						</button>
 					</form>
-					<a href="#" class="bottom-text-w3ls">Forgot Password?</a>
+					<a href="forgetpassword.jsp" class="bottom-text-w3ls">Forgot Password?</a>
 				</div>
 			</div>
-		
 	</div>
 </body>
 </html>

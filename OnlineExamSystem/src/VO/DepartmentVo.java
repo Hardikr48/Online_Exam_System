@@ -31,20 +31,16 @@ public class DepartmentVo {
 	@JoinColumn(name="DepartmentCollegeid")
 	private CollegeVo departmentcollegeid;
 	
-	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "departmentid")
 	private List<StudentVo> studentid;
 	
-	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
-	private List<SemVo> semid;
+	@OneToMany(mappedBy = "departmentid")
+	private List<SemVo> semid ;
 	
-	@OneToMany(mappedBy = "departmentid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "departmentid")
 	private List<SubjectVo> departmentid;
 	
-	@OneToMany( mappedBy = "departmentid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany( mappedBy = "departmentid")
 	private List<DepartmentProfessorVo> departmentprofessor;
 	
 

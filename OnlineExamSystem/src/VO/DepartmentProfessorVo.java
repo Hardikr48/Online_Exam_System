@@ -17,6 +17,9 @@ public class DepartmentProfessorVo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	private int id;
+	
+	@Column(name = "Roll")
+	private String roll;
 
 	@ManyToOne
 	@JoinColumn(name = "Collegeid")
@@ -28,7 +31,7 @@ public class DepartmentProfessorVo {
 	
 	@ManyToOne
 	@JoinColumn(name = "Professorid")
-	private ProfessorVo profrssorid ;
+	private ProfessorVo professorid ;
 
 	public int getId() {
 		return id;
@@ -36,6 +39,14 @@ public class DepartmentProfessorVo {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getRoll() {
+		return roll;
+	}
+
+	public void setRoll(String roll) {
+		this.roll = roll;
 	}
 
 	public CollegeVo getCollegeid() {
@@ -54,11 +65,11 @@ public class DepartmentProfessorVo {
 		this.departmentid = departmentid;
 	}
 
-	public ProfessorVo getProfrssorid() {
-		return profrssorid;
+	public ProfessorVo getProfessorid() {
+		return professorid;
 	}
 
-	public void setProfrssorid(ProfessorVo profrssorid) {
-		this.profrssorid = profrssorid;
+	public void setProfessorid(ProfessorVo professorid) {
+		this.professorid = professorid;
 	}
 }

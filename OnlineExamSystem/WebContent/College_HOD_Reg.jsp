@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,12 +54,24 @@ $(document).ready(function() {
 		 });
      });   
   });
+	
+	$('#semesterid').change(function(event) {  
+        var semesterid=$('#semesterid').val();
+        $.post('Department1',{semesterid:semesterid,flag:"subject"},function(response) {
+    	 var obj = JSON.parse(response);
+    	 var select = $('#subjectid');
+    	 select.find('option').remove();
+    	 $('<option>').val("").text("Select Subject").appendTo(select);  
+		    $.each(obj, function(index, value) {
+		    	$('<option>').val(obj[index].id).text(obj[index].subject).appendTo(select);
+		 	});
+     	});   
+  	});
 });
 </script>
-<title>Insert title here</title>
 </head>
 <body>
-
+	
 <div>
 	<ul>
 	  <c:forEach items="${sessionScope.collegedata }" var="q">
@@ -84,25 +96,36 @@ $(document).ready(function() {
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
 		<div style="padding-top: 2%;">
 			<%
-				if (session.getAttribute("studentadd") != null) {
+				if (session.getAttribute("professoradd") != null) {
 			%>
 			<p style="color: red">Add Successfully</p>
 			<%
-				session.removeAttribute("studentadd");
-			} else if (session.getAttribute("emailidadd") != null) {
+				session.removeAttribute("professoradd");
+			} else if (session.getAttribute("selecterorr") != null) {
 			%>
-			<p style="color: red">Email id already exist</p>
+			<p style="color: red">Please select Sem or Department or subject</p>
+			<%
+				session.removeAttribute("selecterorr");
+			} else if (session.getAttribute("emailwrong") != null) {
+			%>
+			<p style="color: red">Please valid email id</p>
+			<%
+				session.removeAttribute("emailwrong");
+			}else if (session.getAttribute("emailidadd") != null) {
+			%>
+			<p style="color: red">Email ID already exist</p>
 			<%
 				session.removeAttribute("emailidadd");
-			} else if (session.getAttribute("cahck") != null) {
+			}else if (session.getAttribute("hodexist") != null) {
 			%>
-			<p style="color: red">Please select department and semester</p>
+			<p style="color: red">Head Of Department Already exist</p>
 			<%
-				session.removeAttribute("cahck");
-			}
-			%>
-			<h3>Add Student</h3>
-			<form method="post" action="<%=request.getContextPath()%>/Student">
+				session.removeAttribute("hodexist");
+			} 
+			%> 
+			
+			<h3>Add Head Of Department</h3>
+			<form method="post" action="<%=request.getContextPath()%>/Professor">
 				<span>*</span> First_Name: 
 				<input type="text" name="firstName"required><br><br> 
 				
@@ -113,7 +136,7 @@ $(document).ready(function() {
   				<input type="tel" id="phone" name="Con_no" placeholder="123-456-7890"pattern="[0-9]{3}[0-9]{3}[0-9]{4}"><br><br>
   				
 				<span>*</span>Department:-<br>
-				<select name="departmentid" id="deaprtmentid" required>
+				<select name="departmentlist[]" id="deaprtmentid" required>
 					<option>Select</option>
 					<c:forEach items="${sessionScope.departmentist }" var="q">
 						<option value="${q.id }">${q.department }</option>
@@ -121,19 +144,22 @@ $(document).ready(function() {
 				</select><br><br>
 				
 				<span>*</span>Semester:-<br>
-				<select	name="semid" id="semesterid" required>
+				<select	name="semesterlist[]" id="semesterid" required>
 					<option value="">Select Semester</option>
 				</select><br> <br> 
 				
-				<span>*</span>Roll No.:-<input type = "text" name="roll" required><br><br>
-				
+				<span>*</span>Subject:-<br>
+				<select	name="subjectlist[]" id="subjectid" required>
+					<option value="">Select Semester</option>
+				</select><br> <br> 
+				<input type="hidden" name="roll" value="HOD">
 				<span>*</span>Address:
 				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
 				
 				<br> <br> <span>*</span>Gender:<br>
 				Male: <input type="radio" name="gender" value="male" required><br>
 				Female: <input type="radio" name="gender" value="female" required><br><br>
-				
+				<span>*</span>Salary: <input type="text" name="salary"required><br><br> 
 				<span>*</span>Email: 
 				<input type="email" name="email" required><br><br> 
 				
@@ -145,5 +171,6 @@ $(document).ready(function() {
 			</form>
 		</div>
 	</div>
+</body>
 </body>
 </html>

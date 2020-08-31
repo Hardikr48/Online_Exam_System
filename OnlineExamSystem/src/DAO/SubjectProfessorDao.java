@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import VO.DepartmentProfessorVo;
 import VO.ProfessorVo;
 import VO.SemProfessorVo;
 import VO.SubjectProfessorVo;
@@ -26,9 +27,26 @@ public class SubjectProfessorDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
+	public ArrayList<SubjectProfessorVo> searchSubjectProfessor(SubjectProfessorVo subjectprofessorvo) {
+		List<SubjectProfessorVo> professorList = new ArrayList<SubjectProfessorVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from SubjectProfessorVo AS p where p.professorid =:id");
+			q.setParameter("id", subjectprofessorvo.getProfessorid());
+			professorList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<SubjectProfessorVo>) professorList;
+
+	}
 
 	public ArrayList<SubjectProfessorVo> SubjectProfessor(SubjectProfessorVo subjectProfessorVo) {
 		List<SubjectProfessorVo> professorList = new ArrayList<SubjectProfessorVo>();
@@ -36,8 +54,8 @@ public class SubjectProfessorDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from SubjectProfessorVo AS p where p.professorid =:id");
-			q.setParameter("id", subjectProfessorVo.getProfrssorid());
+			Query q = session.createQuery("from SubjectProfessorVo AS d where d.subjectid =:department");
+			q.setParameter("department", subjectProfessorVo.getSubjectid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();

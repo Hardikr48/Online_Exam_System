@@ -74,67 +74,68 @@ $(document).ready(function(){
 	  		alert("maximum 5 files add")
 	  	}
 	});
-
   	$(document).on('click', '.remove', function(){
   		count--;
     	$(this).closest('tr').remove();
   	});
-
   	$(document).on('change', '.department', function(){
     	var departmetid = $(this).val();
     	var semester = $(this).data('semester_id');
     	$.post('Department1',{department:departmetid,flag:"semester"},function(response) {
     		var obj = JSON.parse(response);
      		var select = $('#semesterid'+semester);
+     		var select1 = $('#subjectid'+semester);
+     		select.find('option').remove();
+     		select1.find('option').remove();
+     		$('<option>').val("").text("Select Subject").appendTo(select1);
+     		$('<option>').val("").text("Select Semester").appendTo(select);
      	 	$.each(obj, function(index, value) {
   		   		$('<option>').val(obj[index].id).text(obj[index].semester).appendTo(select);
   		 	});
   		});
   	});
-
-  	$(document).on('change', '.semestr', function(){
+  	$(document).on('change', '.semestr','.department', function(){
       	var semesterid = $(this).val();
       	var subject = $(this).data('subject_id');
       	$.post('Department1',{semesterid:semesterid,flag:"subject"},function(response) {
       		var obj = JSON.parse(response);
        		var select = $('#subjectid'+subject);
+       		select.find('option').remove();
+       		$('<option>').val("").text("Select Subject").appendTo(select);
        	 	$.each(obj, function(index, value) {
     			$('<option>').val(obj[index].id).text(obj[index].subject).appendTo(select);
     		 });
     	});
     });
 });
+  	
 </script>
 <title>Insert title here</title>
 </head>
 <body>
 
-	<div>
-		<ul>
-		<c:forEach items="${sessionScope.collegedata }" var="q">
+
+<div>
+	<ul>
+	  <c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=insert&id=${q.id }">Add Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
+		<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
 		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
 		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
 		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-<<<<<<< HEAD
 		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
 		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
-=======
-		<li><a href="<%=request.getContextPath()%>/Notification?flag=messsage&flag2=hr&flag3=company&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=departmentsearch&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Employee?flag=companysearch&flag2=company&id=${q.id }">View Exam</a></li>
->>>>>>> a18668d36c6479ee0a758268158f5f30085ab589
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
-		</ul>
-	</div>
+	</ul>
+</div>
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
 		<div style="padding-top: 2%;">
 			<%
@@ -143,20 +144,25 @@ $(document).ready(function(){
 			<p style="color: red">Add Successfully</p>
 			<%
 				session.removeAttribute("professoradd");
-			} else if (session.getAttribute("selectsemordepartment") != null) {
+			} else if (session.getAttribute("selecterorr") != null) {
 			%>
-			<p style="color: red">Please select Sem or Department</p>
+			<p style="color: red">Please select Sem or Department or subject</p>
 			<%
-				session.removeAttribute("selectsemordepartment");
-			} else if (session.getAttribute("cahcksubject") != null) {
+				session.removeAttribute("selecterorr");
+			} else if (session.getAttribute("emailwrong") != null) {
 			%>
-			<p style="color: red">Subject already exist</p>
+			<p style="color: red">Please valid email id</p>
 			<%
-				session.removeAttribute("cahcksubject");
-			}
+				session.removeAttribute("emailwrong");
+			}else if (session.getAttribute("emailidadd") != null) {
+			%>
+			<p style="color: red">Email ID already exist</p>
+			<%
+				session.removeAttribute("emailidadd");
+			} 
 			%>
 			<h3>Add Professor</h3>
-			<form method="post" action="<%=request.getContextPath()%>/Professor">
+			<form method="post" action="<%=request.getContextPath()%>/Professor" enctype="multipart/form-data">
 				<span>*</span> First_Name: 
 				<input type="text" name="firstName"required><br><br> 
 				<span>*</span>Last_Name: 
@@ -177,11 +183,7 @@ $(document).ready(function(){
 		            <tbody></tbody>
 		          </table>
 		          </div>
-				<span>*</span>Roll:-<select name="roll" required>
-					<option>Select</option>
-					<option>HOD</option>
-					<option>Professor</option>
-				</select><br><br> 
+				<input type="hidden" name="roll" value="Professor">
 				<span>*</span>Address:
 				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
 				<br> <br> <span>*</span>Gender:<br> Male: <input
@@ -194,7 +196,8 @@ $(document).ready(function(){
 				<span>*</span>Password:
 				<input type="password" name="pass" required><br><br>
 				<input type="hidden" name="flag" value="insert">
-	            <input type="submit" name="submit">
+				<input type="file" name="myfile" accept="image/*"> <br /><br> 
+	            <input type="submit" name="submit" class="btn btn-info" value="Insert" />
 			</form>
 		</div>
 	</div>

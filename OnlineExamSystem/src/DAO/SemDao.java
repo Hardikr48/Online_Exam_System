@@ -70,9 +70,8 @@ public class SemDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from SemVo AS a where a.departmentid =:id And a.semname =:sem");
+			Query q = session.createQuery("from SemVo AS a where a.departmentid =:id");
 			q.setParameter("id", semvo.getDepartmentid());
-			q.setParameter("sem", semvo.getSemname());
 			li = q.list();
 			transaction.commit();
 			session.close();
@@ -82,6 +81,26 @@ public class SemDao {
 		}
 		return (ArrayList<SemVo>) li;
 	}
+	public ArrayList<SemVo> chackhDepartmentSem(SemVo semvo) {
+		List<SemVo> li = new ArrayList<SemVo>();
+		try{
+			
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from SemVo AS a where a.departmentid =:id And a.semname =:sem");
+			q.setParameter("id", semvo.getDepartmentid());
+			q.setParameter("id", semvo.getSemname());
+			li = q.list();
+			transaction.commit();
+			session.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<SemVo>) li;
+	}
+
 	public ArrayList<SemVo> searchDepartment(SemVo semvo) {
 		List<SemVo> li = new ArrayList<SemVo>();
 		try{
