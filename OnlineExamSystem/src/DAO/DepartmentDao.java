@@ -91,4 +91,22 @@ public class DepartmentDao {
 		}
 		return (ArrayList<DepartmentVo>) depList;
 	}
+
+	public ArrayList<DepartmentVo> getdepartmentcode(DepartmentVo departmentVo) {
+		List<DepartmentVo> depList = new ArrayList<DepartmentVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from DepartmentVo AS d where d.id =:daepatname");
+			q.setParameter("daepatname", departmentVo.getId());
+			depList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<DepartmentVo>) depList;
+		
+	}
 }

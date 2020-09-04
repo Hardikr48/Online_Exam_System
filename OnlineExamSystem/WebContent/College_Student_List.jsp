@@ -88,7 +88,7 @@ a:hover {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<h3>View Department</h3>
+		<h3>View Student</h3>
 		<table border="1">
 			<tr>
 				<td>Student Name</td>

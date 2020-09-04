@@ -9,12 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-import VO.DepartmentProfessorVo;
-import VO.DepartmentVo;
 import VO.LoginVO;
 import VO.ProfessorVo;
-import VO.SemProfessorVo;
-import VO.SubjectProfessorVo;
 
 public class ProfessorDao {
 	public void professorInsert(ProfessorVo professorvo, LoginVO loginvo) {
@@ -126,7 +122,6 @@ public class ProfessorDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from ProfessorVo AS p where p.collegeid =:id And p.subjectid =:subject");
 			q.setParameter("id", professorvo.getCollegeid());
-//			q.setParameter("subject", professorvo.getSubjectid());
 			professorList = q.list();
 			transaction.commit();
 			session.close();
@@ -135,4 +130,5 @@ public class ProfessorDao {
 		}
 		return (ArrayList<ProfessorVo>) professorList;
 	}
+	
 }

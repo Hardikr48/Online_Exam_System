@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.SemDao;
+import DAO.SubjectProfessorDao;
 import VO.CollegeVo;
+import VO.DepartmentProfessorVo;
 import VO.DepartmentVo;
+import VO.ProfessorVo;
 import VO.SemVo;
+import VO.SubjectProfessorVo;
 
 /**
  * Servlet implementation class College
@@ -36,6 +41,7 @@ public class Sem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String flag = request.getParameter("flag");
 		HttpSession session = request.getSession();
 		if (flag.equalsIgnoreCase("insert")) {
@@ -53,13 +59,35 @@ public class Sem extends HttpServlet {
 		}
 		if (flag.equalsIgnoreCase("viewdepartmentsemlist")) {
 			viewDepaertmentSemList(request, response);
-			response.sendRedirect("College_Sem_List.jsp");
+			response.sendRedirect("CollegeDepartmentSemList.jsp");
+		}
+		if (flag.equalsIgnoreCase("hodviewsemlist")) {
+			viewHodProfessorSemList(request, response);
+			response.sendRedirect("HOD_Sem_List.jsp");
 		}
 		if (flag.equalsIgnoreCase("deletesem")) {
 			deleteSem(request, response);
 			viewSemList(request, response);
 			response.sendRedirect("College_Sem_List.jsp");
 		}
+	}
+
+	private void viewHodProfessorSemList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		int departmentid = Integer.parseInt(request.getParameter("id"));
+		System.out.println(departmentid);
+		
+		DepartmentVo departmentVo = new DepartmentVo();
+		departmentVo.setId(departmentid);
+		
+		SemVo semVo = new SemVo();
+		semVo.setDepartmentid(departmentVo);
+		
+		SemDao semDao = new SemDao();
+		ArrayList<SemVo> professorsemlist = semDao.searchDepartment(semVo);
+		System.out.println(professorsemlist.size());
+				
+		session.setAttribute("hodsemlist", professorsemlist);
 	}
 
 	private void viewDepaertmentSemList(HttpServletRequest request, HttpServletResponse response) {

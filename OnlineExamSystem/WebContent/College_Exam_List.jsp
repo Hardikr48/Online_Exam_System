@@ -85,7 +85,7 @@ a:hover {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<h3>View Department</h3>
+		<h3>View Exam</h3>
 		<%
 			if (session.getAttribute("examdelete") != null) {
 		%>
@@ -101,8 +101,10 @@ a:hover {
 				<td>Semester</td>
 				<td>Subject</td>
 				<td>Phase</td>
-				<td>Time</td>
+				<td>Topic</td>
 				<td>Marks</td>
+				<td>Time</td>
+				<td>Date</td>
 				<td>Edit</td>
 				<td>Delete</td>
 			</tr>
@@ -114,8 +116,10 @@ a:hover {
 					<td>${q.semesterid.semname }</td>
 					<td>${q.subjectid.subject }</td>
 					<td>${q.phase }</td>
+					<td>${q.examtopic }</td>
 					<td>${q.time }</td>
 					<td>${q.marks }</td>
+					<td>${q.examid.date }</td>
 					<td><a href="<%=request.getContextPath()%>/Exam?flag=editexam&id=${q.id }">Edit</a></td>
 					<td><a href="<%=request.getContextPath()%>/Exam?flag=examdelete&id=${q.id }">Delete</a></td>
 				</tr>

@@ -29,6 +29,14 @@ public class SubjectProfessorVo {
 	@JoinColumn(name = "professorid")
 	private ProfessorVo professorid ;
 	
+	@ManyToOne
+	@JoinColumn(name = "DepartmentProfessor")
+	private DepartmentProfessorVo departmentprofessorid ;
+	
+	@ManyToOne
+	@JoinColumn(name = "SemProfessor")
+	private SemProfessorVo semprofessorid ;
+	
 	public int getId() {
 		return id;
 	}
@@ -60,4 +68,22 @@ public class SubjectProfessorVo {
 	public void setProfessorid(ProfessorVo professorid) {
 		this.professorid = professorid;
 	}
+
+	public DepartmentProfessorVo getDepartmentprofessorid() {
+		return departmentprofessorid;
+	}
+
+	public void setDepartmentprofessorid(DepartmentProfessorVo departmentprofessorid) {
+		this.departmentprofessorid = departmentprofessorid;
+	}
+
+	public SemProfessorVo getSemprofessorid() {
+		return semprofessorid;
+	}
+
+	public void setSemprofessorid(SemProfessorVo semprofessorid) {
+		this.semprofessorid = semprofessorid;
+	}
+	
+	
 }

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -51,6 +52,10 @@ public class StudentVo {
 
 	@Column(name = "JoiningDate")
 	private String joiningdate;
+	
+	@Lob
+	@Column(name = "StudentImage")
+	private byte[] image;
 	
 	@ManyToOne
 	@JoinColumn(name = "DepartmentId")
@@ -177,5 +182,13 @@ public class StudentVo {
 
 	public void setCollegeid(CollegeVo collegeid) {
 		this.collegeid = collegeid;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 }

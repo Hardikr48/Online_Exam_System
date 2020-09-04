@@ -4,7 +4,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -73,21 +78,23 @@ public class Login extends HttpServlet {
 			String pass = (String) session.getAttribute("pass");
 			if (EmailValidation.isValid(email)) {
 				
-				Timestamp t1 = new Timestamp(System.currentTimeMillis());
-				String lastlogin = t1.toString();
-				
 				LoginVO loginvo = new LoginVO();
 				loginvo.setEmail(email);
 				loginvo.setPassword(pass);
 
 				LoginDAO logindao = new LoginDAO();
+				Timestamp t1 = new Timestamp(System.currentTimeMillis());
 				
 				ArrayList<LoginVO> l1 = logindao.verify(loginvo);
-				
 				int loginid = l1.get(0).getId();
 				String lastlogintime = l1.get(0).getLastlogin();
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss a");
+				String lastlogin = sdf.format(t1);				
 				session.setAttribute("time", lastlogintime);
 
+				
+				
 				System.out.println(l1.get(0).getRoll());
 				String roll = l1.get(0).getRoll();
 				if (roll.equals("Admin")) {
@@ -98,10 +105,16 @@ public class Login extends HttpServlet {
 					
 					
 					ArrayList<CollegeVo> admin = logindao.collegeVerify(collegevo);
-					byte[] s= admin.get(0).getImage();
+					
+					byte[] image= admin.get(0).getImage();
+					System.out.println(image);
+					FileOutputStream fout=new FileOutputStream("D:\\github\\OnlineExamSystem\\OnlineExamSystem\\WebContent\\img\\remco.jpg");  
+					fout.write(image);  
+					fout.close();
+					
 					session.setAttribute("collegename", admin.get(0).getCollegename());
 					session.setAttribute("collegedata", admin);
-					session.setAttribute("collegedata1", s);
+					
 					
 					loginvo.setLastlogin(lastlogin);
 					loginvo.setId(loginid);
@@ -117,10 +130,15 @@ public class Login extends HttpServlet {
 					
 					ArrayList<ProfessorVo> professorlist = logindao.professorVerify(professorvo);
 					String professorroll = professorlist.get(0).getRoll();
+					System.out.println(professorroll);
 					session.setAttribute("professorname", professorlist.get(0).getFirstName());
 					
-					if (professorroll.equals("hod")) {
-						
+					if (professorroll.equalsIgnoreCase("hod")) {
+						byte[] image= professorlist.get(0).getImage();
+						System.out.println(image);
+						FileOutputStream fout=new FileOutputStream("D:\\ing\\hod.jpg");  
+						fout.write(image);  
+						fout.close();
 
 						loginvo.setLastlogin(lastlogin);
 						loginvo.setId(loginid);
@@ -131,6 +149,11 @@ public class Login extends HttpServlet {
 						
 						response.sendRedirect("Professor_HOD_Login.jsp");
 					} else if (professorroll.equalsIgnoreCase("professor")) {
+						byte[] image= professorlist.get(0).getImage();
+						System.out.println(image);
+						FileOutputStream fout=new FileOutputStream("D:\\ing\\professor.jpg");  
+						fout.write(image);  
+						fout.close();
 
 						loginvo.setLastlogin(lastlogin);
 						loginvo.setId(loginid);
@@ -143,11 +166,17 @@ public class Login extends HttpServlet {
 					} 
 				}
 				else if (roll.equalsIgnoreCase("Student")) {
+					
 					StudentVo studentvo = new StudentVo();
 					studentvo.setEmail(email);
 					studentvo.setPassword(pass);
 					ArrayList<StudentVo> studentlist = logindao.studentVerify(studentvo);
 					session.setAttribute("studentname", studentlist.get(0).getFirstName());
+					byte[] image= studentlist.get(0).getImage();
+					System.out.println(image);
+					FileOutputStream fout=new FileOutputStream("D:\\ing\\student.jpg");  
+					fout.write(image);  
+					fout.close();
 					
 					loginvo.setLastlogin(lastlogin);
 					loginvo.setId(loginid);
@@ -166,6 +195,7 @@ public class Login extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginResult", "true");
 			response.sendRedirect("Com_Login.jsp");
+			e.printStackTrace();
 		}
 	}
 	

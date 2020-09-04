@@ -2,14 +2,21 @@ package Com;
 
 import java.io.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
+
+import DAO.DepartmentDao;
 import DAO.DepartmentProfessorDao;
 import DAO.LoginDAO;
 import DAO.ProfessorDao;
@@ -31,8 +38,10 @@ import VO.SubjectVo;
  * Servlet implementation class Professor
  */
 @WebServlet("/Student")
+@MultipartConfig
 public class Student extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -48,14 +57,24 @@ public class Student extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String flag = request.getParameter("flag");
 		HttpSession session = request.getSession();
 		if (flag.equalsIgnoreCase("insert")) {
 			int collegeid = Integer.parseInt(request.getParameter("id"));
+			System.out.println(collegeid);
 			session.setAttribute("collegeid", collegeid);
 			Department department = new Department();
 			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("College_Student_Reg.jsp");
+		}
+		if (flag.equalsIgnoreCase("hodinsert")) {
+			int collegeid = Integer.parseInt(request.getParameter("id"));
+			System.out.println(collegeid);
+			session.setAttribute("collegeid", collegeid);
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
+			response.sendRedirect("HOD_Student_Reg.jsp");
 		}
 		if (flag.equalsIgnoreCase("editprofile")) {
 			int studentid = (Integer.parseInt(request.getParameter("id")));
@@ -69,15 +88,50 @@ public class Student extends HttpServlet {
 			searchCollegeStudent(request, response);
 			response.sendRedirect("College_Student_List.jsp");
 		}
-		if (flag.equalsIgnoreCase("viewdepartmentstudent")) {
+		if (flag.equalsIgnoreCase("viewdepartmentstudentlist")) {
 			searchDepartmentStudent(request, response);
-			response.sendRedirect("College_Student_List.jsp");
+			response.sendRedirect("CollegeDepartmentStudentList.jsp");
+		}
+		if (flag.equalsIgnoreCase("hodstudentlist")) {
+			searchDepartmentStudent(request, response);
+			response.sendRedirect("HOD_Student_List.jsp");
 		}
 		
 		if (flag.equalsIgnoreCase("searchsubjectprofessor")) {
 			searchSubjectProfessor(request, response);
 			response.sendRedirect("College_professor_Edit_Profile.jsp");
 		}
+		if (flag.equalsIgnoreCase("viewcollegesemesterstudent")) {
+			searchSemesterStudent(request, response);
+			response.sendRedirect("CollegeSemStudentList.jsp");
+		}
+		
+		if (flag.equalsIgnoreCase("")) {
+			searchSemesterStudent(request, response);
+			response.sendRedirect("CollegeSemStudentList.jsp");
+		}
+	}
+
+	private void searchSemesterStudent(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		try {
+			int semid = Integer.parseInt(request.getParameter("id"));
+
+			SemVo semVo = new SemVo();
+			semVo.setId(semid);
+			
+			StudentVo studentVo = new StudentVo();
+			studentVo.setSemesterid(semVo);
+			
+			StudentDao studentdao = new StudentDao();
+			ArrayList<StudentVo> Studentlist= studentdao.searchSemesterStudent(studentVo);
+			
+			session.setAttribute("SemesterStudentlist", Studentlist);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void searchDepartmentStudent(HttpServletRequest request, HttpServletResponse response) {
@@ -108,11 +162,18 @@ public class Student extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
 		String flag = request.getParameter("flag");
 		if (flag.equalsIgnoreCase("insert")) {
 			studentInsert(request, response);
 			response.sendRedirect("College_Student_Reg.jsp");
 		}
+		if (flag.equalsIgnoreCase("hodinsert")) {
+			studentInsert(request, response);
+			response.sendRedirect("HOD_Student_Reg.jsp");
+		}
+		
 		if (flag.equalsIgnoreCase("update")) {
 			updateStudentProfile(request, response);
 			editStudentProfile(request, response);
@@ -124,20 +185,22 @@ public class Student extends HttpServlet {
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		try {
-			System.out.println("0.0.00.0.0..00..0........................................");
+			System.out.println("............................................");
 			String email = request.getParameter("email");
 			if (EmailValidation.isValid(email)) {
-				
+				System.out.println("............................................");
 				int collegeid = (int) session.getAttribute("collegeid");
 				CollegeVo collegevo = new CollegeVo();
 				collegevo.setId(collegeid);
 
 				int departmentid = Integer.parseInt(request.getParameter("departmentid"));
 				int semid = Integer.parseInt(request.getParameter("semid"));
-
+				
 				DepartmentVo departmentVo = new DepartmentVo();
 				departmentVo.setId(departmentid);
-				
+				DepartmentDao departmentDao = new DepartmentDao();
+				ArrayList<DepartmentVo> getdepartmentcode =departmentDao.getdepartmentcode(departmentVo);
+				String departmentcode = String.valueOf(getdepartmentcode.get(0).getDepartmentcode());
 				SemVo semVo = new SemVo();
 				semVo.setId(semid);
 				
@@ -148,10 +211,55 @@ public class Student extends HttpServlet {
 				String Address = request.getParameter("address");
 				String gender = request.getParameter("gender");
 				String pass = request.getParameter("pass");
-				String roll = request.getParameter("roll");
+				String roll = null;
 				
 				Timestamp t1 = new Timestamp(System.currentTimeMillis());
-				String joiningdate = t1.toString();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss a");
+				String joiningdate = sdf.format(t1);
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yy");
+				String yearoflastdigital = sdf2.format(t1);
+				
+				
+				StudentDao studentdao = new StudentDao();
+				ArrayList<StudentVo> getlastrecord = studentdao.getlastrecord();
+				String lastrecode =getlastrecord.get(0).getRoll();
+				int n = Integer.valueOf(lastrecode);
+				
+				int d =n%1000;
+				System.out.println(d);
+				d++;
+				int a = 0;
+				int b = 0;
+				int c = d;
+				System.out.println(c);
+				String s1 = String.valueOf(a);
+				String s2 = String.valueOf(b);
+				String s3 = String.valueOf(c);
+
+				if (c >= 1 && c < 10) {
+					roll = departmentcode.concat(yearoflastdigital).concat(s1).concat(s2).concat(s3);
+					System.out.println(roll);
+
+				} else if (c >= 10 && c < 100) {
+					roll = departmentcode.concat(yearoflastdigital).concat(s1).concat(s3);
+					System.out.println(roll);
+				}
+
+				else {
+					roll = departmentcode.concat(yearoflastdigital).concat(s3);
+					System.out.println(roll);
+
+				}
+
+				
+				Part filepart = request.getPart("myfile");
+				InputStream inputstream = null;
+				if (filepart != null) {
+					inputstream = filepart.getInputStream();
+				}
+				byte[] bytes = IOUtils.toByteArray(inputstream);
+				
+				
 
 				StudentVo studentvo = new StudentVo();
 				studentvo.setFirstName(firstname);
@@ -166,6 +274,9 @@ public class Student extends HttpServlet {
 				studentvo.setDepartmentid(departmentVo);
 				studentvo.setSemesterid(semVo);
 				studentvo.setCollegeid(collegevo);
+				studentvo.setImage(bytes);
+				
+				
 				
 				LoginVO loginvo = new LoginVO();
 				loginvo.setStudentid(studentvo);
@@ -177,9 +288,8 @@ public class Student extends HttpServlet {
 				LoginDAO logdao = new LoginDAO();
 				ArrayList<LoginVO> emailchack = logdao.emailverify(loginvo);
 				if (emailchack.isEmpty() == true) {
-					System.out.println(".13132323232...........................................");
-					StudentDao studentdao = new StudentDao();
 					studentdao.studentInsert(studentvo, loginvo);
+					session.setAttribute("rollno", roll);
 					session.setAttribute("studentadd", "true");
 				} else {
 					session.setAttribute("emailidadd", "true");
@@ -188,6 +298,7 @@ public class Student extends HttpServlet {
 				session.setAttribute("emailwrong", "true");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			session.setAttribute("cahck", "true");
 		}
 	}

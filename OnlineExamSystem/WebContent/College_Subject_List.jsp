@@ -85,7 +85,7 @@ a:hover {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<h3>View Department</h3>
+		<h3>View Subject</h3>
 		<table border="1">
 			<tr>
 				<td>Subject Name</td>
@@ -98,7 +98,7 @@ a:hover {
 					<td>${q.subject }</td>
 					<td>${q.semid.semname }</td>
 					<td>${q.departmentid.department }</td>
-					<td><a href="<%=request.getContextPath()%>/Professor?flag2=subject&flag=viewsubjectprofessor&id=${q.id }">View Professor</a></td>
+					<td><a href="<%=request.getContextPath()%>/Professor?flag=viewsubjectprofessor&id=${q.id }">View Professor</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -48,7 +48,7 @@ public class StudentDao {
 		}
 	}
 
-	public List editStudentProfile(StudentVo studentvo) {
+	public ArrayList<StudentVo> editStudentProfile(StudentVo studentvo) {
 		List<StudentVo> studentlsit = new ArrayList<StudentVo>();
 		try {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
@@ -59,9 +59,9 @@ public class StudentDao {
 			transaction.commit();
 			session.close();
 		} catch (Exception e) {
-			return studentlsit;
+			return (ArrayList<StudentVo>) studentlsit;
 		}
-		return studentlsit;
+		return (ArrayList<StudentVo>) studentlsit;
 	}
 
 	public ArrayList<StudentVo> searchCollegeStudent(StudentVo studentVo) {
@@ -89,6 +89,40 @@ public class StudentDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from StudentVo AS s where s.departmentid =:id");
 			q.setParameter("id", studentVo.getDepartmentid());
+			studentList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<StudentVo>) studentList;
+	}
+
+	public ArrayList<StudentVo> getlastrecord() {
+		List<StudentVo> studentList = new ArrayList<StudentVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from StudentVo ORDER BY id DESC LIMIT 1;");
+			studentList = q.list();
+			transaction.commit();
+			session.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (ArrayList<StudentVo>) studentList;
+		
+	}
+
+	public ArrayList<StudentVo> searchSemesterStudent(StudentVo studentVo) {
+		List<StudentVo> studentList = new ArrayList<StudentVo>();
+		try {
+			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
+			Session session = sessionfactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Query q = session.createQuery("from StudentVo AS s where s.semesterid =:id");
+			q.setParameter("id", studentVo.getSemesterid());
 			studentList = q.list();
 			transaction.commit();
 			session.close();

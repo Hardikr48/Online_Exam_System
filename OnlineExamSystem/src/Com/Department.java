@@ -94,6 +94,7 @@ public class Department extends HttpServlet {
 			int companyid = (int) session.getAttribute("collegeid");
 			System.out.println(companyid);
 			String departmentname = request.getParameter("departmentname");
+			int code = Integer.parseInt(request.getParameter("departmentcode"));
 
 			CollegeVo collegevo = new CollegeVo();
 			collegevo.setId(companyid);

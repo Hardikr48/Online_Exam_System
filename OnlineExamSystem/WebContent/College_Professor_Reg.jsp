@@ -15,7 +15,10 @@
 body {
 	margin: 0;
 }
-
+td{
+padding-right: 200px;
+padding-bottom: 10px;
+}
 ul {
 	list-style-type: none;
 	margin: 0;
@@ -42,6 +45,7 @@ li a.active {
 li a:hover:not(.active) {
 	background-color: #555;
 	color: white;
+	text-decoration: none;
 }
 </style>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -51,7 +55,7 @@ li a:hover:not(.active) {
 
 $(document).ready(function(){
 	var count = 0;
-	var maxfield = 5;
+	var maxfield = 4;
 	$(document).on('click', '.add', function(){
 	  	if(count<maxfield){
 			count++;
@@ -61,7 +65,7 @@ $(document).ready(function(){
 		   	html += '<td><select name="semesterlist[]" class="form-control semestr" data-subject_id="'+count+'" id="semesterid'+count+'"><option value="">Select Semester</option></select></td>';
 		   	html += '<td><select name="subjectlist[]" class="form-control subject" data-subject_id="'+count+'" id="subjectid'+count+'"><option value="">Select Subject</option></select></td>';
 		   	html += '<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-minus"></span></button></td>';
-		   	$('tbody').append(html);
+		   	$('.chu').append(html);
 		   	var username="deaprtment";
 		   	$.post('Department1',{flag:username},function(response) {
 		   		var obj = JSON.parse(response);
@@ -163,13 +167,47 @@ $(document).ready(function(){
 			%>
 			<h3>Add Professor</h3>
 			<form method="post" action="<%=request.getContextPath()%>/Professor" enctype="multipart/form-data">
-				<span>*</span> First_Name: 
-				<input type="text" name="firstName"required><br><br> 
-				<span>*</span>Last_Name: 
-				<input type="text" name="lastName" required><br> <br> <span>*</span>Contact_No:
-				<input type="text" name="Con_no" required><br> <br>
-				
-				<div class="table-repsonsive">
+				<table>
+				<tr>
+					<td>
+						<span>*</span> First_Name:<br>
+						<input type="text" name="firstName"required>
+					</td>
+					<td>
+						<span>*</span>Address:<br>
+						<textarea rows="3" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
+					</td>
+					<td>
+						<span>*</span>Email: <br>
+						<input type="email" name="email" required>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>*</span>Last_Name: <br>
+						<input type="text" name="lastName" required>
+					</td>
+					<td>
+						<span>*</span>Gender:<br> 
+							Male: <input type="radio" name="gender" value="male" required>
+							Female: <input type="radio" name="gender" value="female" required>
+					</td>
+					<td>
+						<span>*</span>Password:<br>
+						<input type="password" name="pass" required>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>*</span>Contact_No:<br>
+						<input type="tel" id="phone" name="Con_no" placeholder="123-456-7890"pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+					</td>	
+					<td>
+						<span>*</span>Salary:<br> <input type="number" name="salary"required>
+					</td>				
+				</tr>
+				</table>
+				<div class="table-repsonsive"style="padding-top: 10px;">
 		          <span id="error"></span>
 		          <table class="table table-bordered" id="item_table">
 		            <thead>
@@ -180,24 +218,13 @@ $(document).ready(function(){
 		                <th><button type="button" name="add" class="btn btn-success btn-xs add"><span class="glyphicon glyphicon-plus"></span></button></th>
 		              </tr>
 		            </thead>
-		            <tbody></tbody>
+		            <tbody class="chu"></tbody>
 		          </table>
 		          </div>
 				<input type="hidden" name="roll" value="Professor">
-				<span>*</span>Address:
-				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
-				<br> <br> <span>*</span>Gender:<br> Male: <input
-					type="radio" name="gender" value="male" required><br>
-				Female: <input type="radio" name="gender" value="female" required><br>
-				<br>
-				<span>*</span>Salary: <input type="text" name="salary"required><br><br> 
-				<span>*</span>Email: 
-				<input type="email" name="email" required><br><br> 
-				<span>*</span>Password:
-				<input type="password" name="pass" required><br><br>
 				<input type="hidden" name="flag" value="insert">
 				<input type="file" name="myfile" accept="image/*"> <br /><br> 
-	            <input type="submit" name="submit" class="btn btn-info" value="Insert" />
+	            <input type="submit" name="submit" class="btn btn-info" value="Submit" />
 			</form>
 		</div>
 	</div>

@@ -97,6 +97,7 @@ a:hover {
 				<td>View Subject</td>
 				<td>View Professor</td>
 				<td>View Student</td>
+				<td>Exam</td>
 				<td>Delete</td>
 			</tr>
 			
@@ -105,9 +106,10 @@ a:hover {
 				<td><%=i %></td>
 				<td>${q.semname }</td>
 				<td>${q.departmentid.department }</td>
-				<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Subject</a></td>
-				<td><a href="<%=request.getContextPath()%>/Department?flag2=semester&flag=viewsemesterprofessor&id=${q.id }">View Professor</a></td>
-				<td><a href="<%=request.getContextPath()%>/Department?flag=viewdepartrmentsearch&id=${q.id }">View Student</a></td>
+				<td><a href="<%=request.getContextPath()%>/Subject?flag=viewcollegesemestersubject&id=${q.id }">View Subject</a></td>
+				<td><a href="<%=request.getContextPath()%>/Professor?flag=viewcollegesemesterprofessor&id=${q.id }">View Professor</a></td>
+				<td><a href="<%=request.getContextPath()%>/Student?flag=viewcollegesemesterstudent&id=${q.id }">View Student</a></td>
+				<td><a href="<%=request.getContextPath()%>/Exam?flag=viewcollegesemesterexam&id=${q.id }">View Exam</a></td>
 				<td><a href="<%=request.getContextPath()%>/Sem?flag=deletesem&id=${q.id }">Delete</a></td>
 				</tr>
 				<%i++; %>

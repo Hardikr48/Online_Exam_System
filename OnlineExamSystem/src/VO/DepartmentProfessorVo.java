@@ -1,5 +1,8 @@
 package VO;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +36,12 @@ public class DepartmentProfessorVo {
 	@ManyToOne
 	@JoinColumn(name = "Professorid")
 	private ProfessorVo professorid ;
+	
+	@OneToMany(mappedBy = "departmentprofessorid", cascade = CascadeType.REMOVE)
+	private List<SemProfessorVo> semprofessor;
+	
+	@OneToMany(mappedBy = "departmentprofessorid", cascade = CascadeType.REMOVE)
+	private List<SubjectProfessorVo> subjectprofessor;
 
 	public int getId() {
 		return id;
@@ -72,4 +82,22 @@ public class DepartmentProfessorVo {
 	public void setProfessorid(ProfessorVo professorid) {
 		this.professorid = professorid;
 	}
+
+	public List<SemProfessorVo> getSemprofessor() {
+		return semprofessor;
+	}
+
+	public void setSemprofessor(List<SemProfessorVo> semprofessor) {
+		this.semprofessor = semprofessor;
+	}
+
+	public List<SubjectProfessorVo> getSubjectprofessor() {
+		return subjectprofessor;
+	}
+
+	public void setSubjectprofessor(List<SubjectProfessorVo> subjectprofessor) {
+		this.subjectprofessor = subjectprofessor;
+	}
+	
+	
 }

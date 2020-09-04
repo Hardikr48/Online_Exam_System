@@ -86,6 +86,8 @@ li a:hover:not(.active) {
 
 		<span>*</span>Department Name:-
 		<input type="text" name="departmentname"  required ><br><br>
+		<span>*</span>Department Code:-
+		<input type="tel" name="departmetcode" placeholder="12"pattern="[0-9]{2}"><br><br>
 		<input type="hidden" name="flag" value="insert"/>
 		<input type="submit" value="SUBMIT"/>
 		</form>

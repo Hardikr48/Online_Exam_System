@@ -49,6 +49,7 @@ li a:hover:not(.active) {
 <script>
 $(document).ready(function() {                        
 	$('#deaprtmentid').change(function(event) {  
+		var li = 
         var username=$('#deaprtmentid').val();
      $.get('Department1',{q:username},function(response) {
     	 var obj = JSON.parse(response);

@@ -1,5 +1,8 @@
 package VO;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,15 +24,6 @@ public class ExamVo {
 	
 	@Column(name="Date")
 	private java.sql.Date date;
-	
-	@Column(name = "Phase")
-	private String phase;
-	
-	@Column(name = "Time")
-	private int time;
-	
-	@Column(name = "Marks")
-	private int marks;
 	
 	@ManyToOne
 	@JoinColumn(name = "DepartmentId")
@@ -45,7 +40,10 @@ public class ExamVo {
 	@ManyToOne
 	@JoinColumn(name = "collegeId")
 	private CollegeVo collegeid;
-
+	
+	@OneToMany( mappedBy = "examid", cascade = CascadeType.REMOVE)
+	private List<ExamPhaseVo> examid ;
+	
 	public int getId() {
 		return id;
 	}
@@ -62,28 +60,12 @@ public class ExamVo {
 		this.date = date;
 	}
 
-	public String getPhase() {
-		return phase;
+	public List<ExamPhaseVo> getExamid() {
+		return examid;
 	}
 
-	public void setPhase(String phase) {
-		this.phase = phase;
-	}
-
-	public int getTime() {
-		return time;
-	}
-
-	public void setTime(int time) {
-		this.time = time;
-	}
-
-	public int getMarks() {
-		return marks;
-	}
-
-	public void setMarks(int marks) {
-		this.marks = marks;
+	public void setExamid(List<ExamPhaseVo> examid) {
+		this.examid = examid;
 	}
 
 	public DepartmentVo getDepartmentid() {
@@ -117,5 +99,6 @@ public class ExamVo {
 	public void setSubjectid(SubjectVo subjectid) {
 		this.subjectid = subjectid;
 	}
+	
 	
 }

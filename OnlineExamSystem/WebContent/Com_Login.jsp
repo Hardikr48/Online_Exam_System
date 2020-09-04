@@ -23,12 +23,6 @@ div {
 	vertical-align: baseline;
 }
 
-
-
-/* .sub-main-w3 {
-	margin: 1.5vw 5vw;
-}
- */
 .bg-content-w3pvt {
 	max-width: 400px;
 	margin: 0 auto;

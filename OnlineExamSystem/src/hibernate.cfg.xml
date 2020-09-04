@@ -53,5 +53,9 @@
 		
 		<mapping class="VO.ExamVo"/>
 		
+		<mapping class="VO.ExamPhaseVo"/>
+		
+		<mapping class="VO.QuestionVo"/>
+		
 	</session-factory>
 </hibernate-configuration>

@@ -88,9 +88,11 @@ a:hover {
 </div>
 <div style="margin-left:25%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:2%;" >
-		<h3>View Department</h3>
-		<table border="1">
+		<h3>View Professor</h3>
+		<%int i=1; %>
+		<table border="1" style="text-align: center;">
 			<tr>
+				<td>No</td>
 				<td>Professor Name</td>
 				<td>Last Name</td>
 				<td>Email</td>
@@ -100,27 +102,11 @@ a:hover {
 				<td>Salary</td>
 				<td>Designation</td>
 				<td>JoiningDate</td>
-				<% if (s1.equalsIgnoreCase("college")) {%>
-					<td>Department</td>
-					<td>Semester</td>
-					<td>Subject</td>
-					<td>Image</td>
-				<% }else if(s1.equalsIgnoreCase("department")){%>
-					<td>Department</td>
-					<td>Semester</td>
-					<td>Subject</td>
-				<%}else if(s1.equalsIgnoreCase("semester")){%>
-					<td>Subject</td>
-				<%} %>
-				
+				<td>Details</td>
 			</tr>
-			
-				
-					
-					<% if (s1.equalsIgnoreCase("college")) {%>
+				<c:forEach items="${sessionScope.professorlist }" var="q">
 					<tr>
-					<c:forEach items="${sessionScope.colprofessorlist }" var="q">
-					
+						<td><%=i %></td>
 						<td>${q.firstName }</td>
 						<td>${q.lastName }</td>
 						<td>${q.email }</td>
@@ -130,84 +116,10 @@ a:hover {
 						<td>${q.salary }</td>
 						<td>${q.roll }</td>
 						<td>${q.joiningdate }</td>
-						</c:forEach>
-						<c:forEach items="${sessionScope.departmentprofessorlist }" var="b">
-							<td>${b.departmentid.department }</td>
-						</c:forEach>
-						
-						<c:forEach items="${sessionScope.semprofessorlist }" var="a">
-							<td>${a.semid.semname }</td>
-						</c:forEach>
-						
-						<c:forEach items="${sessionScope.subjectrofessorlist }" var="b">
-							<td>${b.subjectid.subject }</td>
-						</c:forEach>
-						
-						<c:forEach items="${sessionScope.colprofessorlist }" var="q">
-						<td><a href="<%=request.getContextPath()%>/PhotoUpload?flag=editprofile&id=${q.id }">Insert Image</a></td>
-						
-						</c:forEach>
-					</tr>	
-					<% }else if(s1.equalsIgnoreCase("department")){%>
-					<tr>
-					<c:forEach items="${sessionScope.depprofessorlist }" var="q">
-						<td>${q.professorid.firstName }</td>
-						<td>${q.professorid.lastName }</td>
-						<td>${q.professorid.email }</td>
-						<td>${q.professorid.con_no }</td>
-						<td>${q.professorid.address }</td>
-						<td>${q.professorid.gender }</td>
-						<td>${q.professorid.salary }</td>
-						<td>${q.professorid.roll }</td>
-						<td>${q.professorid.joiningdate }</td>
-						<td>${q.departmentid.department }</td>
-						</c:forEach>
-				
-						<c:forEach items="${sessionScope.semprofessorlist }" var="a">
-							<td>${a.semid.semname }</td>
-						</c:forEach>
-					
-						<c:forEach items="${sessionScope.subjectrofessorlist }" var="b">
-							<td>${b.subjectid.subject }</td>
-						</c:forEach>
+						<td><a href="<%=request.getContextPath()%>/Professor?flag=viewCollegeProfessorDetails&id=${q.id }">View Details</a></td>
 					</tr>
-					<%} else if(s1.equalsIgnoreCase("semester")){%>
-					<tr>
-					<c:forEach items="${sessionScope.semprofessorlist }" var="q">
-					
-						<td>${q.professorid.firstName }</td>
-						<td>${q.professorid.lastName }</td>
-						<td>${q.professorid.email }</td>
-						<td>${q.professorid.con_no }</td>
-						<td>${q.professorid.address }</td>
-						<td>${q.professorid.gender }</td>
-						<td>${q.professorid.salary }</td>
-						<td>${q.professorid.roll }</td>
-						<td>${q.professorid.joiningdate }</td>
-					</c:forEach>
-						
-						<c:forEach items="${sessionScope.subjectrofessorlist }" var="b">
-							<td>${b.subjectid.subject }</td>
-						</c:forEach>
-					</tr>
-					<%} else if(s1.equalsIgnoreCase("subject")){%>
-					<tr>
-					<c:forEach items="${sessionScope.subprofessorlist }" var="q">
-						
-						<td>${q.professorid.firstName }</td>
-						<td>${q.professorid.lastName }</td>
-						<td>${q.professorid.email }</td>
-						<td>${q.professorid.con_no }</td>
-						<td>${q.professorid.address }</td>
-						<td>${q.professorid.gender }</td>
-						<td>${q.professorid.salary }</td>
-						<td>${q.professorid.roll }</td>
-						<td>${q.professorid.joiningdate }</td>
-					
-					</c:forEach>
-					</tr>	
-					
-				<%} %>
+					<%i++; %>
+				</c:forEach>
 		</table>
 	</div>
 </div>

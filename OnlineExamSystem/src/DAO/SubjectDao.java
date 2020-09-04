@@ -18,8 +18,9 @@ public class SubjectDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from SubjectVo AS s where s.subject =:subjectname");
+			Query q = session.createQuery("from SubjectVo AS s where s.subject =:subjectname And s.departmentid =:depid ");
 			q.setParameter("subjectname", subjectvo.getSubject());
+			q.setParameter("depid", subjectvo.getDepartmentid());
 			subjectlist = q.list();
 			transaction.commit();
 			session.close();
@@ -65,8 +66,7 @@ public class SubjectDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from SubjectVo AS a where a.collegeid =:id And a.semid =:sem");
-			q.setParameter("id", subjectvo.getCollegeid());
+			Query q = session.createQuery("from SubjectVo AS a where a.semid =:sem");
 			q.setParameter("sem", subjectvo.getSemid());
 			subjectlist = q.list();
 			transaction.commit();

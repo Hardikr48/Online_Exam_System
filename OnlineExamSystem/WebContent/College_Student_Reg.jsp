@@ -62,23 +62,23 @@ $(document).ready(function() {
 
 <div>
 	<ul>
-	  <c:forEach items="${sessionScope.collegedata }" var="q">
-		<li><a href="College_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
-		<li><a href="Com_Login.jsp">Logout</a></li>
-	  </c:forEach>
+		<c:forEach items="${sessionScope.collegedata }" var="q">
+			<li><a href="College_Login.jsp">Home</a></li>
+			<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
+			<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
+			<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
+			<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
+			<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
+			<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
+			<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
+			<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
+			<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
+			<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
+			<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
+			<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
+			<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
+			<li><a href="Com_Login.jsp">Logout</a></li>
+	  	</c:forEach>
 	</ul>
 </div>
 	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
@@ -86,7 +86,7 @@ $(document).ready(function() {
 			<%
 				if (session.getAttribute("studentadd") != null) {
 			%>
-			<p style="color: red">Add Successfully</p>
+			<p style="color: red">Add Successfully <%out.print(session.getAttribute("rollno")); %></p>
 			<%
 				session.removeAttribute("studentadd");
 			} else if (session.getAttribute("emailidadd") != null) {
@@ -102,7 +102,7 @@ $(document).ready(function() {
 			}
 			%>
 			<h3>Add Student</h3>
-			<form method="post" action="<%=request.getContextPath()%>/Student">
+			<form method="post" action="<%=request.getContextPath()%>/Student" enctype="multipart/form-data">
 				<span>*</span> First_Name: 
 				<input type="text" name="firstName"required><br><br> 
 				
@@ -117,6 +117,7 @@ $(document).ready(function() {
 					<option>Select</option>
 					<c:forEach items="${sessionScope.departmentist }" var="q">
 						<option value="${q.id }">${q.department }</option>
+						
 					</c:forEach>
 				</select><br><br>
 				
@@ -124,8 +125,6 @@ $(document).ready(function() {
 				<select	name="semid" id="semesterid" required>
 					<option value="">Select Semester</option>
 				</select><br> <br> 
-				
-				<span>*</span>Roll No.:-<input type = "text" name="roll" required><br><br>
 				
 				<span>*</span>Address:
 				<textarea rows="2" cols="10" name="address" style="margin: 0px; width: 192px; height: 27px;"required></textarea>
@@ -140,7 +139,12 @@ $(document).ready(function() {
 				<span>*</span>Password:
 				<input type="password" name="pass" required><br><br>
 				
-				<input type="hidden" name="flag" value="insert">
+				
+				<c:forEach items="${sessionScope.departmentist }" var="q">
+					<input type="hidden" name="departmentcode" value="${q.departmentcode }">
+				</c:forEach>
+				<input type="file" name="myfile" accept="image/*"><br><br>
+	            <input type="hidden" name="flag" value="insert">
 	            <input type="submit" name="submit">
 			</form>
 		</div>

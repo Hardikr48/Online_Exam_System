@@ -65,6 +65,10 @@ public class ProfessorVo {
 	@JoinColumn(name = "Collegeid")
 	private CollegeVo collegeid;
 	
+	@ManyToOne
+	@JoinColumn(name = "Departmentid")
+	private DepartmentVo departmentid;
+	
 	@OneToMany(mappedBy = "professorid")
 	private List<DepartmentProfessorVo> departmentprofessor;
 	
@@ -200,6 +204,14 @@ public class ProfessorVo {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public DepartmentVo getDepartmentid() {
+		return departmentid;
+	}
+
+	public void setDepartmentid(DepartmentVo departmentid) {
+		this.departmentid = departmentid;
 	}
 
 }
