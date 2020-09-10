@@ -1,7 +1,8 @@
 package VO;
 
 public class Questionlist {
-	private String id,Que,op1,op2,op3,op4,ans;
+	private String id,Que,op1,op2,op3,op4,ans,topic;
+	private int time , marks ,subject;
 	
 	public String getId() {
 		return id;
@@ -44,5 +45,29 @@ public class Questionlist {
 	}
 	public void setAns(String ans) {
 		this.ans = ans;
+	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
+	public int getMarks() {
+		return marks;
+	}
+	public void setMarks(int marks) {
+		this.marks = marks;
+	}
+	public String getTopic() {
+		return topic;
+	}
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+	public int getSubject() {
+		return subject;
+	}
+	public void setSubject(int subject) {
+		this.subject = subject;
 	}
 }

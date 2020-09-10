@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -88,6 +89,8 @@ public class Department1 extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("....................................");
 		String flag = request.getParameter("flag");
+		System.out.println(flag);
+		
 		if(flag.equalsIgnoreCase("exam")) {
 			examStart(request,response);
 		}
@@ -181,103 +184,25 @@ public class Department1 extends HttpServlet {
 		}
 	}
 
+
 	private void examStart(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
-		System.out.println("-------------------------------------------------");
+		
 		List<QuestionVo> QueList = new ArrayList<QuestionVo>();
-		int examid = (int)session.getAttribute("examid");
+		int examid = (int)session.getAttribute("examId");
 		
-		ExamVo examVo = new ExamVo();
-		examVo.setId(examid);
-		
-		
-		System.out.println(examid);
-		ExamPhaseVo examPhaseVo =  new ExamPhaseVo();
-		examPhaseVo.setExamid(examVo);
-		
-		ExamPhaseDao examPhaseDao = new ExamPhaseDao();
-		ArrayList<ExamPhaseVo> questionlist= examPhaseDao.getPhaseList(examPhaseVo);
-		System.out.println(questionlist.size());
-		
-		for(ExamPhaseVo list : questionlist) {
-			int id = list.getId();
-			System.out.println("---------------"+id);
-			examPhaseVo.setId(id);
+		ExamPhaseVo examPhaseVo = new ExamPhaseVo();
+		examPhaseVo.setId(examid);
 			
-			QuestionVo questionVo = new QuestionVo();
-			questionVo.setExamphaseid(examPhaseVo);
-			
-			QuestionDao questionDao = new QuestionDao();
-			ArrayList<QuestionVo> questionlist2= questionDao.getquestion(questionVo);
-			System.out.println("-8-8-8-8-8-----"+questionlist2);
-			QueList.addAll(questionlist2);
-		}
-		System.out.println(QueList.size());
-		session.setAttribute("quelist", QueList);
+		QuestionVo questionVo = new QuestionVo();
+		questionVo.setExamphaseid(examPhaseVo);
 		
-		List<Questionlist> list = new ArrayList<Questionlist>();
-		
-		for (QuestionVo quelist: QueList) {
-			int id = quelist.getId();
-			String id1 = String.valueOf(id);
-			String que = quelist.getQuestion();
-			String op1 = quelist.getOpta();
-			String op2 = quelist.getOptb();
-			String op3 = quelist.getOptc();
-			String op4 = quelist.getOptd();
-			String ans = quelist.getAns();
-			System.out.println("online exam system=   "+id+" "+que+" "+op1+" "+op2+" "+op3+" "+op4+" "+ans );
-			Questionlist questionlist1 = new Questionlist();
-			questionlist1.setQue(que);
-			questionlist1.setId(id1);
-			questionlist1.setOp1(op1);
-			questionlist1.setOp2(op2);
-			questionlist1.setOp3(op3);
-			questionlist1.setOp4(op4);
-			questionlist1.setAns(ans);
-			list.add(questionlist1);
-		}
-		System.out.println(list.size());
-		Gson gson = new Gson();
-		PrintWriter out = response.getWriter();
-		out.print(gson.toJson(list));
-		out.flush();
-		out.close();
-		
-	}
+		QuestionDao questionDao = new QuestionDao();
+		ArrayList<QuestionVo> questionlist2= questionDao.getquestion(questionVo);
+		String topic= questionlist2.get(0).getExamphaseid().getExamtopic();
+		int subject= questionlist2.get(0).getExamphaseid().getSubjectid().getId();
+		QueList.addAll(questionlist2);
 	
-	private void getTime(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		System.out.println("-------------------------------------------------");
-		List<QuestionVo> QueList = new ArrayList<QuestionVo>();
-		int examid = (int)session.getAttribute("examid");
-		
-		ExamVo examVo = new ExamVo();
-		examVo.setId(examid);
-		
-		
-		System.out.println(examid);
-		ExamPhaseVo examPhaseVo =  new ExamPhaseVo();
-		examPhaseVo.setExamid(examVo);
-		
-		ExamPhaseDao examPhaseDao = new ExamPhaseDao();
-		ArrayList<ExamPhaseVo> questionlist= examPhaseDao.getPhaseList(examPhaseVo);
-		System.out.println(questionlist.size());
-		System.out.println(questionlist.get(0).getTime());
-		
-		for(ExamPhaseVo list : questionlist) {
-			int id = list.getId();
-			System.out.println("---------------"+id);
-			examPhaseVo.setId(id);
-			
-			QuestionVo questionVo = new QuestionVo();
-			questionVo.setExamphaseid(examPhaseVo);
-			
-			QuestionDao questionDao = new QuestionDao();
-			ArrayList<QuestionVo> questionlist2= questionDao.getquestion(questionVo);
-			System.out.println("-8-8-8-8-8-----"+questionlist2);
-			QueList.addAll(questionlist2);
-		}
 		System.out.println(QueList.size());
 		session.setAttribute("quelist", QueList);
 		
@@ -292,7 +217,10 @@ public class Department1 extends HttpServlet {
 			String op3 = quelist.getOptc();
 			String op4 = quelist.getOptd();
 			String ans = quelist.getAns();
-			System.out.println("online exam system=   "+id+" "+que+" "+op1+" "+op2+" "+op3+" "+op4+" "+ans );
+			int time = quelist.getExamphaseid().getTime();
+			int marks = quelist.getExamphaseid().getMarks();
+			
+			System.out.println("online exam system=   "+id+" "+que+" "+op1+" "+op2+" "+op3+" "+op4+" "+ans+" "+time+" "+marks+""+topic+""+subject );
 			Questionlist questionlist1 = new Questionlist();
 			questionlist1.setQue(que);
 			questionlist1.setId(id1);
@@ -301,8 +229,13 @@ public class Department1 extends HttpServlet {
 			questionlist1.setOp3(op3);
 			questionlist1.setOp4(op4);
 			questionlist1.setAns(ans);
+			questionlist1.setTime(time);
+			questionlist1.setMarks(marks);
+			questionlist1.setTopic(topic);
+			questionlist1.setSubject(subject);
 			list.add(questionlist1);
 		}
+		
 		System.out.println(list.size());
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();

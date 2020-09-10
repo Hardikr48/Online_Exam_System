@@ -57,5 +57,7 @@
 		
 		<mapping class="VO.QuestionVo"/>
 		
+		<mapping class="VO.ResultVo"/>
+		
 	</session-factory>
 </hibernate-configuration>

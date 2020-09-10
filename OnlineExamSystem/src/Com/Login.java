@@ -89,7 +89,7 @@ public class Login extends HttpServlet {
 				int loginid = l1.get(0).getId();
 				String lastlogintime = l1.get(0).getLastlogin();
 				
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss a");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss aa");
 				String lastlogin = sdf.format(t1);				
 				session.setAttribute("time", lastlogintime);
 
@@ -172,6 +172,7 @@ public class Login extends HttpServlet {
 					studentvo.setPassword(pass);
 					ArrayList<StudentVo> studentlist = logindao.studentVerify(studentvo);
 					session.setAttribute("studentname", studentlist.get(0).getFirstName());
+					session.setAttribute("studentid", studentlist.get(0).getId());
 					byte[] image= studentlist.get(0).getImage();
 					System.out.println(image);
 					FileOutputStream fout=new FileOutputStream("D:\\ing\\student.jpg");  

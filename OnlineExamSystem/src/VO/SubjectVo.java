@@ -39,14 +39,15 @@ public class SubjectVo {
 	@ManyToOne
 	@JoinColumn(name = "Departmentid")
 	private DepartmentVo departmentid;
-
-	@OneToMany( mappedBy = "subjectid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	
+	@OneToMany( mappedBy = "subjectid")
 	private List<SubjectProfessorVo> subjectprofessorid;
 	
-	@OneToMany( mappedBy = "subjectid", cascade = CascadeType.REMOVE)
-	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany( mappedBy = "subjectid")
 	private List<ExamVo> examid;
+	
+	@OneToMany( mappedBy = "subjectid")
+	private List<ResultVo> resultid;
 	
 	public int getId() {
 		return id;
@@ -102,6 +103,14 @@ public class SubjectVo {
 
 	public void setExamid(List<ExamVo> examid) {
 		this.examid = examid;
+	}
+
+	public List<ResultVo> getResultid() {
+		return resultid;
+	}
+
+	public void setResultid(List<ResultVo> resultid) {
+		this.resultid = resultid;
 	}
 	
 }

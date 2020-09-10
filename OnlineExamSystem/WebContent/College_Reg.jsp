@@ -39,5 +39,11 @@
 		</form>
 		<a href="Com_Login.jsp">Login</a>
 	</div>
+	<footer
+        style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
+        <div class=" container">
+            <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
+        </div>
+    </footer>
 </body>
 </html>

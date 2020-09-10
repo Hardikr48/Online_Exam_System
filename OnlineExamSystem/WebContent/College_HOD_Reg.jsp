@@ -148,8 +148,8 @@ $(document).ready(function() {
 	  </c:forEach>
 	</ul>
 
-	<div style="margin-left: 25%; padding: 1px 16px; height: 1000px;">
-		<div style="padding-top: 2%;">
+	<div style="margin-left: 15%; padding: 1px 16px; height: 1000px;">
+		<div style="padding-top: 3%;">
 			<%
 				if (session.getAttribute("professoradd") != null) {
 			%>
@@ -232,6 +232,6 @@ $(document).ready(function() {
             <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
         </div>
     </footer>
-</body>
+
 </body>
 </html>

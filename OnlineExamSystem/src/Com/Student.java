@@ -84,6 +84,14 @@ public class Student extends HttpServlet {
 			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("College_Student_Edit.jsp");
 		}
+		if (flag.equalsIgnoreCase("editprofilestudent")) {
+			int studentid = (Integer.parseInt(request.getParameter("id")));
+			session.setAttribute("studentid", studentid);
+			editStudentProfile(request, response);
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
+			response.sendRedirect("Student_Edit.jsp");
+		}
 		if (flag.equalsIgnoreCase("searchcollegestudent")) {
 			searchCollegeStudent(request, response);
 			response.sendRedirect("College_Student_List.jsp");
@@ -179,6 +187,11 @@ public class Student extends HttpServlet {
 			editStudentProfile(request, response);
 			response.sendRedirect("College_Student_Edit.jsp");
 		}
+		if (flag.equalsIgnoreCase("updatestudent")) {
+			updateStudentProfile(request, response);
+			editStudentProfile(request, response);
+			response.sendRedirect("Student_Edit.jsp");
+		}
 	}
 
 	private void studentInsert(HttpServletRequest request, HttpServletResponse response)
@@ -214,7 +227,7 @@ public class Student extends HttpServlet {
 				String roll = null;
 				
 				Timestamp t1 = new Timestamp(System.currentTimeMillis());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss a");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss aa");
 				String joiningdate = sdf.format(t1);
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yy");
 				String yearoflastdigital = sdf2.format(t1);
@@ -275,8 +288,6 @@ public class Student extends HttpServlet {
 				studentvo.setSemesterid(semVo);
 				studentvo.setCollegeid(collegevo);
 				studentvo.setImage(bytes);
-				
-				
 				
 				LoginVO loginvo = new LoginVO();
 				loginvo.setStudentid(studentvo);

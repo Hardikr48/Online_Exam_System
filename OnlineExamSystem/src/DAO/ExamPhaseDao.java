@@ -50,7 +50,7 @@ public class ExamPhaseDao {
 			SessionFactory sessionfactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			Session session = sessionfactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			Query q = session.createQuery("from ExamPhaseVo where examid ="+ examPhaseVo.getExamid().getId());
+			Query q = session.createQuery("from ExamPhaseVo where id ="+ examPhaseVo.getId());
 			examlist = q.list();
 			transaction.commit();
 			session.close();

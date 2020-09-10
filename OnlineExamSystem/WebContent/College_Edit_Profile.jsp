@@ -72,9 +72,9 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid" style="position: relative;">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#" style="color: black">Onlie Examination System</a>
+                <a class="navbar-brand" href="#" style="color: black">Online Examination System</a>
                 <span style="text-align: center;"> <a class="navbar-brand" 
-                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Or Engineering</a>
+                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Of Engineering</a>
                 </span>
                 <span style="right:5%; position: absolute; padding-top:5px;" >
                     <div class="dropdown">                    	
@@ -112,7 +112,7 @@
 	  </c:forEach>
 	</ul>
 	<div style="margin-left: 15%; padding: 1px 16px; height: 1000px;">
-		<div style="padding-top: 2%;">
+		<div style="padding-top: 3%;">
 			<%
 				if (session.getAttribute("loginResult") != null) {
 			%>

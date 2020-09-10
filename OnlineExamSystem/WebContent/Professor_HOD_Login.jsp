@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -107,16 +108,13 @@
 	  </c:forEach>
 	</ul>
 
-<div style="margin-left:25%;padding:1px 16px;height:1000px;">
-	<div style="text-align: left;">
+<div style="margin-left:15%;padding:1px 16px;height:1000px; ">
+	<div style="text-align: left; margin-top: 50px">
 		<%out.print( "Last Login Time :"+session.getAttribute("time"));%>
+		<span style="top:0;margin-left: 800px; "><%out.print(  "Welcome to :"+session.getAttribute("professorname"));%></span>
 		
 	</div>
-	<div style="text-align: left; margin-left: 60%;">
-		<%out.print(  "Welcome to :"+session.getAttribute("professorname"));%>
-		
-	</div>
-	<table border="1"style="margin-top: 2%;">
+	<table border="1"style="margin-top: 3%;">
 	<tr>
 		<td>ProfessorName</td>
 		<td>Email</td>
@@ -139,5 +137,11 @@
         </div>
     </footer>
 </div>
+<footer
+        style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
+        <div class=" container">
+            <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
+        </div>
+    </footer>
 </body>
 </html>

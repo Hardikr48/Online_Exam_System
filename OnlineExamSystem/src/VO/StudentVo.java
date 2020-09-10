@@ -73,6 +73,9 @@ public class StudentVo {
 	@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)
 	private List<LoginVO> loginid ;
 	
+	@OneToMany(mappedBy = "studentid")
+	private List<ResultVo> resultid;
+	
 	public int getId() {
 		return id;
 	}
@@ -190,5 +193,13 @@ public class StudentVo {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public List<ResultVo> getResultid() {
+		return resultid;
+	}
+
+	public void setResultid(List<ResultVo> resultid) {
+		this.resultid = resultid;
 	}
 }

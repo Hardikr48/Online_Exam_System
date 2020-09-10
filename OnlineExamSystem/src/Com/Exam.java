@@ -71,6 +71,13 @@ public class Exam extends HttpServlet {
 			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("HOD_Exam_Reg.jsp");
 		}
+		if (flag.equalsIgnoreCase("professor")) {
+			int collegeid = Integer.parseInt(request.getParameter("id"));
+			session.setAttribute("collegeid", collegeid);
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
+			response.sendRedirect("Professor_Exam_Reg.jsp");
+		}
 		if (flag.equalsIgnoreCase("stuexaminsert")) {
 			int collegeid = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("collegeid", collegeid);
@@ -121,6 +128,8 @@ public class Exam extends HttpServlet {
 			response.sendRedirect("Student_List_Exam.jsp");
 		}
 		if (flag.equalsIgnoreCase("examrules")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			session.setAttribute("examId", id);
 			response.sendRedirect("Exam_Rules.jsp");
 		}
 		
@@ -131,7 +140,7 @@ public class Exam extends HttpServlet {
 		
 		int examid = Integer.parseInt(request.getParameter("examid"));
 		session.setAttribute("examid", examid);
-		System.out.println("-----------------------------------------"+examid);
+		System.out.println("-----"+examid);
 
 	}
 

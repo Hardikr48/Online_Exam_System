@@ -10,47 +10,42 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script>
 
-/* $(document).ready(function(){
-	var username="exam";
-   	$.post('Department1',{flag:username},function(response) {
-   		var obj = JSON.parse(response);
-   		alert(response)
-   		var dataObject = obj.data;
-   		
-	    var dataMap = new Map(Object.entries(dataObject));
-	    var resultMap = new Map();
-	    for (const key of dataMap.keys())  {
-	        console.log(key);
-	        var keyMap = new Map(Object.entries(dataMap.get(key)));
-	        resultMap.set(key, keyMap);
-	    }
-	
-	    console.log("done!");
-	    return resultMap;
- 	});
-}); */
 $(document).ready(function(){
-	const myMap = new Map();
 	var username="exam";
+	var getans;
+	var queid;
+	var selectedans;
+	var selectedid;
+	var correct_ans=0;
+	var wrong_ans=0;
+	var mark_ans=0;
+	var totalmarks=0;
+	var val;
+	var time = 0;
+	var topic;
+	var subject;
+	var ans= [];  
+	let obj ;
    	$.post('Department1',{flag:username},function(response) {
-   		var obj = JSON.parse(response);
+   		obj = JSON.parse(response);
+   		var i =1;
+   		var a=0;
+   		$.each(obj, function(index, value) {
+ 		   	console.log(obj[index]);
+ 		   	var html = '';
+ 		   html += '<li><button class="button8"  data-id="'+a+'" data-id2= "'+i+' "id="queclik'+i+'">'+i+'</button></li>';
+ 		   $('.box1212').append(html);
+ 		   	i++;
+ 		   	a++;
+ 		   	console.log("i ==>"+i+"a==>"+a);
+ 		 });
+   		time = obj[0].time;
+   		totalmarks = obj[0].marks;
+   		topic=obj[0].topic;
+   		subject=obj[0].subject;
+   		console.log(time);
    		
-   		$.each( obj, function( key , value ) {
-   		myMap[key] = value;
-   		});
-   	});
-   	$(document).on('click', '.button', function(){
-		var queid = $('#queclik').val();
-		alert(queid);
-		var getque= myMap[queid];
-		$.each(getque, function(index, value) {
-			$('<option>').val(obj[index].id).text(obj[index].subject).appendTo(select);
-		 });
-	 });
-   	var h3 = document.getElementsByTagName("h3");
-   	h3[0].innerHTML = "Countdown Timer With JS";
-
-   		var sec = 1800,
+   		var sec = time;
    	    countDiv    = document.getElementById("timer"),
    	    secpass,
    	    countDown   = setInterval(function () {
@@ -58,54 +53,266 @@ $(document).ready(function(){
    	        
    	        secpass();
    	    }, 1000);
+   	    
+   	 function secpass() {
+    	    'use strict';
+    	    
+    	    var min     = Math.floor(sec / 60),
+    	        remSec  = sec % 60;
+    	    
+    	    if (remSec < 10) {
+    	        
+    	        remSec = '0' + remSec;
+    	    
+    	    }
+    	    if (min < 10) {
+    	        
+    	        min = '0' + min;
+    	    
+    	    }
+    	    countDiv.innerHTML = min + ":" + remSec;
+    	    
+    	    if (sec > 0) {
+    	        
+    	        sec = sec - 1;
+    	        
+    	    } else {
+    	    	
+    	        clearInterval(countDown);
+    	        countDiv.innerHTML = 'countdown done';
+    	        
+    	        var json = JSON.stringify(ans);
+    	        --i;
+    	        sessionStorage.setItem("topic", topic);
+    	        sessionStorage.setItem("subject", subject);
+    	        sessionStorage.setItem("que", i);
+    	        sessionStorage.setItem("time", time);
+    	        sessionStorage.setItem("listofans", json);
+    	        sessionStorage.setItem("correctans", correct_ans);
+    	        sessionStorage.setItem("worngans", wrong_ans);
+    	        sessionStorage.setItem("markans", mark_ans);
+    	        sessionStorage.setItem("totalmark", totalmarks);
 
-   	function secpass() {
-   	    'use strict';
+    	        window.location.replace("NewFile.jsp");
+    	    }
+    	}
    	    
-   	    var min     = Math.floor(sec / 60),
-   	        remSec  = sec % 60;
    	    
-   	    if (remSec < 10) {
-   	        
-   	        remSec = '0' + remSec;
-   	    
-   	    }
-   	    if (min < 10) {
-   	        
-   	        min = '0' + min;
-   	    
-   	    }
-   	    countDiv.innerHTML = min + ":" + remSec;
-   	    
-   	    if (sec > 0) {
-   	        
-   	        sec = sec - 1;
-   	        
-   	    } else {
-   	        
-   	        clearInterval(countDown);
-   	        
-   	        countDiv.innerHTML = 'countdown done';
-   	        
-   	    }
-   	}
-   	
-   
+   		var number = $(this).attr("data-id");
+		let getque= obj[0];
+	
+	
+	document.getElementById("queid").value = 0 ;
+	document.getElementById("id").value = getque.id ;
+	document.getElementById("ans").value = getque.ans ;
+	document.getElementById("op1").value = getque.op1;
+	document.getElementById("op2").value = getque.op2;
+	document.getElementById("op3").value = getque.op3;
+	document.getElementById("op4").value = getque.op4;
+	
+	document.getElementById("op11").innerHTML = getque.op1;
+ 	document.getElementById("op22").innerHTML = getque.op2;
+ 	document.getElementById("op33").innerHTML = getque.op3;
+ 	document.getElementById("op44").innerHTML = getque.op4;
+ 	document.getElementById("que").innerHTML = getque.Que;
+ 
+	});
+   	$(document).on('click', '.button8', function(){
+   		var radios = document.getElementsByName('fname');
+   		for (c=0;c<radios.length;c++){
+   			radios[c].checked=false;
+   		}
+   		var number = $(this).attr("data-id");
+		let getque= obj[number];
 
+		document.getElementById("queid").value = number;
+		document.getElementById("op1").value = getque.op1;
+		document.getElementById("op2").value = getque.op2;
+		document.getElementById("op3").value = getque.op3;
+		document.getElementById("op4").value = getque.op4;
+		document.getElementById("id").value = getque.id ;
+		document.getElementById("ans").value = getque.ans ;
+		
+		document.getElementById("op11").innerHTML = getque.op1;
+	 	document.getElementById("op22").innerHTML = getque.op2;
+	 	document.getElementById("op33").innerHTML = getque.op3;
+	 	document.getElementById("op44").innerHTML = getque.op4;
+	 	document.getElementById("que").innerHTML = getque.Que;
+	 }); 
+   	$(document).on('click', '.button5' , function(){
+   		var radios = document.getElementsByName('fname');
+		console.log(radios);
+		var val= "";
+		var id;
+		for (var i = 0, length = radios.length; i < length; i++) {
+		    if (radios[i].checked) {
+		       val = radios[i].value;
+		       console.log(val);
+		       break;
+		     }
+		}
+		if (val == "" ) {
+		  alert('please select choice answer');
+		  
+		} else if ( val != "" ) {
+			var quechange=$('#queid').val();
+			var nos = ++quechange;
+			var quid=$("#queclik"+nos);
+			
+			$(quid).css("background-color","green");
+			
+			
+			for (c=0;c<radios.length;c++){
+	   			radios[c].checked=false;
+	   		}
+	   		
+	   		id=$('#queid').val();
+		   	id++;
+			let getque= obj[id];
+			
+			selectedid=$('#id').val();
+			selectedans=$('#ans').val();
+			
+			var points = new Array();
+	    	points.push(selectedid);
+	      	points.push(val);
+	      	ans.push(points);
+	      	
+	      	for (let index = 0; index < obj.length; index++) {
+	      		var element = obj[index];
+	        	if(element.id == selectedid && element.ans == val){
+	        		correct_ans++;
+	        	}
+	        	else if(element.id == selectedid && element.ans != val){
+	        		wrong_ans++;
+	        	}
+	        }
+			document.getElementById("queid").value = id;
+			document.getElementById("op1").value = getque.op1;
+			document.getElementById("op2").value = getque.op2;
+			document.getElementById("op3").value = getque.op3;
+			document.getElementById("op4").value = getque.op4;
+			document.getElementById("id").value = getque.id ;
+			document.getElementById("ans").value = getque.ans ;
+			
+			document.getElementById("op11").innerHTML = getque.op1;
+		 	document.getElementById("op22").innerHTML = getque.op2;
+		 	document.getElementById("op33").innerHTML = getque.op3;
+		 	document.getElementById("op44").innerHTML = getque.op4;
+		 	document.getElementById("que").innerHTML = getque.Que;	
+		}
+	 });
+	$(document).on('click', '.button1', function(){
+		var radios = document.getElementsByName('fname');
+		console.log(radios);
+		var val= "";
+		var id;
+		for (var i = 0, length = radios.length; i < length; i++) {
+		    if (radios[i].checked) {
+		       val = radios[i].value;
+		       console.log(val);
+		       break;
+		     }
+		}
+		if (val == "" ) {
+		  alert('please select choice answer');
+		  
+		} else if ( val != "" ) {
+			var quechange=$('#queid').val();
+			var nos = ++quechange;
+			var quid=$("#queclik"+nos);
+			
+			$(quid).css("background-color","purple");
+			
+			
+			for (c=0;c<radios.length;c++){
+	   			radios[c].checked=false;
+	   		}
+	   		
+	   		id=$('#queid').val();
+		   	id++;
+			let getque= obj[id];
+			
+			selectedid=$('#id').val();
+			selectedans=$('#ans').val();
+			var points = new Array();
+	    	points.push(selectedid);
+	      	points.push(val);
+	      	ans.push(points);
+	      	
+	      	for (let index = 0; index < obj.length; index++) {
+	      		var element = obj[index];
+	        	if(element.id == selectedid && element.ans == val){
+	        		mark_ans++;
+	        		console.log(mark_ans);
+	        	}
+	        	else if(element.id == selectedid && element.ans != val){
+	        		wrong_ans++;
+	        		console.log("wrong_ans = > "+wrong_ans);
+	        	}
+	        }
+			document.getElementById("queid").value = id;
+			document.getElementById("op1").value = getque.op1;
+			document.getElementById("op2").value = getque.op2;
+			document.getElementById("op3").value = getque.op3;
+			document.getElementById("op4").value = getque.op4;
+			document.getElementById("id").value = getque.id;
+			document.getElementById("ans").value = getque.ans;
+
+			document.getElementById("op11").innerHTML = getque.op1;
+		 	document.getElementById("op22").innerHTML = getque.op2;
+		 	document.getElementById("op33").innerHTML = getque.op3;
+		 	document.getElementById("op44").innerHTML = getque.op4;
+		 	document.getElementById("que").innerHTML = getque.Que;	
+		}
+	});
+	$(document).on('click', '.button3', function(){
+		var id;
+		id=$('#queid').val();
+   		id--;
+		let getque= obj[id];
+		
+		document.getElementById("queid").value = id;
+		document.getElementById("op1").value = getque.op1;
+		document.getElementById("op2").value = getque.op2;
+		document.getElementById("op3").value = getque.op3;
+		document.getElementById("op4").value = getque.op4;
+		document.getElementById("id").value = getque.id ;
+		document.getElementById("ans").value = getque.ans ;
+		
+		document.getElementById("op11").innerHTML = getque.op1;
+	 	document.getElementById("op22").innerHTML = getque.op2;
+	 	document.getElementById("op33").innerHTML = getque.op3;
+	 	document.getElementById("op44").innerHTML = getque.op4;
+	 	document.getElementById("que").innerHTML = getque.Que;
+	 
+	 });
 });
 	</script>
 <style>
+.button8 {
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  text-align:center;
+  line-height:50px;
+  border-radius: 25px;
+  text-decoration: none;
+  border: none; 
+}
 h1{
 	font-size: 20px;
 	border:1px solid black;		
 	color:blue;
 	background-color:lightgray;
+	width: 77%;
 }
 .top{
 	border:1px solid black;
 	margin-top:-13px;
-	height: 430px;
-
+	height: 452px;
+	width: 77%;
 }
 h2{
 	border:1px solid black;
@@ -126,24 +333,29 @@ h2{
   cursor: pointer;
 }
 .button1{
-	background-color: orange;
+	background-color: purple;
 }
 .button2{
 	background-color:blue;
 }
 
 .button5{
-	background-color:red;
+    margin-left: 350px;
+	background-color:green;
+}
+.button3{
+margin-left: 350px;
+	background-color: red;
 }
 .box{
 	border-top: 2px solid black;
-	margin-top: 254px;
+	margin-top: 1px;
 }
 .hero{
 	border:1px solid black;
 	width: 20%;
 	margin-left:1163px;
-    margin-top:-509px;
+    margin-top:-533px;
 }
 .button6{
 	background-color: black;
@@ -160,50 +372,73 @@ footer {
   margin-top: 122px;
 }
 .bottom{
-	    margin-left:1163px;;
+	    margin-left:1147px;;
 	    border:1px solid black;
-	    width:20%;
-	    margin-top:8px;
-		height: 395px;
+	    width:301px;
+	    margin-top:-394px;
+		height: 420px;
 }
 header {
   background-color: #666;
-
   text-align: center;
   font-size:20px;
   color: white;
 }
+.box1212{
+list-style-type: none;
+    padding-left: 0px;
+    display: flex;
+    width: 280px;
+    flex-wrap: wrap;
+    margin: auto;
+}
+.box1212 li{
+
+margin:5px 3px;}
 </style>
 </head>
 <body>
 	<header>
 	 <h3>Apollo Institute Of Engineering</h3>
 	</header>
-  		<fieldset style="width:74%;height:497px">
+  			<fieldset style="width:74%;height:522px">
 	 	<legend>QUESTIONS FOR EXAM-1ST EXAM</legend>
 		<h1>Ouestion No.20 Of 20</h1>
+		
    		<div class="top">
+   			<form>
 	   		<h2 id="que"></h2>
-			
-			<input type="radio" name="fname" id="op1">
-	  	  	<label for="fname"id="op1">Old Technology</label><br>
+			<input type="hidden" name="id" id="queid" value="">
+			<input type="hidden" name="id" id="id" value="">
+			<input type="hidden" name="id" id="ans" value="">
+			<input type="radio" name="fname" id="op1" >
+	  	  	<label id="op11">Old Technology</label><br>
 		  	
-		  	<input type="radio" name="fname">
-		  	<label for="fname" id="op2">New Technology</label><br>
+		  	<input type="radio" name="fname" id="op2">
+		  	<label id="op22">New Technology</label><br>
 		  	
-		  	<input type="radio" name="fname">
-		  	<label for="fname" id="op3">Middle Technology</label><br>
+		  	<input type="radio" name="fname" id="op3">
+		  	<label id="op33">Middle Technology</label><br>
 		  	
-		  	<input type="radio" name="fname">
-		  	<label for="fname" id="op4" >All of the abive</label><br>
+		  	<input type="radio" name="fname" id="op4">
+		  	<label id="op44" >All of the abive</label><br>
 		  	
-		  	<div class="box">
-			  	<button class="button button1">Review later</button>
-			  	<button class="button button2">Clear</button>
-			  	<button class="button button3">Black</button>
-			  	<button class="button button4">Save& Next</button>
-			  	<button class="button button5">Submit Quiz</button>
+		  	<input type="reset" style="margin-top: 259px; background-color: blue;" name="reset">
+		  	</form>
+		  	<div class="box" id="box">
+			  	<button class="button button1 ">Mark & Review </button>
+			  	<button class="button button3">Previous Question</button>
+			  	<button class="button button5">Save & Next</button>
 			</div>
+			<div class="bottom">
+			<!-- <table style="margin-left: 19px;"> -->
+			<p style="margin-left: 19px">View Question palettle</p>
+			<ul class="box1212">
+			
+			</ul>
+
+			
+ 		  </div>
 		</div>
 	</fieldset>
 <div class="hero">
@@ -218,26 +453,11 @@ header {
 		<p style="margin-left: 95px;margin-top:5px">Hardik Ramani</p>
 	</div>
 
-<div class="bottom">
-	<table style="margin-left: 19px;">
-		<p style="margin-left: 19px">View Question palettle</p>
-		<%int i = 1; %>
-	 	<tr>
-	 		<c:forEach items="${sessionScope.quelist }" var="q">
-	 			<%if (i%5==0){%>
-						<td><button class="button button6"  data-semester_id="${q.id }" id="queclik" value="${q.id }"><%=i %></button></td>
-					<tr>
-				<%}else{ %>
-					<td><button class="button button6"id="queclik" data-semester_id="${q.id }" value="${q.id }"><%=i %></button></td>
-				<%}i++; %>
-			</c:forEach>
-		</tr>
-	</table>
-</div>
+
 <footer
         style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
         <div class=" container">
-            <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
+            <p>Â© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
         </div>
     </footer>
 </body>

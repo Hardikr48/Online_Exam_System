@@ -68,13 +68,13 @@
 </head>
 
 <body>
-<c:forEach items="${sessionScope.collegedata }" var="q" end="0">
+<c:forEach items="${sessionScope.studentdata }" var="q" end="0">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid" style="position: relative;">
             <div class="navbar-header">
                 <a class="navbar-brand"  style="color: black">Onlie Examination System</a>
                 <span style="text-align: center;"> <a class="navbar-brand" 
-                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Or Engineering</a>
+                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Of Engineering</a>
                 </span>
                 <span style="right:5%; position: absolute; padding-top:5px;" >
                     <div class="dropdown">                    	
@@ -82,7 +82,7 @@
                             style="border-radius: 50%;">&nbsp;<i class="fa fa-ellipsis-v" style="font-size:24px; position: absolute; top: 20%; color: black;"></i>
                         <div class="dropdown-content">
                             <a href="#">View Profile</a><br>
-                            <a href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit Profile</a><br>
+                            <a href="<%=request.getContextPath()%>/Student?flag=editprofilestudent&id=${q.id }">Edit Profile</a><br>
                             <a href="#">Log out</a>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
 	  <c:forEach items="${sessionScope.studentdata }" var="q">
 		<li><a href="Professor_Login.jsp">Home</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=studentexamlist&id=${q.id }">View Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Report</a></li>
+		<li><a href="<%=request.getContextPath()%>/Result?flag=studentid&id=${q.id }">View Report</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
@@ -107,7 +107,7 @@
 	</div>
 	<table border="1" style="margin-top: 2%; text-align: center; text-transform: capitalize; ">
 	<tr>
-	<td>CollegeName</td>
+	<td>Student Name</td>
 	<td>Address</td>
 	<td>Email</td>
 	</tr>
@@ -120,5 +120,11 @@
 		</c:forEach>
 	</table>
 </div>
+<footer
+        style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
+        <div class=" container">
+            <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
+        </div>
+    </footer>
 </body>
 </html>

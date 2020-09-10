@@ -72,6 +72,10 @@ public class Subject extends HttpServlet {
 			searchDepartmentSubject(request, response);
 			response.sendRedirect("CollegeDepartmentSubjectList.jsp");
 		}
+		if (flag.equalsIgnoreCase("professorsubject")) {
+			searchDepartmentSubject(request, response);
+			response.sendRedirect("Professor_List_subject.jsp");
+		}
 		if (flag.equalsIgnoreCase("hodviewsubject")) {
 			searchDepartmentSubject(request, response);
 			response.sendRedirect("HOD_Subject_List.jsp");

@@ -146,6 +146,10 @@ public class Professor extends HttpServlet {
 			searchProfessorSemester(request, response);
 			response.sendRedirect("CollegeProfessorSemList.jsp");
 		}
+		if (flag.equalsIgnoreCase("professorsubject")) {
+			searchProfessorSemester(request, response);
+			response.sendRedirect("Professor_List_subject.jsp");
+		}
 		if (flag.equalsIgnoreCase("viewCollegeProfessorSemesterSubjectList")) {
 			int semid = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("viewCollegeProfessorSemesterSubjectList", semid);
@@ -334,7 +338,7 @@ public class Professor extends HttpServlet {
 				byte[] bytes = IOUtils.toByteArray(inputstream);
 
 				Timestamp t1 = new Timestamp(System.currentTimeMillis());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss a");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy  hh:mm:ss aa");
 				String joiningdate = sdf.format(t1);
 
 				ProfessorVo professorvo = new ProfessorVo();
@@ -372,6 +376,7 @@ public class Professor extends HttpServlet {
 						professordao.professorInsert(professorvo, loginvo);
 
 					} else if (flag2.equalsIgnoreCase("hod")) {
+						
 						DepartmentProfessorDao departmentprofessordao = new DepartmentProfessorDao();
 						ArrayList<DepartmentProfessorVo> hodchack = departmentprofessordao
 								.chackHodProfessor(departmentprofessorvo);
