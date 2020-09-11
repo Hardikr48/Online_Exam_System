@@ -23,7 +23,6 @@
 <script>
 $(document).ready(function() {                        
 	$('#deaprtmentid').change(function(event) {  
-		var li = 
         var username=$('#deaprtmentid').val();
      $.get('Department1',{q:username},function(response) {
     	 var obj = JSON.parse(response);
@@ -145,7 +144,7 @@ li a:hover:not (.active ) {
 	</ul>
 </div>
 	<div style="margin-left:15%; padding: 1px 16px; height: 1000px;">
-		<div style="padding-top: 3%;">
+		<div style="padding-top: 4%;">
 			<%
 				if (session.getAttribute("addsubject") != null) {
 			%>

@@ -138,7 +138,7 @@ li a:hover:not (.active ) {
 	</ul>
 
 	<div style="margin-left: 15%; padding: 1px 16px; height: 1000px;">
-		<div style="padding-top: 3%;">
+		<div style="padding-top: 4%;">
 			<%
 				if (session.getAttribute("studentadd") != null) {
 			%>

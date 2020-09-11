@@ -82,26 +82,22 @@
                         <img src="img/professor.jpg" alt="Cinque Terre" width="40" height="40" 
                             style="border-radius: 50%;">&nbsp;<i class="fa fa-ellipsis-v" style="font-size:24px; position: absolute; top: 20%; color: black;"></i>
                         <div class="dropdown-content">
-                            <a href="#">View Profile</a><br>
                             <a href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit Profile</a><br>
-                            <a href="#">Log out</a>
-                         
+                            <a href="Com_Login.jsp">Log out</a>
                         </div>
                     </div>
                 </span>
             </div>
         </div>
     </nav>
-</c:forEach> 
+</c:forEach>
 	<ul>
 	  <c:forEach items="${sessionScope.professordata }" var="q">
 		<li><a href="Professor_Login.jsp">Home</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=professor&id=${q.collegeid.id }">Add Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add questions</a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=professorsubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=professorsubject123&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=professorstudent&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchprofessordexam&id=${q.id }">View Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Questions</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>

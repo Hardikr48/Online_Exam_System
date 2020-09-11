@@ -166,7 +166,7 @@ $(document).ready(function(){
 	<input type="text" name="result1" id="result1" style="border:hidden;font-size: 28px; margin-top:10px;  background-color: lightgray;color: black" readonly="readonly"><br><br>
 	
 	<label  style="font-size: 28px;margin-left: 345px">Mark obtained <b><span style="font-size: 25px;">&#37;</span>:</b></label>
-	<input type="text" name="result" id="result" style="border:hidden;font-size: 28px;width:50px ;background-color: lightgray;color: black" readonly="readonly"&#37;><br><br>	
+	<input type="text" name="result" id="result" style="border:hidden;font-size: 28px;background-color: lightgray;color: black" readonly="readonly"&#37;><br><br>	
 	
 	<label  style="font-size: 28px;margin-left: 345px">Time :</label>
 	<input type="text" name="time"  id="time" style="border:hidden;font-size: 28px;width:50px ; background-color: lightgray;color: black" readonly="readonly"><b><span style="font-size: 20px;">Minute</span></b><br><br>

@@ -11,8 +11,38 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.filterable .btn-filter').click(function(){
+        var $panel = $(this).parents('.filterable'),
+        $filters = $panel.find('.filters input'),
+        $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('tr').show();
+        }
+    });
+});
+</script>
+<script type="text/javascript">
+function filterTable() {
+	  const query = q => document.querySelectorAll(q);
+	  const filters = [...query('th input')].map(e => new RegExp(e.value, 'i'));
+
+	  query('tbody tr').forEach(row => row.style.display = 
+	    filters.every((f, i) => f.test(row.cells[i].textContent)) ? '' : 'none');
+	}
+</script>
 <style>
 ul {
 	list-style-type: none;
@@ -68,6 +98,31 @@ li a:hover:not (.active ) {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+.filterable {
+    margin-top: 15px;
+     width: 1278px;
+    
+}
+.filterable .panel-heading .pull-right {
+    margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+    color: #333;
+}
 </style>
 </head>
 
@@ -118,28 +173,51 @@ li a:hover:not (.active ) {
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
-
-<div style="margin-left:15%;padding:1px 16px;height:1000px;">
-	<div style="padding-top:3%;" >
-		<h3>View Subject</h3>
-		<table border="1">
-			<tr>
-				<td>Subject Name</td>
-				<td>Semester</td>
-				<td>Department Name</td>
-				<td>View Subject</td>
-			</tr>
-			<c:forEach items="${sessionScope.subjectlist }" var="q">
-				<tr>
-					<td>${q.subject }</td>
-					<td>${q.semid.semname }</td>
-					<td>${q.departmentid.department }</td>
-					<td><a href="<%=request.getContextPath()%>/Professor?flag=viewsubjectprofessor&id=${q.id }">View Professor</a></td>
-				</tr>
-			</c:forEach>
-		</table>
+<div style="margin-left:8%;padding:1px 16px;height:1000px;">
+	<div style="padding-top:3%;">
+		<%int i=1; %>
+		<div class="container">
+		    <div class="row">
+		        <div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">Subject</h3>
+		                <div class="pull-right">
+		                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+		                </div>
+		            </div>
+		            <table class="table">
+		                <thead>
+		                    <tr class="filters">
+		                    	
+		                    	
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()"  placeholder="No" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()"  placeholder="Subject Name" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()"  placeholder="Semester" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()"  placeholder="Department Name" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()"  placeholder="Department Code" disabled></th>
+		                       <th colspan="5">View Professor</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+							<c:forEach items="${sessionScope.subjectlist }" var="q">
+								<tr>
+									<td><%=i %></td>
+									<td>${q.subject }</td>
+									<td>${q.semid.semname }</td>
+									<td>${q.departmentid.department }</td>
+									<td>${q.departmentid.departmentcode }</td>
+									<td><a href="<%=request.getContextPath()%>/Professor?flag=viewsubjectprofessor&id=${q.id }">View Professor</a></td>
+								</tr>
+								<%i++; %>
+							</c:forEach>
+						 </tbody>
+		            </table>
+		        </div>
+		    </div>
+		</div>
 	</div>
 </div>
+</body>
 <footer
         style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
         <div class=" container">

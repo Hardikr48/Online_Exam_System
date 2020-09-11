@@ -201,12 +201,11 @@ a:-webkit-any-link {
 			<div class="sub-main-w3">
 				<div class="bg-content-w3pvt">
 					<div class="top-content-style">
-						<img src="img/expertlogo.png" alt="" width="50" height="50"
-							style="border-radius: 50%">
+						<img src="img/expertlogo.png" alt="" width="50" height="50"style="border-radius: 50%">
 					</div>
 					<form action="Login" method="post">
 						<p class="legend">
-							Login Here<span class="fas fa-hand-o-down"></span>
+							Login Here <span class="fas fa-hand-o-down"></span>
 						</p>
 						<div class="input">
 							<input type="email" placeholder="Email" name="email" required="">

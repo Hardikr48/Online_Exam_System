@@ -94,19 +94,16 @@
         </div>
     </nav>
 </c:forEach> 
-	<ul>
+<ul>
 	  <c:forEach items="${sessionScope.professordata }" var="q">
 		<li><a href="Professor_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=profrssoraddexam&id=${q.collegeid.id }">Add Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add questions</a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=professor&id=${q.collegeid.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=professorsubject&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=professorstudent&id=${q.id }">View Student</a></li>
 		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchprofessordexam&id=${q.id }">View Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Questions</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
-
 <div style="margin-left:15%;padding:1px 16px;height:1000px;">
 	<div style="padding-top:3%;" >
 		<h3>View Exam</h3>

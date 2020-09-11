@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-
+<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -18,7 +18,7 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
 $(document).ready(function(){
     $('.filterable .btn-filter').click(function(){
@@ -39,14 +39,15 @@ $(document).ready(function(){
 <script type="text/javascript">
 function filterTable() {
 	  const query = q => document.querySelectorAll(q);
-	  console.log(query);
 	  const filters = [...query('th input')].map(e => new RegExp(e.value, 'i'));
-		console.log(filters);
+
 	  query('tbody tr').forEach(row => row.style.display = 
 	    filters.every((f, i) => f.test(row.cells[i].textContent)) ? '' : 'none');
 	}
 </script>
+
 <style>
+
 ul {
 	list-style-type: none;
 	margin: 0;
@@ -103,10 +104,11 @@ li a:hover:not (.active ) {
 }
 .filterable {
     margin-top: 15px;
-     width: 1278px;
+    width: 1278px;
 }
 .filterable .panel-heading .pull-right {
     margin-top: -20px;
+    
 }
 .filterable .filters input[disabled] {
     background-color: transparent;
@@ -125,53 +127,42 @@ li a:hover:not (.active ) {
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
+
 </style>
 </head>
 
 <body>
-	<c:forEach items="${sessionScope.collegedata }" var="q" end="0">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container-fluid" style="position: relative;">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#" style="color: black">Online
-						Examination System</a> <span style="text-align: center;"> <a
-						class="navbar-brand"
-						style="margin-left: 264px; color: black; font-size: 25px;">Apollo
-							Institute Of Engineering</a>
-					</span> <span style="right: 5%; position: absolute; padding-top: 5px;">
-						<div class="dropdown">
-							<img src="img/remco.jpg" alt="Cinque Terre" width="40"
-								height="40" style="border-radius: 50%;">&nbsp;<i
-								class="fa fa-ellipsis-v"
-								style="font-size: 24px; position: absolute; top: 20%; color: black;"></i>
-							<div class="dropdown-content">
-								<a href="#">View Profile</a><br> <a
-									href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit
-									Profile</a><br> <a href="#">Log out</a>
-
-							</div>
-						</div>
-					</span>
-				</div>
-			</div>
-		</nav>
-	</c:forEach>
+<c:forEach items="${sessionScope.professordata }" var="q" end="0">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid" style="position: relative;">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: black">Onlie Examination System</a>
+                <span style="text-align: center;"> <a class="navbar-brand" 
+                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Or Engineering</a>
+                </span>
+                <span style="right:5%; position: absolute; padding-top:5px;" >
+                    <div class="dropdown">                    	
+                        <img src="img/professor.jpg" alt="Cinque Terre" width="40" height="40" 
+                            style="border-radius: 50%;">&nbsp;<i class="fa fa-ellipsis-v" style="font-size:24px; position: absolute; top: 20%; color: black;"></i>
+                        <div class="dropdown-content">
+                            <a href="#">View Profile</a><br>
+                            <a href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit Profile</a><br>
+                            <a href="#">Log out</a>
+                         
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </nav>
+</c:forEach> 
 	<ul>
-	  <c:forEach items="${sessionScope.collegedata }" var="q">
-		<li><a href="College_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
+	  <c:forEach items="${sessionScope.professordata }" var="q">
+		<li><a href="Professor_Login.jsp">Home</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=professor&id=${q.collegeid.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=professorsubject&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=professorstudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchprofessordexam&id=${q.id }">View Exam</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
@@ -182,7 +173,7 @@ li a:hover:not (.active ) {
 		    <div class="row">
 		        <div class="panel panel-primary filterable">
 		            <div class="panel-heading">
-		                <h3 class="panel-title">Semester</h3>
+		                <h3 class="panel-title">Student</h3>
 		                <div class="pull-right">
 		                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
 		                </div>
@@ -191,42 +182,50 @@ li a:hover:not (.active ) {
 		                <thead>
 		                    <tr class="filters">
 		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="No" disabled></th>
-		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Semester" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Student" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Last Name" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Email" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="ContactNo" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Address" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Gender" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Roll No" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="JoiningDate" disabled></th>
 		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Department" disabled></th>
-		                       <th>View Subject</th>
-		                       <th>View Professor</th>
-		                       <th>View Student</th>
-		                       <th>View Exam</th>
-		                       <th>Delete</th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Sem" disabled></th>
+		                       <th colspan="5">Edit Profile</th>
+		                       <th colspan="5">Exam Report</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
-			
-							<c:forEach items="${sessionScope.semlist }" var="q">
-								<tr>
-								<td><%=i %></td>
-								<td>${q.semname }</td>
-								<td>${q.departmentid.department }</td>
-								<td><a href="<%=request.getContextPath()%>/Subject?flag=viewcollegesemestersubject&id=${q.id }">View Subject</a></td>
-								<td><a href="<%=request.getContextPath()%>/Professor?flag=viewcollegesemesterprofessor&id=${q.id }">View Professor</a></td>
-								<td><a href="<%=request.getContextPath()%>/Student?flag=viewcollegesemesterstudent&id=${q.id }">View Student</a></td>
-								<td><a href="<%=request.getContextPath()%>/Exam?flag=viewcollegesemesterexam&id=${q.id }">View Exam</a></td>
-								<td><a href="<%=request.getContextPath()%>/Sem?flag=deletesem&id=${q.id }">Delete</a></td>
+		                    <c:forEach items="${sessionScope.professorstudentlist }" var="q">
+								<tr>	
+									<td><%=i %></td>
+									<td>${q.firstName }</td>
+									<td>${q.lastName }</td>
+									<td>${q.email }</td>
+									<td>${q.con_no }</td>
+									<td>${q.address }</td>
+									<td>${q.gender }</td>
+									<td>${q.roll }</td>
+									<td>${q.joiningdate }</td>
+									<td>${q.departmentid.department }</td>
+									<td>${q.semesterid.semname }</td>
+									<td colspan="5"><a href="<%=request.getContextPath()%>/Student?flag=professoreditstudent&id=${q.id }">Edit</a></td>
+									<td><a href="<%=request.getContextPath()%>/Result?flag=reportprofessor&id=${q.id }"> Exam Report</a></td>
 								</tr>
 								<%i++; %>
 							</c:forEach>
-						 </tbody>
+		                </tbody>
 		            </table>
 		        </div>
 		    </div>
 		</div>
 	</div>
 </div>
+</body>
 <footer
         style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
         <div class=" container">
             <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
-        </div>	
+        </div>
     </footer>
-</body>
-</html>

@@ -41,20 +41,34 @@ public class Result extends HttpServlet {
 		String flag = request.getParameter("flag");
 		
 		if(flag.equalsIgnoreCase("studentid")) {
-			int studentid = Integer.parseInt(request.getParameter("id"));
-			
-			StudentVo studentVo = new  StudentVo();
-			studentVo.setId(studentid);
-			
-			ResultVo resultVo = new ResultVo();
-			resultVo.setStudentid(studentVo);
-			
-			ResultDao resultDao = new ResultDao();
-			ArrayList<ResultVo> reportlist = resultDao.searchResult(resultVo);
-			
-			session.setAttribute("studentresult", reportlist);
+			studentReport(request, response);
 			response.sendRedirect("Report.jsp");
 		}
+		if(flag.equalsIgnoreCase("reportcollege")) {
+			studentReport(request, response);
+			response.sendRedirect("College_Student_Report.jsp");
+		}
+		if(flag.equalsIgnoreCase("reportprofessor")) {
+			studentReport(request, response);
+			response.sendRedirect("Professor_Student_Report.jsp");
+		}
+	}
+
+	private void studentReport(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		int studentid = Integer.parseInt(request.getParameter("id"));
+		
+		StudentVo studentVo = new  StudentVo();
+		studentVo.setId(studentid);
+		
+		ResultVo resultVo = new ResultVo();
+		resultVo.setStudentid(studentVo);
+		
+		ResultDao resultDao = new ResultDao();
+		ArrayList<ResultVo> reportlist = resultDao.searchResult(resultVo);
+		System.out.println("ds---"+reportlist);
+		
+		session.setAttribute("studentresult", reportlist);
 	}
 
 	/**

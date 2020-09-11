@@ -89,22 +89,24 @@ public class Department extends HttpServlet {
 
 	protected void departmentInsert(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		try {
+			try {
 
 			int companyid = (int) session.getAttribute("collegeid");
 			System.out.println(companyid);
 			String departmentname = request.getParameter("departmentname");
 			int code = Integer.parseInt(request.getParameter("departmentcode"));
-
+			
 			CollegeVo collegevo = new CollegeVo();
 			collegevo.setId(companyid);
 
 			DepartmentVo departmentvo = new DepartmentVo();
 			departmentvo.setDepartment(departmentname);
 			departmentvo.setDepartmentcollegeid(collegevo);
+			departmentvo.setDepartmentcode(code);
 
 			DepartmentDao departmentdao = new DepartmentDao();
 			ArrayList<DepartmentVo> departmentist = departmentdao.chackDepartment(departmentvo);
+			System.out.println(departmentist);
 			if (departmentist.isEmpty() == true) {
 				departmentdao.insertDepartment(departmentvo);
 				session.setAttribute("adddepartment", "true");

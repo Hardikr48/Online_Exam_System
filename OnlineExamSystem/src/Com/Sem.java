@@ -155,8 +155,9 @@ public class Sem extends HttpServlet {
 						session.setAttribute("addsem", "true");
 					}
 				}
-			} else {
+			 else {
 				session.setAttribute("semno", "true");
+			}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

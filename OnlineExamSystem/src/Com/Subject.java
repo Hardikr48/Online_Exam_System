@@ -15,9 +15,12 @@ import org.hibernate.Session;
 import DAO.DepartmentDao;
 import DAO.SemDao;
 import DAO.SubjectDao;
+import DAO.SubjectProfessorDao;
 import VO.CollegeVo;
 import VO.DepartmentVo;
+import VO.ProfessorVo;
 import VO.SemVo;
+import VO.SubjectProfessorVo;
 import VO.SubjectVo;
 
 /**
@@ -73,7 +76,11 @@ public class Subject extends HttpServlet {
 			response.sendRedirect("CollegeDepartmentSubjectList.jsp");
 		}
 		if (flag.equalsIgnoreCase("professorsubject")) {
-			searchDepartmentSubject(request, response);
+			searchProfessorDepartmentSubject(request, response);
+			response.sendRedirect("Professor_List_subject.jsp");
+		}
+		if (flag.equalsIgnoreCase("professorsubject123")) {
+			searchProfessorDepartmentSubject(request, response);
 			response.sendRedirect("Professor_List_subject.jsp");
 		}
 		if (flag.equalsIgnoreCase("hodviewsubject")) {
@@ -209,6 +216,23 @@ public class Subject extends HttpServlet {
 		}
 		
 	}
+	
+	private void searchProfessorDepartmentSubject(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 
+		int professorid = Integer.parseInt(request.getParameter("id"));
+		System.out.println(professorid);
+
+		ProfessorVo professorvo = new ProfessorVo();
+		professorvo.setId(professorid);
+		
+		SubjectProfessorVo subjectProfessorVo = new SubjectProfessorVo();
+		subjectProfessorVo.setProfessorid(professorvo);
+		
+		SubjectProfessorDao subjectprofessordao = new SubjectProfessorDao();
+		ArrayList<SubjectProfessorVo> subjectprofessorlist = subjectprofessordao.getProfessorDepartment(subjectProfessorVo);
+		session.setAttribute("collegeProfessorDepartmentSubjectList", subjectprofessorlist);
+		
+	}
 	
 }

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Insert title here</title>
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script>
@@ -90,49 +91,35 @@ li a:hover:not (.active ) {
 </head>
 
 <body>
-	<c:forEach items="${sessionScope.collegedata }" var="q" end="0">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container-fluid" style="position: relative;">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#" style="color: black">Online
-						Examination System</a> <span style="text-align: center;"> <a
-						class="navbar-brand"
-						style="margin-left: 264px; color: black; font-size: 25px;">Apollo
-							Institute Of Engineering</a>
-					</span> <span style="right: 5%; position: absolute; padding-top: 5px;">
-						<div class="dropdown">
-							<img src="img/remco.jpg" alt="Cinque Terre" width="40"
-								height="40" style="border-radius: 50%;">&nbsp;<i
-								class="fa fa-ellipsis-v"
-								style="font-size: 24px; position: absolute; top: 20%; color: black;"></i>
-							<div class="dropdown-content">
-								<a href="#">View Profile</a><br> <a
-									href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit
-									Profile</a><br> <a href="#">Log out</a>
-
-							</div>
-						</div>
-					</span>
-				</div>
-			</div>
-		</nav>
-	</c:forEach>
+	<c:forEach items="${sessionScope.professordata }" var="q" end="0">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid" style="position: relative;">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: black">Onlie Examination System</a>
+                <span style="text-align: center;"> <a class="navbar-brand" 
+                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Or Engineering</a>
+                </span>
+                <span style="right:5%; position: absolute; padding-top:5px;" >
+                    <div class="dropdown">                    	
+                        <img src="img/professor.jpg" alt="Cinque Terre" width="40" height="40" 
+                            style="border-radius: 50%;">&nbsp;<i class="fa fa-ellipsis-v" style="font-size:24px; position: absolute; top: 20%; color: black;"></i>
+                        <div class="dropdown-content">
+                            <a href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit Profile</a><br>
+                            <a href="Com_Login.jsp">Log out</a>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </nav>
+</c:forEach>
 	<ul>
-	  <c:forEach items="${sessionScope.collegedata }" var="q">
-		<li><a href="College_Login.jsp">Home</a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=insert&id=${q.id }">Add Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=insert&id=${q.id }">Add Semester </a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=insert&id=${q.id }">Add Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=professor&flag=insert&id=${q.id }">Add Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag2=hod&flag=insert&id=${q.id }">Add Head Of Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=insert&id=${q.id }">Add Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=insert&id=${q.id }">Add Exam</a></li>
-		<li><a href="<%=request.getContextPath()%>/Sem?flag=viewsemlist&id=${q.id }">View SemList </a></li>
-		<li><a href="<%=request.getContextPath()%>/Department?flag=viewdepartmentlist&id=${q.id }">View Department</a></li>
-		<li><a href="<%=request.getContextPath()%>/Subject?flag=searchcollegesubject&id=${q.id }">View Subject</a></li>
-		<li><a href="<%=request.getContextPath()%>/Professor?flag=searchcollegeprofessor&id=${q.id }">View Professor</a></li>
-		<li><a href="<%=request.getContextPath()%>/Student?flag=searchcollegestudent&id=${q.id }">View Student</a></li>
-		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchcollegeexam&id=${q.id }">View Exam</a></li>
+	  <c:forEach items="${sessionScope.professordata }" var="q">
+		<li><a href="Professor_Login.jsp">Home</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=professor&id=${q.collegeid.id }">Add Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/Subject?flag=professorsubject&id=${q.id }">View Subject</a></li>
+		<li><a href="<%=request.getContextPath()%>/Student?flag=professorstudent&id=${q.id }">View Student</a></li>
+		<li><a href="<%=request.getContextPath()%>/Exam?flag=searchprofessordexam&id=${q.id }">View Exam</a></li>
 		<li><a href="Com_Login.jsp">Logout</a></li>
 	  </c:forEach>
 	</ul>
@@ -193,7 +180,7 @@ li a:hover:not (.active ) {
 				
 				<span>*</span>Password:
 				<input type="text" name="pass" value="${q.password }" required><br><br>
-				<input type="hidden" name="flag" value="update">
+				<input type="hidden" name="flag" value="updateprofessorstudent">
 				<input type="hidden" name="gender" value="${q.gender }">
 				<input type="hidden" name="collegeid" value="${q.collegeid.id }">
 				<input type="hidden" name="id" value="${q.id }">
@@ -210,4 +197,3 @@ li a:hover:not (.active ) {
         </div>
     </footer>
 </body>
-</html>

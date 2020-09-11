@@ -34,34 +34,17 @@ $(document).ready(function(){
             $tbody.find('tr').show();
         }
     });
-
-    $('.filterable .filters input').keyup(function(e){
-        /* Ignore tab key */
-        var code = e.keyCode || e.which;
-        if (code == '9') return;
-        /* Useful DOM data and selectors */
-        var $input = $(this),
-        inputContent = $input.val().toLowerCase(),
-        $panel = $input.parents('.filterable'),
-        column = $panel.find('.filters th').index($input.parents('th')),
-        $table = $panel.find('.table'),
-        $rows = $table.find('tbody tr');
-        /* Dirtiest filter function ever ;) */
-        var $filteredRows = $rows.filter(function(){
-            var value = $(this).find('td').eq(column).text().toLowerCase();
-            return value.indexOf(inputContent) === -1;
-        });
-        /* Clean previous no-result if exist */
-        $table.find('tbody .no-result').remove();
-        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
-        $rows.show();
-        $filteredRows.hide();
-        /* Prepend no-result row if all rows are filtered */
-        if ($filteredRows.length === $rows.length) {
-            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
-        }
-    });
 });
+</script>
+<script type="text/javascript">
+function filterTable() {
+	  const query = q => document.querySelectorAll(q);
+	  console.log(query);
+	  const filters = [...query('th input')].map(e => new RegExp(e.value, 'i'));
+		console.log(filters);
+	  query('tbody tr').forEach(row => row.style.display = 
+	    filters.every((f, i) => f.test(row.cells[i].textContent)) ? '' : 'none');
+	}
 </script>
 <style>
 ul {
@@ -120,6 +103,7 @@ li a:hover:not (.active ) {
 }
 .filterable {
     margin-top: 15px;
+     width: 1278px;
 }
 .filterable .panel-heading .pull-right {
     margin-top: -20px;
@@ -196,15 +180,14 @@ li a:hover:not (.active ) {
 	  </c:forEach>
 	</ul>
 
-<div style="margin-left:15%;padding:1px 16px;height:1000px;">
-	<div style="padding-top:3%;" >
-		<h3>View Professor</h3>
+<div style="margin-left:8%;padding:1px 16px;height:1000px;">
+	<div style="padding-top:3%;">
 		<%int i=1; %>
 		<div class="container">
 		    <div class="row">
 		        <div class="panel panel-primary filterable">
 		            <div class="panel-heading">
-		                <h3 class="panel-title">Users</h3>
+		                <h3 class="panel-title">Professor</h3>
 		                <div class="pull-right">
 		                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
 		                </div>
@@ -212,17 +195,17 @@ li a:hover:not (.active ) {
 		            <table class="table">
 		                <thead>
 		                    <tr class="filters">
-		                       <th><input type="text" class="form-control" placeholder="ID" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Professor" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Last Name" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Email" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="ContactNo" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Address" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Gender" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Salary" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="Designation" disabled></th>
-		                       <th><input type="text" class="form-control" placeholder="JoiningDate" disabled></th>
-		                       <th colspan="5"><input type="button" class="form-control" value="Details" placeholder="de" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="No" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Professor" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Last Name" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Email" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="ContactNo" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Address" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Gender" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Salary" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Designation" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="JoiningDate" disabled></th>
+		                       <th colspan="5">Detail</th>
 		                    </tr>
 		                </thead>
 		                <tbody>

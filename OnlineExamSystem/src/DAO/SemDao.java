@@ -90,7 +90,7 @@ public class SemDao {
 			Transaction transaction = session.beginTransaction();
 			Query q = session.createQuery("from SemVo AS a where a.departmentid =:id And a.semname =:sem");
 			q.setParameter("id", semvo.getDepartmentid());
-			q.setParameter("id", semvo.getSemname());
+			q.setParameter("sem", semvo.getSemname());
 			li = q.list();
 			transaction.commit();
 			session.close();

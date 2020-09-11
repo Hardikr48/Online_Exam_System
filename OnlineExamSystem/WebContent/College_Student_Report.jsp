@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -129,33 +129,30 @@ li a:hover:not (.active ) {
 </head>
 
 <body>
-	<c:forEach items="${sessionScope.collegedata }" var="q" end="0">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container-fluid" style="position: relative;">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#" style="color: black">Online
-						Examination System</a> <span style="text-align: center;"> <a
-						class="navbar-brand"
-						style="margin-left: 264px; color: black; font-size: 25px;">Apollo
-							Institute Of Engineering</a>
-					</span> <span style="right: 5%; position: absolute; padding-top: 5px;">
-						<div class="dropdown">
-							<img src="img/remco.jpg" alt="Cinque Terre" width="40"
-								height="40" style="border-radius: 50%;">&nbsp;<i
-								class="fa fa-ellipsis-v"
-								style="font-size: 24px; position: absolute; top: 20%; color: black;"></i>
-							<div class="dropdown-content">
-								<a href="#">View Profile</a><br> <a
-									href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit
-									Profile</a><br> <a href="#">Log out</a>
-
-							</div>
-						</div>
-					</span>
-				</div>
-			</div>
-		</nav>
-	</c:forEach>
+<c:forEach items="${sessionScope.collegedata }" var="q" end="0">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid" style="position: relative;">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: black">Online Examination System</a>
+                <span style="text-align: center;"> <a class="navbar-brand" 
+                        style="margin-left: 264px;color: black; font-size: 25px;">Apollo Institute Of Engineering</a>
+                </span>
+                <span style="right:5%; position: absolute; padding-top:5px;" >
+                    <div class="dropdown">                    	
+                        <img src="img/remco.jpg" alt="Cinque Terre" width="40" height="40" 
+                            style="border-radius: 50%;">&nbsp;<i class="fa fa-ellipsis-v" style="font-size:24px; position: absolute; top: 20%; color: black;"></i>
+                        <div class="dropdown-content">
+                            <a href="#">View Profile</a><br>
+                            <a href="<%=request.getContextPath()%>/College?flag=editprofile&id=${q.id }">Edit Profile</a><br>
+                            <a href="#">Log out</a>
+                         
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </nav>
+</c:forEach> 
 	<ul>
 	  <c:forEach items="${sessionScope.collegedata }" var="q">
 		<li><a href="College_Login.jsp">Home</a></li>
@@ -176,13 +173,13 @@ li a:hover:not (.active ) {
 	  </c:forEach>
 	</ul>
 <div style="margin-left:8%;padding:1px 16px;height:1000px;">
-	<div style="padding-top:3%;">
+	<div style="padding-top:4%;">
 		<%int i=1; %>
 		<div class="container">
 		    <div class="row">
 		        <div class="panel panel-primary filterable">
 		            <div class="panel-heading">
-		                <h3 class="panel-title">Semester</h3>
+		                <h3 class="panel-title">Report</h3>
 		                <div class="pull-right">
 		                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
 		                </div>
@@ -190,28 +187,37 @@ li a:hover:not (.active ) {
 		            <table class="table">
 		                <thead>
 		                    <tr class="filters">
-		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="No" disabled></th>
-		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Semester" disabled></th>
-		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Department" disabled></th>
-		                       <th>View Subject</th>
-		                       <th>View Professor</th>
-		                       <th>View Student</th>
-		                       <th>View Exam</th>
-		                       <th>Delete</th>
+		                       <th style="width: 37px;"><input type="text" class="form-control" onkeyup="filterTable()" placeholder="No" disabled></th>
+		                       <th style="width: 80px;"><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Subject" disabled></th>
+		                       <th style="width: 60px;"><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Topic" disabled></th>
+		                       <th ><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Result" disabled></th>
+		                       <th style="width: 115px;"><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Mark obtained" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Total Mark" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Time" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Correct" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Wrong" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Mark & Review" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Not Attended" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Mcq" disabled></th>
+		                       <th><input type="text" class="form-control" onkeyup="filterTable()" placeholder="Date" disabled></th>
 		                    </tr>
 		                </thead>
 		                <tbody>
-			
-							<c:forEach items="${sessionScope.semlist }" var="q">
+							<c:forEach items="${sessionScope.studentresult }" var="q">
 								<tr>
-								<td><%=i %></td>
-								<td>${q.semname }</td>
-								<td>${q.departmentid.department }</td>
-								<td><a href="<%=request.getContextPath()%>/Subject?flag=viewcollegesemestersubject&id=${q.id }">View Subject</a></td>
-								<td><a href="<%=request.getContextPath()%>/Professor?flag=viewcollegesemesterprofessor&id=${q.id }">View Professor</a></td>
-								<td><a href="<%=request.getContextPath()%>/Student?flag=viewcollegesemesterstudent&id=${q.id }">View Student</a></td>
-								<td><a href="<%=request.getContextPath()%>/Exam?flag=viewcollegesemesterexam&id=${q.id }">View Exam</a></td>
-								<td><a href="<%=request.getContextPath()%>/Sem?flag=deletesem&id=${q.id }">Delete</a></td>
+									<td><%=i %></td>
+									<td>${q.subjectid.subject }</td>
+									<td>${q.topic }</td>
+									<td>${q.result }</td>
+									<td>${q.markobtained }&#37;</td>
+									<td>${q.totalmark }</td>
+									<td>${q.time }</td>
+									<td>${q.correct }</td>
+									<td>${q.wrong }</td>
+									<td>${q.markreview }</td>
+									<td>${q.notattended }</td>
+									<td>${q.totalmcq }</td>
+									<td>${q.date }</td>
 								</tr>
 								<%i++; %>
 							</c:forEach>
@@ -222,11 +228,12 @@ li a:hover:not (.active ) {
 		</div>
 	</div>
 </div>
+</body>	
 <footer
         style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
         <div class=" container">
             <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
-        </div>	
+        </div>
     </footer>
 </body>
 </html>

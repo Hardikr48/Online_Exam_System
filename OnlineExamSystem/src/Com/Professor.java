@@ -381,9 +381,7 @@ public class Professor extends HttpServlet {
 						ArrayList<DepartmentProfessorVo> hodchack = departmentprofessordao
 								.chackHodProfessor(departmentprofessorvo);
 						if (hodchack.isEmpty() == true) {
-							System.out.println("---5-5-5-5-5------");
 							for (int i = 0; i < departmentlist.length; i++) {
-								System.out.println("-------------------------------------");
 								int departmentid = Integer.parseInt(departmentlist[i]);
 								DepartmentVo departmentvo = new DepartmentVo();
 								departmentvo.setId(departmentid);
@@ -392,7 +390,6 @@ public class Professor extends HttpServlet {
 							}
 							session.setAttribute("professoradd", "true");
 						} else if (hodchack.isEmpty() == false) {
-							System.out.println("234161321111111111111111111111111111111111111");
 							session.setAttribute("hodexist", "true");
 						}
 					}

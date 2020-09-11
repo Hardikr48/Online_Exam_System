@@ -24,11 +24,12 @@ $(document).ready(function(){
 	var time = 0;
 	var topic;
 	var subject;
+	var i =1;
 	var ans= [];  
 	let obj ;
    	$.post('Department1',{flag:username},function(response) {
    		obj = JSON.parse(response);
-   		var i =1;
+   		
    		var a=0;
    		$.each(obj, function(index, value) {
  		   	console.log(obj[index]);
@@ -45,7 +46,7 @@ $(document).ready(function(){
    		subject=obj[0].subject;
    		console.log(time);
    		
-   		var sec = time;
+   		var sec = time*60;
    	    countDiv    = document.getElementById("timer"),
    	    secpass,
    	    countDown   = setInterval(function () {
@@ -277,7 +278,7 @@ $(document).ready(function(){
 		document.getElementById("op2").value = getque.op2;
 		document.getElementById("op3").value = getque.op3;
 		document.getElementById("op4").value = getque.op4;
-		document.getElementById("id").value = getque.id ;
+		document.getElementById("id").value = getque.id;
 		document.getElementById("ans").value = getque.ans ;
 		
 		document.getElementById("op11").innerHTML = getque.op1;
@@ -285,6 +286,25 @@ $(document).ready(function(){
 	 	document.getElementById("op33").innerHTML = getque.op3;
 	 	document.getElementById("op44").innerHTML = getque.op4;
 	 	document.getElementById("que").innerHTML = getque.Que;
+	 
+	 });
+	
+	$(document).on('click', '.button4', function(){
+		console.log("dsadsa");
+		var json = JSON.stringify(ans);
+		--i;
+		console.log(json);
+        sessionStorage.setItem("topic", topic);
+        sessionStorage.setItem("subject", subject);
+        sessionStorage.setItem("que", i);
+        sessionStorage.setItem("time", time);
+        sessionStorage.setItem("listofans", json);
+        sessionStorage.setItem("correctans", correct_ans);
+        sessionStorage.setItem("worngans", wrong_ans);
+        sessionStorage.setItem("markans", mark_ans);
+        sessionStorage.setItem("totalmark", totalmarks);
+
+        window.location.replace("NewFile.jsp");
 	 
 	 });
 });
@@ -340,7 +360,7 @@ h2{
 }
 
 .button5{
-    margin-left: 350px;
+    margin-left: 300px;
 	background-color:green;
 }
 .button3{
@@ -426,6 +446,7 @@ margin:5px 3px;}
 		  	<input type="reset" style="margin-top: 259px; background-color: blue;" name="reset">
 		  	</form>
 		  	<div class="box" id="box">
+		  		<button class="button button4 ">Submit </button>
 			  	<button class="button button1 ">Mark & Review </button>
 			  	<button class="button button3">Previous Question</button>
 			  	<button class="button button5">Save & Next</button>

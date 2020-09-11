@@ -28,6 +28,7 @@ import VO.DepartmentProfessorVo;
 import VO.DepartmentVo;
 import VO.LoginVO;
 import VO.ProfessorVo;
+import VO.QuestionVo;
 import VO.SemProfessorVo;
 import VO.SemVo;
 import VO.StudentVo;
@@ -92,6 +93,14 @@ public class Student extends HttpServlet {
 			department.viewcollegeDepartmentList(request, response);
 			response.sendRedirect("Student_Edit.jsp");
 		}
+		if (flag.equalsIgnoreCase("professoreditstudent")) {
+			int studentid = (Integer.parseInt(request.getParameter("id")));
+			session.setAttribute("studentid", studentid);
+			editStudentProfile(request, response);
+			Department department = new Department();
+			department.viewcollegeDepartmentList(request, response);
+			response.sendRedirect("Professor_Student_Edit.jsp");
+		}
 		if (flag.equalsIgnoreCase("searchcollegestudent")) {
 			searchCollegeStudent(request, response);
 			response.sendRedirect("College_Student_List.jsp");
@@ -99,6 +108,10 @@ public class Student extends HttpServlet {
 		if (flag.equalsIgnoreCase("viewdepartmentstudentlist")) {
 			searchDepartmentStudent(request, response);
 			response.sendRedirect("CollegeDepartmentStudentList.jsp");
+		}
+		if (flag.equalsIgnoreCase("professorstudent")) {
+			searchProfessorStudent(request, response);
+			response.sendRedirect("Professor_Student_List.jsp");
 		}
 		if (flag.equalsIgnoreCase("hodstudentlist")) {
 			searchDepartmentStudent(request, response);
@@ -118,6 +131,38 @@ public class Student extends HttpServlet {
 			searchSemesterStudent(request, response);
 			response.sendRedirect("CollegeSemStudentList.jsp");
 		}
+	}
+
+	private void searchProfessorStudent(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		int professorid = Integer.parseInt(request.getParameter("id"));
+		
+		ProfessorVo professorVo = new ProfessorVo();
+		professorVo.setId(professorid);
+		
+		SemProfessorVo semProfessorVo = new SemProfessorVo();
+		semProfessorVo.setProfessorid(professorVo);
+		
+		
+		SemProfessorDao semProfessorDao = new SemProfessorDao();
+		
+		ArrayList<SemProfessorVo> semseterlist= semProfessorDao.searchCollegeProfessorsemester(semProfessorVo);
+		List<StudentVo> QueList = new ArrayList<StudentVo>();
+		for(SemProfessorVo sem : semseterlist) {
+			int semid = sem.getSemid().getId();
+			SemVo semVo = new SemVo();
+			semVo.setId(semid);
+			
+			StudentVo studentVo = new StudentVo();
+			studentVo.setSemesterid(semVo);
+			
+			StudentDao studentdao = new StudentDao();
+			ArrayList<StudentVo> Studentlist= studentdao.searchSemesterStudent(studentVo);
+			QueList.addAll(Studentlist);
+		}
+			session.setAttribute("professorstudentlist", QueList);
+		
+		
 	}
 
 	private void searchSemesterStudent(HttpServletRequest request, HttpServletResponse response) {
@@ -191,6 +236,11 @@ public class Student extends HttpServlet {
 			updateStudentProfile(request, response);
 			editStudentProfile(request, response);
 			response.sendRedirect("Student_Edit.jsp");
+		}
+		if (flag.equalsIgnoreCase("updateprofessorstudent")) {
+			updateStudentProfile(request, response);
+			editStudentProfile(request, response);
+			response.sendRedirect("Professor_Student_Edit.jsp");
 		}
 	}
 

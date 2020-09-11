@@ -115,7 +115,7 @@
 	</ul>
 
 <div style="margin-left:15%;padding:1px 16px;height:1000px;">
-	<div style="padding-top:3%;" >
+	<div style="padding-top:4%;" >
 		<% 
 	    if(session.getAttribute("adddepartment") != null ){
 		%>
@@ -127,8 +127,14 @@
 		<%session.removeAttribute("erorr");
 		}else if(session.getAttribute("selectsem") != null ){
 		%>
-		 <p style="color:red"> Please select sem </p>
+		 <p style="color:red"> Department already exists</p>
 		<%session.removeAttribute("selectsem");
+		}
+		
+		else if(session.getAttribute("department") != null ){
+		%>
+		 <p style="color:red"> Department already exists</p>
+		<%session.removeAttribute("department");
 		}
 		%>
 		<h3>Add Department</h3>
@@ -137,7 +143,7 @@
 		<span>*</span>Department Name:-
 		<input type="text" name="departmentname"  required ><br><br>
 		<span>*</span>Department Code:-
-		<input type="tel" name="departmetcode" placeholder="12"pattern="[0-9]{2}"><br><br>
+		<input type="tel" name="departmentcode" placeholder="12"pattern="[0-9]{2}"><br><br>
 		<input type="hidden" name="flag" value="insert"/>
 		<input type="submit" value="SUBMIT"/>
 		</form>

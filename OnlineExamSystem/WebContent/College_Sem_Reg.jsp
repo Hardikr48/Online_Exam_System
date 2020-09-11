@@ -119,7 +119,7 @@ li a:hover:not (.active ) {
 	  </c:forEach>
 	</ul>
 <div style="margin-left:15%;padding:1px 16px;height:1000px;">
-	<div style="padding-top:3%;" >
+	<div style="padding-top:4%;" >
 		<% 
 	    if(session.getAttribute("addsem") != null ){
 		%>
@@ -131,7 +131,7 @@ li a:hover:not (.active ) {
 		<%session.removeAttribute("erorr");
 		}else if(session.getAttribute("semno") != null ){
 		%>
-		 <p style="color:red"> Semester NO is not valid </p>
+		 <p style="color:red"> Semester already exists</p>
 		<%session.removeAttribute("semno");
 		}
 		%>
