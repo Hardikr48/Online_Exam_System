@@ -39,9 +39,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 function filterTable() {
 	  const query = q => document.querySelectorAll(q);
-	  console.log(query);
 	  const filters = [...query('th input')].map(e => new RegExp(e.value, 'i'));
-		console.log(filters);
 	  query('tbody tr').forEach(row => row.style.display = 
 	    filters.every((f, i) => f.test(row.cells[i].textContent)) ? '' : 'none');
 	}
@@ -235,7 +233,7 @@ li a:hover:not (.active ) {
 <footer
         style="background-color:rgb(136, 127, 127); color: black; position: fixed;bottom: 0%;width: 100%; text-align: center;">
         <div class=" container">
-            <p>© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
+            <p>Â© Copyright <strong>EXPERT WEB DESIGNING</strong> All Rights Reserved </p>
         </div>
     </footer>
 </body>
