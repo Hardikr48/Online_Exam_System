@@ -62,7 +62,6 @@ public class Department1 extends HttpServlet {
 
 		SemDao semdao = new SemDao();
 		ArrayList<SemVo> semlist = semdao.searchDepartment(semvo);
-		System.out.println(semlist.size());
 		List<Common> list = new ArrayList<Common>();
 
 		for (SemVo sem : semlist) {
@@ -87,16 +86,12 @@ public class Department1 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("....................................");
 		String flag = request.getParameter("flag");
-		System.out.println(flag);
 		
 		if(flag.equalsIgnoreCase("exam")) {
 			examStart(request,response);
 		}
-		System.out.println(flag);
 		if (flag.equalsIgnoreCase("semester")) {
-			System.out.println("0320.32......................");
 			int departmentid = Integer.parseInt(request.getParameter("department"));
 			DepartmentVo departmentVo = new DepartmentVo();
 			departmentVo.setId(departmentid);
@@ -106,7 +101,6 @@ public class Department1 extends HttpServlet {
 
 			SemDao semDao = new SemDao();
 			ArrayList<SemVo> semlist = semDao.searchDepartment(semVo);
-			System.out.println(semlist.size());
 			List<Common> list = new ArrayList<Common>();
 			for (SemVo sem : semlist) {
 				int id = sem.getId();
@@ -135,7 +129,6 @@ public class Department1 extends HttpServlet {
 
 			DepartmentDao departmentDao = new DepartmentDao();
 			ArrayList<DepartmentVo> semlist = departmentDao.searchCollegeDepartment(departmentVo);
-			System.out.println(semlist.size());
 			List<Common> list = new ArrayList<Common>();
 
 			for (DepartmentVo sem : semlist) {
@@ -164,7 +157,6 @@ public class Department1 extends HttpServlet {
 			
 			SubjectDao subjectDao = new SubjectDao();
 			ArrayList<SubjectVo> semlist = subjectDao.searchSem(subjectVo);
-			System.out.println(semlist.size());
 			List<Common> list = new ArrayList<Common>();
 
 			for (SubjectVo subjectlist : semlist) {
@@ -203,7 +195,6 @@ public class Department1 extends HttpServlet {
 		int subject= questionlist2.get(0).getExamphaseid().getSubjectid().getId();
 		QueList.addAll(questionlist2);
 	
-		System.out.println(QueList.size());
 		session.setAttribute("quelist", QueList);
 		
 		List<Questionlist> list = new ArrayList<Questionlist>();
@@ -220,7 +211,6 @@ public class Department1 extends HttpServlet {
 			int time = quelist.getExamphaseid().getTime();
 			int marks = quelist.getExamphaseid().getMarks();
 			
-			System.out.println("online exam system=   "+id+" "+que+" "+op1+" "+op2+" "+op3+" "+op4+" "+ans+" "+time+" "+marks+""+topic+""+subject );
 			Questionlist questionlist1 = new Questionlist();
 			questionlist1.setQue(que);
 			questionlist1.setId(id1);
@@ -236,7 +226,6 @@ public class Department1 extends HttpServlet {
 			list.add(questionlist1);
 		}
 		
-		System.out.println(list.size());
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(list));
